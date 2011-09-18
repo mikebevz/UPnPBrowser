@@ -27,6 +27,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         
         ListView devicesList = (ListView) findViewById(R.id.devices_list);
         
+        setTitle("Available UPnP Devices");
         
         
         ctrlPoint = new ControlPoint();
@@ -69,14 +70,14 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         ctrlPoint.start();
     }
 
-    public void deviceNotifyReceived(SSDPPacket ssdpp) {
+    public void deviceNotifyReceived(final SSDPPacket ssdpp) {
         
         Runnable task = new Runnable() {
 
             public void run() {
                 
                 devListAdapter.setDeviceList(ctrlPoint.getDeviceList());
-                System.out.println("Device Notify Received");
+                System.out.println("Device Notify Received: "+ ssdpp.getUSN());
                 devListAdapter.notifyDataSetChanged();
             }
             

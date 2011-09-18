@@ -33,7 +33,7 @@ public class DeviceBrowserUIActivity extends Activity {
         Device device = (Device) ((UpnpBrowserApp)getApplication()).getDeviceList().get(position);
         
         this.setTitle(device.getFriendlyName());
-        Log.d("DeviceBrowser", device.getUPC());
+        Log.d("DeviceBrowser", device.getDeviceType());
         
         ServiceList serviceList = device.getServiceList(); 
         
