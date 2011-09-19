@@ -15,6 +15,9 @@ import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.tasks.GetServiceActionsTask;
 import com.mikebevz.upnp.tasks.OnServiceActionsList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.cybergarage.upnp.ActionList;
 import org.cybergarage.upnp.Service;
 
@@ -36,7 +39,11 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("position");
         Service service = (Service) ((UpnpBrowserApp)getApplication()).getServiceList().get(position);
-        this.setTitle("Actions at "+service.getServiceID());
+        
+        List<String> list = Arrays.asList(service.getServiceID().split(":"));
+        Collections.reverse(list);
+                
+        this.setTitle("Actions at " + list.toArray()[0].toString());
         
         //GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
         //getServiceTask.setOnDeviceServiceListHandler(this);

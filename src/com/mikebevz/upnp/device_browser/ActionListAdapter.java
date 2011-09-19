@@ -77,7 +77,8 @@ public class ActionListAdapter extends BaseAdapter {
         //Collections.reverse(list);
 
         holder.text.setText(this.getActions().get(position).getName());
-        holder.description.setText("Input args: " + String.valueOf(this.getActions().get(position).getInputArgumentList().size()));
+        holder.description.setText("Input args: " + String.valueOf(this.getActions().get(position).getInputArgumentList().size())
+                                   +" / Output args: " + String.valueOf(this.getActions().get(position).getOutputArgumentList().size()));
 
         return cView;
     }
