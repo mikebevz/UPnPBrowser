@@ -12,13 +12,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import com.mikebevz.upnp.ControlUIFactory;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.tasks.GetDeviceServicesTask;
 import com.mikebevz.upnp.tasks.OnDeviceServiceList;
 import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.Service;
 import org.cybergarage.upnp.ServiceList;
 
 /**
@@ -68,7 +66,7 @@ public class ServiceListActivity extends Activity implements OnDeviceServiceList
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
         
-        //Service service = (Service) adapter.getItem(position);
+        
         
         
         Intent intent = new Intent(this, ActionListActivity.class);

@@ -5,6 +5,7 @@
 package com.mikebevz.upnp.device_browser;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,10 +45,7 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         Collections.reverse(list);
                 
         this.setTitle("Actions at " + list.toArray()[0].toString());
-        
-        //GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
-        //getServiceTask.setOnDeviceServiceListHandler(this);
-        //getServiceTask.execute(device);
+
         GetServiceActionsTask getActionsTask = new GetServiceActionsTask();
         getActionsTask.setOnServiceActionListHandler(this);
         getActionsTask.execute(service);
@@ -63,12 +61,16 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
 
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
+        //TODO Forward to ArgumentListAction
         
-        //throw new UnsupportedOperationException("Not supported yet.");
+        Intent intent = new Intent(this, ArgumentListActivity.class);
+        intent.putExtra("position", position);
+        startActivity(intent);
     }
 
     public void OnServiceActionsListSuccess(ActionList aList) {
         this.sList = aList;
+        ((UpnpBrowserApp)getApplication()).setActionList(aList);
         Log.d("ServiceList", String.valueOf(sList.size()));
         adapter.setActions(sList);
         adapter.notifyDataSetChanged();
