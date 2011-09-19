@@ -7,24 +7,20 @@ package com.mikebevz.upnp.uicontrolls;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
+import android.view.Window;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import com.mikebevz.upnp.mediaserver.content_directory.Container;
-import com.mikebevz.upnp.mediaserver.content_directory.ContainerListAdapter;
-import com.mikebevz.upnp.mediaserver.content_directory.SaxContentParser;
-import java.util.List;
+import com.mikebevz.upnp.tasks.GetDeviceServicesTask;
+import com.mikebevz.upnp.tasks.OnDeviceServiceList;
 import org.cybergarage.upnp.Action;
-import org.cybergarage.upnp.ActionList;
-import org.cybergarage.upnp.ArgumentList;
 import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.Service;
+import org.cybergarage.upnp.ServiceList;
 
 /**
  *
  * @author mikebevz
  */
-public class MediaTombActivity extends Activity {
+public class MediaTombActivity extends Activity implements OnDeviceServiceList {
     
     
     // Connection Manager Service
@@ -38,11 +34,18 @@ public class MediaTombActivity extends Activity {
     Action getSystemUpdateIDAction;
     Action getSearchCapabilitiesAction;
     
+    ServiceList sList;
+    
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         // ToDo add your GUI initialization code here   
+        requestWindowFeature(Window.PROGRESS_VISIBILITY_ON);
+        requestWindowFeature(Window.PROGRESS_START);
+        setProgressBarVisibility(true);
+        
         setContentView(R.layout.media_server_frontpage);
         
         
@@ -51,6 +54,7 @@ public class MediaTombActivity extends Activity {
         Device device = (Device) ((UpnpBrowserApp)getApplication()).getDeviceList().get(position);
         this.setTitle(device.getFriendlyName());
         
+        /*
         Service contentDirectory = device.getService("urn:upnp-org:serviceId:ContentDirectory");
         
         ActionList list = contentDirectory.getActionList();
@@ -58,7 +62,14 @@ public class MediaTombActivity extends Activity {
         for(int i=0;i<list.size();i++) {
            Log.d("Action: ", list.getAction(i).getName()); 
         }
+        */
         
+        GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
+        getServiceTask.setOnDeviceServiceListHandler(this);
+        getServiceTask.execute(device);
+        
+        
+        /*
         browseAction = contentDirectory.getAction("Browse");
         
         
@@ -93,9 +104,19 @@ public class MediaTombActivity extends Activity {
         }
         
         
-        
+        */
         //getSortCapabilitiesAction = device.getAction("getSortCapabilities");
         //getSystemUpdateIDAction = device.getAction("getSystemUpdateIdAction");
         
+    }
+
+    public void OnDeviceServiceListSuccess(ServiceList sList) {
+        this.sList = sList;
+        Log.d("ServiceList", String.valueOf(sList.size()));
+    }
+
+    public void OnDeviceServiceListProgressUpdate(Integer value) {
+        Log.d("Progress", String.valueOf(value));
+        setProgress(value);
     }
 }

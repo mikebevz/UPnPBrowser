@@ -5,7 +5,9 @@
 package com.mikebevz.upnp;
 
 import android.app.Application;
+import org.cybergarage.upnp.ActionList;
 import org.cybergarage.upnp.DeviceList;
+import org.cybergarage.upnp.ServiceList;
 
 /**
  *
@@ -14,6 +16,8 @@ import org.cybergarage.upnp.DeviceList;
 public class UpnpBrowserApp extends Application {
     
     private DeviceList deviceList;
+    private ActionList actionList;
+    private ServiceList serviceList;
     
     
     public void setDeviceList(DeviceList list) {
@@ -23,4 +27,22 @@ public class UpnpBrowserApp extends Application {
     public DeviceList getDeviceList() {
         return deviceList;
     }
+
+    public void setActionList(ActionList actionList) {
+        this.actionList = actionList;
+    }
+    
+    public ActionList getActionList() {
+        return actionList;
+    }
+
+    public void setServiceList(ServiceList sList) {
+        this.serviceList = sList;
+    }
+    
+    public ServiceList getServiceList() {
+        return this.serviceList;
+    }
+    
+    
 }

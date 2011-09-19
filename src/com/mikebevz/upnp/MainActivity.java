@@ -120,7 +120,6 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Device dev = (Device) devListAdapter.getItem(position);
         
-        
         ((UpnpBrowserApp)getApplication()).setDeviceList(ctrlPoint.getDeviceList());
         ControlUIFactory factory = new ControlUIFactory();
         
