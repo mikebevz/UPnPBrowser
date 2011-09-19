@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import org.cybergarage.upnp.ControlPoint;
 import org.cybergarage.upnp.Device;
 import org.cybergarage.upnp.device.DeviceChangeListener;
@@ -21,6 +22,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     ControlPoint ctrlPoint = null;
     DeviceListAdapter devListAdapter;
     Boolean controlPointStatus = false; // false = stopped, true = running
+    ListView devicesList;
     
     /** Called when the activity is first created. */
     @Override
@@ -29,9 +31,10 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        ListView devicesList = (ListView) findViewById(R.id.devices_list);
+        devicesList = (ListView) findViewById(R.id.devices_list);
         
         setTitle("Available UPnP Devices");
+        
         
         
         startControlPoint();
@@ -47,17 +50,26 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     }
     
     private void startControlPoint() {
-        Log.d("ControlPoint", "Start ControlPoint");
-        if (ctrlPoint == null) {
-            Log.d("ControlPoint", "Start - Create New ControlPoint");
-            ctrlPoint = new ControlPoint();
-            ctrlPoint.addNotifyListener(this);
-            ctrlPoint.addDeviceChangeListener(this);
-        }
-        Log.d("ControlPoint", "Start - Starting ControlPoint");
-        if (controlPointStatus == false) {
-            ctrlPoint.start();
-            controlPointStatus = true;
+        UpnpBrowserApp app = (UpnpBrowserApp)getApplication();
+        
+        if (!app.IsWifiConnected()) {
+            Log.d("WifiCheck", "Wifi Is not Connected!");
+            setTitle("WiFi is not connected!");
+        } else {
+        
+            Log.d("ControlPoint", "Start ControlPoint");
+            if (ctrlPoint == null) {
+                Log.d("ControlPoint", "Start - Create New ControlPoint");
+                ctrlPoint = new ControlPoint();
+                ctrlPoint.addNotifyListener(this);
+                ctrlPoint.addDeviceChangeListener(this);
+                
+            }
+            Log.d("ControlPoint", "Start - Starting ControlPoint");
+            if (controlPointStatus == false) {
+                ctrlPoint.start();
+                controlPointStatus = true;
+            }
         }
     }
     
@@ -66,6 +78,10 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         if (controlPointStatus == false) {
             Log.d("ControlPoint", "Resume - Start ControlPoint");
             ctrlPoint.start();
+            ctrlPoint.addNotifyListener(this);
+            ctrlPoint.addDeviceChangeListener(this);
+            ctrlPoint.removeExpiredDevices();
+            //ctrlPoint.renewSubscriberService();
             controlPointStatus = true;
         }
         
@@ -75,6 +91,8 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         Log.d("ControlPoint", "Stopping ControlPoint");
         if (controlPointStatus == true) {
             ctrlPoint.stop();
+            ctrlPoint.removeNotifyListener(this);
+            ctrlPoint.removeDeviceChangeListener(this);
             controlPointStatus = false;
         }
         //ctrlPoint = null;

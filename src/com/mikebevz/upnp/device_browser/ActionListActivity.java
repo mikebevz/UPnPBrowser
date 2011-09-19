@@ -53,6 +53,7 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         
         ListView listView = (ListView)findViewById(R.id.list_view);
         adapter = new ActionListAdapter(this);
+        
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         

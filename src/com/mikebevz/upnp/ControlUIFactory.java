@@ -6,10 +6,8 @@ package com.mikebevz.upnp;
 
 import android.content.Context;
 import android.content.Intent;
-import com.mikebevz.upnp.device_browser.ServiceListActivity;
 import com.mikebevz.upnp.uicontrolls.DeviceBrowserUIActivity;
 import com.mikebevz.upnp.uicontrolls.MediaServer2Activity;
-import com.mikebevz.upnp.uicontrolls.MediaTombActivity;
 import com.mikebevz.upnp.uicontrolls.SwitchPowerUIActivity;
 
 /**
@@ -58,7 +56,7 @@ public class ControlUIFactory {
                 return new Intent(context, MediaServer2Activity.class);    
                 
             default:
-                return new Intent(context, ServiceListActivity.class);
+                return new Intent(context, DeviceBrowserUIActivity.class);
                 
         }
         

@@ -5,6 +5,8 @@
 package com.mikebevz.upnp;
 
 import android.app.Application;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import org.cybergarage.upnp.ActionList;
 import org.cybergarage.upnp.DeviceList;
 import org.cybergarage.upnp.ServiceList;
@@ -42,6 +44,12 @@ public class UpnpBrowserApp extends Application {
     
     public ServiceList getServiceList() {
         return this.serviceList;
+    }
+    
+    public Boolean IsWifiConnected() {
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return mWifi.isConnected();
     }
 
   
