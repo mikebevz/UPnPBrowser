@@ -5,6 +5,8 @@
 package com.mikebevz.upnp.device_browser;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +25,13 @@ public class GenericKeyValueAdapter extends BaseAdapter {
     
     private List<String> data;
     private LayoutInflater mInflater;
+    private final Bitmap diskIcon;
     
      public GenericKeyValueAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
         data = new ArrayList<String>();
+        diskIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.info);
     }
     
 
@@ -57,7 +61,8 @@ public class GenericKeyValueAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.text = (TextView) cView.findViewById(R.id.text);
             holder.description = (TextView) cView.findViewById(R.id.description);
-
+            holder.icon = (ImageView)cView.findViewById(R.id.icon);
+            
             cView.setTag(holder);
         } else {
             holder = (ViewHolder) cView.getTag();
@@ -65,7 +70,7 @@ public class GenericKeyValueAdapter extends BaseAdapter {
 
 
         holder.text.setText(data.get(position));
-        
+        holder.icon.setImageBitmap(diskIcon);
 
         return cView;
     }

@@ -6,13 +6,14 @@
     android:padding="5sp">
 
     <ImageView android:id="@+id/icon"
-        android:layout_width="48sp"
-        android:layout_height="48sp" />
+        android:layout_width="64sp"
+        android:layout_height="64sp" 
+        android:paddingRight="5sp"/>
 
     <TextView android:id="@+id/text"
         android:layout_gravity="center_vertical"
         android:layout_width="wrap_content"
-        
+        android:textSize="20sp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/icon"
         />

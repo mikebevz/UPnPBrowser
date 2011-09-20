@@ -5,6 +5,8 @@
 package com.mikebevz.upnp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +25,16 @@ public class DeviceListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     
     private DeviceList data;
+    private Bitmap diskIcon;
     
     public DeviceListAdapter(Context context) {
         
         mInflater = LayoutInflater.from(context);
         
         data = new DeviceList();
-        //Device dev1 = new Device();
-        //dev1.setFriendlyName("Test1");
-        //dev1.setLocation("http://location.com");
-        //data.add(dev1);
+        diskIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.disk);
+        
+        
     }
 
     public int getCount() {
@@ -57,6 +59,7 @@ public class DeviceListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.text = (TextView)cView.findViewById(R.id.text);
             holder.description = (TextView)cView.findViewById(R.id.description);
+            holder.icon = (ImageView)cView.findViewById(R.id.icon);
             
             cView.setTag(holder);
         } else {
@@ -65,7 +68,7 @@ public class DeviceListAdapter extends BaseAdapter {
         
         holder.text.setText(data.getDevice(position).getFriendlyName());
         holder.description.setText(data.getDevice(position).getLocation());
-        
+        holder.icon.setImageBitmap(diskIcon);
         
         return cView;
     }
