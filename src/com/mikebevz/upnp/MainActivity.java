@@ -41,7 +41,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         
         setContentView(R.layout.main);
         
-        BugSenseHandler.setup(this, "a8c5f7db");
+       // BugSenseHandler.setup(this, "a8c5f7db");
         
         devicesList = (ListView) findViewById(R.id.devices_list);
 

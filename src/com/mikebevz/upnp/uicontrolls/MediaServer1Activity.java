@@ -9,11 +9,21 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
+import android.widget.ListView;
+import android.widget.Toast;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import com.mikebevz.upnp.tasks.GetDeviceServicesTask;
-import com.mikebevz.upnp.tasks.OnDeviceServiceList;
+import com.mikebevz.upnp.mediaserver.content_directory.Container;
+import com.mikebevz.upnp.mediaserver.content_directory.ContainerListAdapter;
+import com.mikebevz.upnp.mediaserver.content_directory.SaxContentParser;
+import com.mikebevz.upnp.mediaserver1.BrowseTask;
+import com.mikebevz.upnp.mediaserver1.OnTaskFactory;
+import com.mikebevz.upnp.mediaserver1.TaskFactory;
+import com.mikebevz.upnp.tasks.GetDeviceTask;
+import com.mikebevz.upnp.tasks.OnDeviceDetails;
+import java.util.List;
 import org.cybergarage.upnp.Action;
+import org.cybergarage.upnp.ArgumentList;
 import org.cybergarage.upnp.Device;
 import org.cybergarage.upnp.ServiceList;
 
@@ -21,24 +31,20 @@ import org.cybergarage.upnp.ServiceList;
  *
  * @author mikebevz
  */
-public class MediaServer1Activity extends Activity implements OnDeviceServiceList {
-    
-    
+public class MediaServer1Activity extends Activity implements OnDeviceDetails, OnTaskFactory {
+
     // Connection Manager Service
     Action getProtocolInfoAction;
     Action getCurrentConnectionIDsAction;
     Action getCurrentConnectionInfoAction;
-    
     // ContentDirectory Service
-    Action browseAction;
+    Action action;
     Action getSortCapabilitiesAction;
     Action getSystemUpdateIDAction;
     Action getSearchCapabilitiesAction;
-    
     ServiceList sList;
     private ProgressDialog dialog;
-    
-    
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
@@ -47,91 +53,107 @@ public class MediaServer1Activity extends Activity implements OnDeviceServiceLis
         requestWindowFeature(Window.PROGRESS_VISIBILITY_ON);
         requestWindowFeature(Window.PROGRESS_START);
         setProgressBarVisibility(true);
-        
+
         setContentView(R.layout.media_server_frontpage);
-        
-        
+
+
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("device");
-        Device device = (Device) ((UpnpBrowserApp)getApplication()).getDeviceList().get(position);
-        this.setTitle(device.getFriendlyName());
-        
+
+
+        GetDeviceTask task = new GetDeviceTask((UpnpBrowserApp) getApplication());
+        task.setOnDeviceDetailsHandler(this);
+        task.execute(position);
+        //Device device = (Device) ((UpnpBrowserApp)getApplication()).getDeviceList().get(position);
+        //this.setTitle(device.getFriendlyName());
+
         /*
         Service contentDirectory = device.getService("urn:upnp-org:serviceId:ContentDirectory");
         
         ActionList list = contentDirectory.getActionList();
         
         for(int i=0;i<list.size();i++) {
-           Log.d("Action: ", list.getAction(i).getName()); 
+        Log.d("Action: ", list.getAction(i).getName()); 
         }
-        */
-        
-        GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
-        getServiceTask.setOnDeviceServiceListHandler(this);
-        getServiceTask.execute(device);
-        
-        
-        
-        
+         */
+
+        //GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
+        //getServiceTask.setOnDeviceServiceListHandler(this);
+        //getServiceTask.execute(device);
+
+
+
+
         /*
-        browseAction = contentDirectory.getAction("Browse");
+        action = contentDirectory.getAction("Browse");
         
         
-        browseAction.setArgumentValue("ObjectID", "0");
-        browseAction.setArgumentValue("BrowseFlag", "BrowseDirectChildren");
-        browseAction.setArgumentValue("Filter", "*");
-        browseAction.setArgumentValue("StartingIndex", "0");
-        browseAction.setArgumentValue("RequestedCount", "10");
-        browseAction.setArgumentValue("SortCriteria", "");
+        action.setArgumentValue("ObjectID", "0");
+        action.setArgumentValue("BrowseFlag", "BrowseDirectChildren");
+        action.setArgumentValue("Filter", "*");
+        action.setArgumentValue("StartingIndex", "0");
+        action.setArgumentValue("RequestedCount", "10");
+        action.setArgumentValue("SortCriteria", "");
         
-        if (browseAction.postControlAction() == true) {
-            ArgumentList outArgList = browseAction.getOutputArgumentList();
-            
-            String result = browseAction.getArgument("Result").getValue();
-            String numberReturned = browseAction.getArgument("NumberReturned").getValue();
-            String totalMatches = browseAction.getArgument("TotalMatches").getValue();
-            String updateID = browseAction.getArgument("UpdateID").getValue();
-            
-            SaxContentParser parser = new SaxContentParser();
-            parser.setMessage(result);
-            List<Container> containers = parser.parse();
-            
-            ContainerListAdapter adapter = new ContainerListAdapter(this);
-            adapter.setContainers(containers);
-            
-            ListView containerList = (ListView)findViewById(R.id.container_list);
-            containerList.setAdapter(adapter);
-            
-            Log.d("Container: ", String.valueOf(containers.size()));
-            
+        if (action.postControlAction() == true) {
+        ArgumentList outArgList = action.getOutputArgumentList();
+        
+        String result = action.getArgument("Result").getValue();
+        String numberReturned = action.getArgument("NumberReturned").getValue();
+        String totalMatches = action.getArgument("TotalMatches").getValue();
+        String updateID = action.getArgument("UpdateID").getValue();
+        
+        SaxContentParser parser = new SaxContentParser();
+        parser.setMessage(result);
+        List<Container> containers = parser.parse();
+        
+        ContainerListAdapter adapter = new ContainerListAdapter(this);
+        adapter.setContainers(containers);
+        
+        ListView containerList = (ListView)findViewById(R.id.container_list);
+        containerList.setAdapter(adapter);
+        
+        Log.d("Container: ", String.valueOf(containers.size()));
+        
         
         }
         
         
-        */
+         */
         //getSortCapabilitiesAction = device.getAction("getSortCapabilities");
         //getSystemUpdateIDAction = device.getAction("getSystemUpdateIdAction");
-        
+
     }
 
-    public void OnDeviceServiceListSuccess(ServiceList sList) {
-        this.sList = sList;
-        Log.d("ServiceList", String.valueOf(sList.size()));
+    public void OnDeviceDetailsSuccess(Device device) {
+
+        BrowseTask task = new BrowseTask();
+        task.setOnTaskFactoryHandler(this);
+        task.execute(device.getService(TaskFactory.CONTENT_DIRECTORY_SERVICE).getAction(TaskFactory.BROWSE_ACTION));
+
         dialog.dismiss();
-        
-        
-        //TaskFactory factory = new TaskFactory();
-        //Device device = ((Service) sList.get(0)).getDevice();
-        //TaskFactoryTask task = factory.getTaskForAction(device.getService().getAction("Browse"));
-        
     }
 
-    public void OnDeviceServiceListProgressUpdate(Integer value) {
-        Log.d("Progress", String.valueOf(value));
-        setProgress(value);
+    public void OnDeviceDetailsProgressUpdate(Integer integer) {
     }
 
-    public void OnDeviceServiceListPreExecute() {
+    public void OnDeviceDetailsPreExecute() {
         dialog = ProgressDialog.show(this, "", "Downloading...", true);
+    }
+
+    public void onTaskFactorySuccess(List<Container> result) {
+        //throw new UnsupportedOperationException("Not supported yet.");
+
+        ContainerListAdapter adapter = new ContainerListAdapter(this);
+        adapter.setContainers(result);
+
+        ListView containerList = (ListView) findViewById(R.id.container_list);
+        containerList.setAdapter(adapter);
+
+        Log.d("Container: ", String.valueOf(result.size()));
+    }
+
+    public void onTaskFactoryPreExecute() {
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }

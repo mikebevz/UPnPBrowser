@@ -4,12 +4,9 @@
  */
 package com.mikebevz.upnp.tasks;
 
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.os.AsyncTask;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.ServiceList;
 
 /**
  *
@@ -24,6 +21,14 @@ public class GetDeviceTask  extends AsyncTask<Integer, Integer, Device> {
     public GetDeviceTask(UpnpBrowserApp app) {
         this.app = app;
     }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        this.delegate.OnDeviceDetailsPreExecute();
+    }
+    
+    
     
     @Override
     protected Device doInBackground(Integer... positions) {

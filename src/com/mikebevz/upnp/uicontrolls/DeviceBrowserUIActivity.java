@@ -121,4 +121,8 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
         startActivity(intent);
         
     }
+
+    public void OnDeviceDetailsPreExecute() {
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

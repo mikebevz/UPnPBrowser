@@ -14,5 +14,6 @@ public interface OnDeviceDetails {
 
     public void OnDeviceDetailsSuccess(Device result);
     public void OnDeviceDetailsProgressUpdate(Integer integer);
+    public void OnDeviceDetailsPreExecute();
     
 }
