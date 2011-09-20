@@ -52,73 +52,53 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        // ToDo add your GUI initialization code here   
-        requestWindowFeature(Window.PROGRESS_VISIBILITY_ON);
-        requestWindowFeature(Window.PROGRESS_START);
-        setProgressBarVisibility(true);
-
         setContentView(R.layout.media_server_frontpage);
-
 
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("device");
 
-
         GetDeviceTask task = new GetDeviceTask((UpnpBrowserApp) getApplication());
         task.setOnDeviceDetailsHandler(this);
         task.execute(position);
-        
     }
-    
+
     public void OnDeviceDetailsPreExecute() {
-        dialog = ProgressDialog.show(this, "", "Loading...", true);
-        
+        //dialog = ProgressDialog.show(this, "", "Loading...", true);
     }
 
     public void OnDeviceDetailsSuccess(Device device) {
         setTitle(device.getFriendlyName());
-        
+
         BrowseTask task = new BrowseTask();
         task.setOnTaskFactoryHandler(this);
         task.execute(device.getService(TaskFactory.CONTENT_DIRECTORY_SERVICE).getAction(TaskFactory.BROWSE_ACTION));
 
-        dialog.dismiss();
+       //dialog.dismiss();
     }
 
     public void OnDeviceDetailsProgressUpdate(Integer integer) {
     }
 
-    
-    
     public void onTaskFactoryPreExecute() {
         dialog = ProgressDialog.show(this, "", "Loading...", true);
-        
     }
 
     public void onTaskFactorySuccess(List<Container> result) {
         this.containerList = result;
         ContainerListAdapter adapter = new ContainerListAdapter(this);
         adapter.setContainers(result);
-        
+
         ListView cList = (ListView) findViewById(R.id.container_list);
         cList.setAdapter(adapter);
         cList.setOnItemClickListener(this);
 
-        Log.d("Container: ", String.valueOf(result.size()));
+        Log.d("Containers: ", String.valueOf(result.size()));
         dialog.dismiss();
     }
 
-    
-
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-        
         Intent intent = new Intent(this, ContainerListActivity.class);
-        
         intent.putExtra("objectId", containerList.get(position).getObjectId());
         startActivity(intent);
-        
     }
 }
-
-
-       

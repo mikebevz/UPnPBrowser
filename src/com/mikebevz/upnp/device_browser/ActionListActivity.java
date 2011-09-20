@@ -28,7 +28,7 @@ import org.cybergarage.upnp.Service;
  * @author mikebevz
  */
 public class ActionListActivity extends Activity implements OnServiceActionsList, OnItemClickListener {
-    
+
     private ActionList sList;
     private ActionListAdapter adapter;
     private ProgressDialog dialog;
@@ -37,34 +37,32 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.list_view);  
-        
+        setContentView(R.layout.list_view);
+
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("position");
-        Service service = (Service) ((UpnpBrowserApp)getApplication()).getServiceList().get(position);
-        
+        Service service = (Service) ((UpnpBrowserApp) getApplication()).getServiceList().get(position);
+
         List<String> list = Arrays.asList(service.getServiceID().split(":"));
         Collections.reverse(list);
-                
+
         this.setTitle("Actions at " + list.toArray()[0].toString());
 
         GetServiceActionsTask getActionsTask = new GetServiceActionsTask();
         getActionsTask.setOnServiceActionListHandler(this);
         getActionsTask.execute(service);
-                
-        
-        ListView listView = (ListView)findViewById(R.id.list_view);
+
+
+        ListView listView = (ListView) findViewById(R.id.list_view);
         adapter = new ActionListAdapter(this);
-        
+
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
-        
-    }
-    
 
+    }
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-        
+
         Intent intent = new Intent(this, ArgumentListActivity.class);
         intent.putExtra("position", position);
         startActivity(intent);
@@ -72,7 +70,7 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
 
     public void OnServiceActionsListSuccess(ActionList aList) {
         this.sList = aList;
-        ((UpnpBrowserApp)getApplication()).setActionList(aList);
+        ((UpnpBrowserApp) getApplication()).setActionList(aList);
         Log.d("ServiceList", String.valueOf(sList.size()));
         adapter.setActions(sList);
         adapter.notifyDataSetChanged();
@@ -80,10 +78,8 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
     }
 
     public void OnServiceActionListPreExecute() {
-        dialog = ProgressDialog.show(this, "", "Downloading...", true);
+        dialog = ProgressDialog.show(this, "", "Loading...", true);
     }
-    
-    
 
     public void OnServiceActionsListProgressUpdate(Integer value) {
         //throw new UnsupportedOperationException("Not supported yet.");

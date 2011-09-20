@@ -11,7 +11,7 @@ import java.util.Date;
  * @author mikebevz
  */
 public class Container {
-    
+
     private String objectId;
     private String title;
     private String cclass;
@@ -24,7 +24,7 @@ public class Container {
     private String parentId;
     private String childCount;
     private String restricted;
- 
+
     /**
      * @return the title
      */
@@ -153,6 +153,4 @@ public class Container {
     void setRestricted(String value) {
         this.restricted = value;
     }
-    
-            
 }

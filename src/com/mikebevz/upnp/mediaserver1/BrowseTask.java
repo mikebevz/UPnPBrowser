@@ -26,6 +26,14 @@ public class BrowseTask extends AsyncTask<Action, Void, List<Container>> impleme
     private String sortCriteria = "";
 
     @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        this.delegate.onTaskFactoryPreExecute();
+    }
+    
+    
+    
+    @Override
     protected List<Container> doInBackground(Action... actions) {
         setAction(actions[0]);//device.getService(TaskFactory.CONTENT_DIRECTORY_SERVICE).getAction(TaskFactory.BROWSE_ACTION);
         getAction().setArgumentValue("ObjectID", getObjectID());
