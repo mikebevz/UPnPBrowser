@@ -8,6 +8,7 @@ import android.app.Application;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import org.cybergarage.upnp.ActionList;
+import org.cybergarage.upnp.ArgumentList;
 import org.cybergarage.upnp.DeviceList;
 import org.cybergarage.upnp.ServiceList;
 
@@ -20,6 +21,7 @@ public class UpnpBrowserApp extends Application {
     private DeviceList deviceList;
     private ActionList actionList;
     private ServiceList serviceList;
+    private ArgumentList argumentList;
     
     
     public void setDeviceList(DeviceList list) {
@@ -50,6 +52,10 @@ public class UpnpBrowserApp extends Application {
         ConnectivityManager connManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         return mWifi.isConnected();
+    }
+
+    public void setArgumentList(ArgumentList aList) {
+        this.argumentList = aList;
     }
 
   

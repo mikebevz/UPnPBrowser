@@ -28,12 +28,15 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
     private ArgumentList aList;
     private ArgumentListAdapter adapter;
     private ProgressDialog dialog;
+    private UpnpBrowserApp app;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.list_view);  
+        
+        app = (UpnpBrowserApp)getApplication(); 
         
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("position");
@@ -58,7 +61,8 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
 
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-        
+        //Intent intent = new Intent(this, ArgumentDetails)
+                
     }
 
 
@@ -66,6 +70,8 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
     public void OnActionArgumentsListSuccess(ArgumentList aList) {
         this.aList = aList;
         Log.d("ArgumentsList", String.valueOf(aList.size()));
+        //aList.getArgument(0).getActionNode().get
+        app.setArgumentList(aList);
         adapter.setArguments(aList);
         adapter.notifyDataSetChanged();
         dialog.dismiss();
