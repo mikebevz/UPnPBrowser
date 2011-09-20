@@ -15,4 +15,6 @@ public interface OnActionArgumentsList {
     public void OnActionArgumentsListSuccess(ArgumentList result);
 
     public void OnActionArgumentsProgressUpdate(Integer integer);
+
+    public void OnActionArgumentsListPreExecute();
 }

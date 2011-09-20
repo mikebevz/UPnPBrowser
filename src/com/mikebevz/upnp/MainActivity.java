@@ -34,7 +34,6 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().requestFeature(Window.FEATURE_PROGRESS);
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         
         

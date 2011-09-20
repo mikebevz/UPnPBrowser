@@ -5,7 +5,7 @@
 package com.mikebevz.upnp.device_browser;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +27,7 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
     
     private ArgumentList aList;
     private ArgumentListAdapter adapter;
+    private ProgressDialog dialog;
 
     /** Called when the activity is first created. */
     @Override
@@ -38,17 +39,9 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
         int position = bundle.getInt("position");
         Action action = (Action) ((UpnpBrowserApp)getApplication()).getActionList().get(position);
         
-        //List<String> list = Arrays.asList(service.getServiceID().split(":"));
-        //Collections.reverse(list);
-                
         this.setTitle(action.getName() + " arguments");
         
-        //GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
-        //getServiceTask.setOnDeviceServiceListHandler(this);
-        //getServiceTask.execute(device);
-        //GetServiceActionsTask getActionsTask = new GetServiceActionsTask();
-        //getActionsTask.setOnServiceActionListHandler(this);
-        //getActionsTask.execute(service);
+
         GetActionArgumentsTask getArgumentsTask = new GetActionArgumentsTask();
         getArgumentsTask.setOnActionArgumentsListHandler(this);        
         getArgumentsTask.execute(action);
@@ -65,13 +58,7 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
 
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-        //TODO Forward to ArgumentListAction
         
-        
-        
-        //Intent intent = new Intent(this, ArgumentListActivity.class);
-        //intent.putExtra("position", position);
-        //startActivity(intent);
     }
 
 
@@ -81,8 +68,15 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
         Log.d("ArgumentsList", String.valueOf(aList.size()));
         adapter.setArguments(aList);
         adapter.notifyDataSetChanged();
+        dialog.dismiss();
     }
 
+    public void OnActionArgumentsListPreExecute() {
+        dialog = ProgressDialog.show(this, "", "Downloading...", true);
+    }
+
+    
+    
     public void OnActionArgumentsProgressUpdate(Integer integer) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }

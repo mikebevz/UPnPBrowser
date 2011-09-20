@@ -16,6 +16,12 @@ import org.cybergarage.upnp.ArgumentList;
 public class GetActionArgumentsTask  extends AsyncTask<Action, Integer, ArgumentList> {
     
     OnActionArgumentsList delegate;
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        delegate.OnActionArgumentsListPreExecute();
+    }
     
     
     @Override
