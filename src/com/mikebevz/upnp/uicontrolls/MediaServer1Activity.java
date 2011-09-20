@@ -5,6 +5,7 @@
 package com.mikebevz.upnp.uicontrolls;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -20,7 +21,7 @@ import org.cybergarage.upnp.ServiceList;
  *
  * @author mikebevz
  */
-public class MediaTombActivity extends Activity implements OnDeviceServiceList {
+public class MediaServer1Activity extends Activity implements OnDeviceServiceList {
     
     
     // Connection Manager Service
@@ -35,6 +36,7 @@ public class MediaTombActivity extends Activity implements OnDeviceServiceList {
     Action getSearchCapabilitiesAction;
     
     ServiceList sList;
+    private ProgressDialog dialog;
     
     
     /** Called when the activity is first created. */
@@ -67,6 +69,8 @@ public class MediaTombActivity extends Activity implements OnDeviceServiceList {
         GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
         getServiceTask.setOnDeviceServiceListHandler(this);
         getServiceTask.execute(device);
+        
+        
         
         
         /*
@@ -113,6 +117,13 @@ public class MediaTombActivity extends Activity implements OnDeviceServiceList {
     public void OnDeviceServiceListSuccess(ServiceList sList) {
         this.sList = sList;
         Log.d("ServiceList", String.valueOf(sList.size()));
+        dialog.dismiss();
+        
+        
+        //TaskFactory factory = new TaskFactory();
+        //Device device = ((Service) sList.get(0)).getDevice();
+        //TaskFactoryTask task = factory.getTaskForAction(device.getService().getAction("Browse"));
+        
     }
 
     public void OnDeviceServiceListProgressUpdate(Integer value) {
@@ -121,6 +132,6 @@ public class MediaTombActivity extends Activity implements OnDeviceServiceList {
     }
 
     public void OnDeviceServiceListPreExecute() {
-        //throw new UnsupportedOperationException("Not supported yet.");
+        dialog = ProgressDialog.show(this, "", "Downloading...", true);
     }
 }

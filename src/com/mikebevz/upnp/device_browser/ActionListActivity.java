@@ -64,7 +64,6 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
 
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-        //TODO Forward to ArgumentListAction
         
         Intent intent = new Intent(this, ArgumentListActivity.class);
         intent.putExtra("position", position);

@@ -4,7 +4,6 @@
  */
 package com.mikebevz.upnp.uicontrolls;
 
-import android.content.DialogInterface;
 import android.view.View;
 import com.mikebevz.upnp.tasks.OnDeviceDetails;
 import android.app.Activity;
@@ -14,6 +13,7 @@ import android.os.Bundle;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import com.mikebevz.upnp.ControlUIFactory;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.GenericKeyValueAdapter;
@@ -29,6 +29,7 @@ import org.cybergarage.upnp.Device;
 public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails, OnClickListener {
 
     private GenericKeyValueAdapter adapter;
+    private Device device;
     
     /** Called when the activity is first created. */
     @Override
@@ -48,6 +49,9 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
         Button servicesBtn = (Button) findViewById(R.id.services_btn);
         servicesBtn.setOnClickListener(this);
         
+        Button contentBtn = (Button) findViewById(R.id.content_btn);
+        contentBtn.setOnClickListener(this);
+        
         adapter = new GenericKeyValueAdapter(this);
         
         ArrayList<String> properties = new ArrayList<String>();
@@ -56,32 +60,10 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
         ListView listView = (ListView)findViewById(R.id.list_view);
         listView.setAdapter(adapter);
         
-        /*
-        ServiceList serviceList = device.getServiceList(); 
-        
-        for(int i=0; i<serviceList.size();i++) {
-            Service serv = serviceList.getService(i);
-            ActionList actionList = serv.getActionList();
-            Log.d("Service", serv.getServiceID());
-            
-            for (int j=0;j<actionList.size();j++) {
-                Action action = actionList.getAction(j);
-                Log.d("Action", action.getName());
-                ArgumentList argList = action.getArgumentList();
-                
-                for (int e=0;e<argList.size();e++) {
-                    Argument arg = argList.getArgument(e);
-                    Log.d("Argument name", arg.getName());
-                    Log.d("Argument value", arg.getValue());
-                }
-                
-            }
-            
-        }*/
     }
 
     public void OnDeviceDetailsSuccess(Device device) {
-        
+        this.device = device;
         this.setTitle(device.getFriendlyName());
         
         ArrayList<String> properties = new ArrayList<String>();
@@ -119,9 +101,22 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
     }
 
 
-    public void onClick(View arg0) {
+    public void onClick(View view) {
+        Intent intent;
+        switch(view.getId()) {
+            case R.id.content_btn:
+                ControlUIFactory factory = new ControlUIFactory();
+                intent = factory.getIntent(this, device.getDeviceType());
+                break;    
+            case R.id.services_btn:
+                intent = new Intent(this, ServiceListActivity.class);
+                break;
+            default:
+                intent = new Intent(this, ServiceListActivity.class);
+                
+        }
         
-        Intent intent = new Intent(this, ServiceListActivity.class);
+        
         intent.putExtra("device", getIntent().getExtras().getInt("device"));
         startActivity(intent);
         

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import com.mikebevz.upnp.uicontrolls.DeviceBrowserUIActivity;
 import com.mikebevz.upnp.uicontrolls.MediaServer2Activity;
+import com.mikebevz.upnp.uicontrolls.MediaServer1Activity;
 import com.mikebevz.upnp.uicontrolls.SwitchPowerUIActivity;
 
 /**
@@ -18,8 +19,8 @@ public class ControlUIFactory {
     
     final public static int SWITCH_POWER = 1000;
     final public static String SWITCH_POWER_UPC = "urn:schemas-upnp-org:device:DimmableLight:1";
-    final public static int MEDIA_TOMB = 2000;
-    final public static String MEDIA_TOMB_UPC = "urn:schemas-upnp-org:device:MediaServer:1";
+    final public static int MEDIA_SERVER1 = 2000;
+    final public static String MEDIA_SERVER1_UPC = "urn:schemas-upnp-org:device:MediaServer:1";
     final public static int MEDIA_SERVER2 = 3000;
     final public static String MEDIA_SERVER2_UPC = "urn:schemas-upnp-org:device:MediaServer:2";
     
@@ -36,8 +37,8 @@ public class ControlUIFactory {
             devId = SWITCH_POWER;
         }
         
-        if (upc.equals(MEDIA_TOMB_UPC)) {
-            devId = MEDIA_TOMB;
+        if (upc.equals(MEDIA_SERVER1_UPC)) {
+            devId = MEDIA_SERVER1;
         }
         
         if (upc.equals(MEDIA_SERVER2_UPC)) {
@@ -49,8 +50,8 @@ public class ControlUIFactory {
             case SWITCH_POWER:
                 return new Intent(context, SwitchPowerUIActivity.class);
             
-            //case MEDIA_TOMB:
-            //    return new Intent(context, MediaTombActivity.class);
+            case MEDIA_SERVER1:
+                return new Intent(context, MediaServer1Activity.class);
             
             case MEDIA_SERVER2:
                 return new Intent(context, MediaServer2Activity.class);    

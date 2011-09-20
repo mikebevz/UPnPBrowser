@@ -8,6 +8,7 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -21,6 +22,7 @@ import org.cybergarage.upnp.device.DeviceChangeListener;
 import org.cybergarage.upnp.device.NotifyListener;
 import org.cybergarage.upnp.ssdp.SSDPPacket;
 import com.bugsense.trace.BugSenseHandler;
+import com.mikebevz.upnp.uicontrolls.DeviceBrowserUIActivity;
 
 public class MainActivity extends Activity implements NotifyListener, DeviceChangeListener, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
@@ -44,18 +46,18 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         devicesList = (ListView) findViewById(R.id.devices_list);
 
         setTitle("Available UPnP Devices");
-
+        
+        devListAdapter = new DeviceListAdapter(this);   
 
         try {
             startControlPoint();
 
-            devListAdapter = new DeviceListAdapter(this);
             devListAdapter.setDeviceList(ctrlPoint.getDeviceList());
 
             devicesList.setAdapter(devListAdapter);
             devicesList.setOnItemClickListener(this);
 
-            UpnpBrowserApp app = (UpnpBrowserApp) getApplication();
+            app = (UpnpBrowserApp) getApplication();
         } catch (Exception e) {
             Toast toast = Toast.makeText(getApplicationContext(), "Connect to a WiFi network", Toast.LENGTH_LONG);
             toast.show();
@@ -164,7 +166,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
             resumeControlPoint();
         } catch (Exception ex) {
             Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, null, ex);
-            Toast toast = Toast.makeText(getApplicationContext(), "Connect to a WiFi network", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), "WiFi network is not connected. Try to refresh.", Toast.LENGTH_LONG);
             toast.show();
         }
 
@@ -217,10 +219,10 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Device dev = (Device) devListAdapter.getItem(position);
 
-        ((UpnpBrowserApp) getApplication()).setDeviceList(ctrlPoint.getDeviceList());
-        ControlUIFactory factory = new ControlUIFactory();
+        app.setDeviceList(ctrlPoint.getDeviceList());
+        //ControlUIFactory factory = new ControlUIFactory();
 
-        Intent intent = factory.getIntent(this, dev.getDeviceType());
+        Intent intent = new Intent(this, DeviceBrowserUIActivity.class);//factory.getIntent(this, dev.getDeviceType());
         intent.putExtra("device", position);
         startActivity(intent);
 
@@ -251,4 +253,41 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         inflater.inflate(R.menu.main_context_menu, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh_network:
+                
+               if (controlPointStatus == true) {
+                   stopControlPoint();
+               }
+                
+               try {
+                    
+                    startControlPoint();
+                    
+                    devListAdapter.setDeviceList(ctrlPoint.getDeviceList());
+                    devicesList.setAdapter(devListAdapter);
+                    devicesList.setOnItemClickListener(this);
+                    
+                    Toast toast = Toast.makeText(this, "Restarting scanning...", Toast.LENGTH_SHORT);
+                    toast.show();
+                    
+                    return true;
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "WiFi network is not connected. Try to refresh.", Toast.LENGTH_LONG);
+                    toast.show();
+                    return false;
+                } 
+                
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        
+    }
+    
+    
+    
+    
 }

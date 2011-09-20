@@ -76,10 +76,7 @@ public class ServiceListActivity extends Activity implements OnDeviceServiceList
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
         
-        
-        
-        
-        Intent intent = new Intent(this, ActionListActivity.class);
+        Intent intent = new Intent(this, ServiceDetailsActivity.class);
         intent.putExtra("position", position);
         startActivity(intent);
         
