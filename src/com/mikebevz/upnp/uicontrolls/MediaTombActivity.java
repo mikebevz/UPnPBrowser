@@ -119,4 +119,8 @@ public class MediaTombActivity extends Activity implements OnDeviceServiceList {
         Log.d("Progress", String.valueOf(value));
         setProgress(value);
     }
+
+    public void OnDeviceServiceListPreExecute() {
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

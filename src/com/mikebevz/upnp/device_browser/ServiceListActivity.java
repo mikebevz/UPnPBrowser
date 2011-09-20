@@ -5,6 +5,7 @@
 package com.mikebevz.upnp.device_browser;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,12 +28,14 @@ public class ServiceListActivity extends Activity implements OnDeviceServiceList
     
     private ServiceList sList;
     private ServiceListAdapter adapter;
+    private ProgressDialog dialog;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.list_view);  
+        
         
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("device");
@@ -50,6 +53,12 @@ public class ServiceListActivity extends Activity implements OnDeviceServiceList
         listView.setOnItemClickListener(this);
         
     }
+
+    public void OnDeviceServiceListPreExecute() {
+        dialog = ProgressDialog.show(this, "", "Downloading...", true);
+    }
+    
+    
     
     public void OnDeviceServiceListSuccess(ServiceList sList) {
         this.sList = sList;
@@ -57,6 +66,7 @@ public class ServiceListActivity extends Activity implements OnDeviceServiceList
         ((UpnpBrowserApp)getApplication()).setServiceList(sList);
         adapter.setServices(sList);
         adapter.notifyDataSetChanged();
+        dialog.dismiss();
     }
 
     public void OnDeviceServiceListProgressUpdate(Integer value) {

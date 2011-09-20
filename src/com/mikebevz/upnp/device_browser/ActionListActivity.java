@@ -5,6 +5,7 @@
 package com.mikebevz.upnp.device_browser;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
     
     private ActionList sList;
     private ActionListAdapter adapter;
+    private ProgressDialog dialog;
 
     /** Called when the activity is first created. */
     @Override
@@ -75,7 +77,14 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         Log.d("ServiceList", String.valueOf(sList.size()));
         adapter.setActions(sList);
         adapter.notifyDataSetChanged();
+        dialog.dismiss();
     }
+
+    public void OnServiceActionListPreExecute() {
+        dialog = ProgressDialog.show(this, "", "Downloading...", true);
+    }
+    
+    
 
     public void OnServiceActionsListProgressUpdate(Integer value) {
         //throw new UnsupportedOperationException("Not supported yet.");

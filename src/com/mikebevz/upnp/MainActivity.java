@@ -9,6 +9,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +34,10 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //getWindow().requestFeature(Window.FEATURE_PROGRESS);
+        getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        
+        
         setContentView(R.layout.main);
         
         BugSenseHandler.setup(this, "a8c5f7db");
@@ -59,6 +64,17 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (controlPointStatus == true) {
+            this.setProgressBarIndeterminate(true);
+            this.setProgressBarIndeterminateVisibility(true);
+        }
+    }
+    
+    
+
     private void startControlPoint() throws Exception {
         app = (UpnpBrowserApp) getApplication();
 
@@ -79,6 +95,8 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
             Log.d("ControlPoint", "Start - Starting ControlPoint");
             if (controlPointStatus == false) {
                 ctrlPoint.start();
+                this.setProgressBarIndeterminate(true);
+                this.setProgressBarIndeterminateVisibility(true);
                 controlPointStatus = true;
             }
         }
@@ -95,7 +113,10 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
                 ctrlPoint.addNotifyListener(this);
                 ctrlPoint.addDeviceChangeListener(this);
                 ctrlPoint.removeExpiredDevices();
-                //ctrlPoint.renewSubscriberService();
+                
+                this.setProgressBarIndeterminate(true);
+                this.setProgressBarIndeterminateVisibility(true);
+                
                 controlPointStatus = true;
             }
         }
@@ -109,6 +130,8 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
             ctrlPoint.removeNotifyListener(this);
             ctrlPoint.removeDeviceChangeListener(this);
             controlPointStatus = false;
+            this.setProgressBarIndeterminate(false);
+            this.setProgressBarIndeterminateVisibility(false);
         }
         //ctrlPoint = null;
     }

@@ -15,6 +15,12 @@ import org.cybergarage.upnp.Service;
 public class GetServiceActionsTask  extends AsyncTask<Service, Integer, ActionList> {
     
     OnServiceActionsList delegate;
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        delegate.OnServiceActionListPreExecute();
+    }
     
     
     @Override

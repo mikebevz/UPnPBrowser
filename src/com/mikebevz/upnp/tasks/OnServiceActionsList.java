@@ -13,4 +13,6 @@ import org.cybergarage.upnp.ActionList;
 public interface OnServiceActionsList {
     public void OnServiceActionsListSuccess(ActionList aList);
     public void OnServiceActionsListProgressUpdate(Integer value);
+
+    public void OnServiceActionListPreExecute();
 }

@@ -25,13 +25,13 @@ public class GenericKeyValueAdapter extends BaseAdapter {
     
     private List<String> data;
     private LayoutInflater mInflater;
-    private final Bitmap diskIcon;
+    private final Bitmap icon;
     
      public GenericKeyValueAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
         data = new ArrayList<String>();
-        diskIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.info);
+        icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.info);
     }
     
 
@@ -70,7 +70,7 @@ public class GenericKeyValueAdapter extends BaseAdapter {
 
 
         holder.text.setText(data.get(position));
-        holder.icon.setImageBitmap(diskIcon);
+        holder.icon.setImageBitmap(icon);
 
         return cView;
     }

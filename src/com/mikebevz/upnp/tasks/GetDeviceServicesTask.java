@@ -15,6 +15,14 @@ import org.cybergarage.upnp.ServiceList;
 public class GetDeviceServicesTask  extends AsyncTask<Device, Integer, ServiceList> {
     
     OnDeviceServiceList delegate;
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        delegate.OnDeviceServiceListPreExecute();
+    }
+    
+    
     
     
     @Override
@@ -22,6 +30,7 @@ public class GetDeviceServicesTask  extends AsyncTask<Device, Integer, ServiceLi
         publishProgress(100);
         return devices[0].getServiceList();
     }
+    
     
     @Override
     protected void onPostExecute(ServiceList result) {

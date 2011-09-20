@@ -5,6 +5,8 @@
 package com.mikebevz.upnp.device_browser;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +26,13 @@ public class ActionListAdapter extends BaseAdapter {
 
     private List<Action> actions;
     private LayoutInflater mInflater;
+    private final Bitmap icon;
 
     public ActionListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
         actions = new ArrayList<Action>();
+        icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.action);
     }
 
     /**
@@ -67,6 +71,7 @@ public class ActionListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.text = (TextView) cView.findViewById(R.id.text);
             holder.description = (TextView) cView.findViewById(R.id.description);
+            holder.icon = (ImageView)cView.findViewById(R.id.icon);
 
             cView.setTag(holder);
         } else {
@@ -79,6 +84,7 @@ public class ActionListAdapter extends BaseAdapter {
         holder.text.setText(this.getActions().get(position).getName());
         holder.description.setText("Input args: " + String.valueOf(this.getActions().get(position).getInputArgumentList().size())
                                    +" / Output args: " + String.valueOf(this.getActions().get(position).getOutputArgumentList().size()));
+        holder.icon.setImageBitmap(icon);
 
         return cView;
     }

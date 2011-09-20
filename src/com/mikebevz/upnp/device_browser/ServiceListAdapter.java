@@ -5,6 +5,8 @@
 package com.mikebevz.upnp.device_browser;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +29,13 @@ public class ServiceListAdapter extends BaseAdapter {
     private List<Service> services;
 
     private LayoutInflater mInflater;
+    private final Bitmap icon;
     
     public ServiceListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         
         services = new ArrayList<Service>();
+        icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.service);
     }
 
     /**
@@ -70,6 +74,7 @@ public class ServiceListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.text = (TextView)cView.findViewById(R.id.text);
             holder.description = (TextView)cView.findViewById(R.id.description);
+            holder.icon = (ImageView)cView.findViewById(R.id.icon);
             
             cView.setTag(holder);
         } else {
@@ -81,6 +86,7 @@ public class ServiceListAdapter extends BaseAdapter {
         
         holder.text.setText(list.toArray()[0].toString());
         holder.description.setText(this.getServices().get(position).getServiceID());
+        holder.icon.setImageBitmap(icon);
         
         return cView;
     }

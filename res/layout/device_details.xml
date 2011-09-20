@@ -7,13 +7,14 @@
 <Button 
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Services"
+    android:text="See Services"
     android:id="@+id/services_btn"
 />
 <TextView 
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="Device Details"
+    android:textSize="25sp"
 /> 
 <ListView 
     android:layout_width="fill_parent"
@@ -23,5 +24,6 @@
     android:choiceMode="singleChoice"
     
 />
+
 
 </LinearLayout>
