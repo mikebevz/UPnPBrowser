@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class Container {
     
+    private String objectId;
     private String title;
     private String cclass;
     private String storageUsed;
@@ -19,6 +20,10 @@ public class Container {
     private String description;
     private String writeStatus;
     private String icon;
+    private String dlnaManager;
+    private String parentId;
+    private String childCount;
+    private String restricted;
  
     /**
      * @return the title
@@ -116,6 +121,37 @@ public class Container {
      */
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    /**
+     * @return the objectId
+     */
+    public String getObjectId() {
+        return objectId;
+    }
+
+    /**
+     * @param objectId the objectId to set
+     */
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
+
+    void setDlnaManager(String value) {
+        //throw new UnsupportedOperationException("Not yet implemented");
+        this.dlnaManager = value;
+    }
+
+    void setParentID(String value) {
+        this.parentId = value;
+    }
+
+    void setChildCount(String value) {
+        this.childCount = value;
+    }
+
+    void setRestricted(String value) {
+        this.restricted = value;
     }
     
             

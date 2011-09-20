@@ -22,6 +22,7 @@ public class UpnpBrowserApp extends Application {
     private ActionList actionList;
     private ServiceList serviceList;
     private ArgumentList argumentList;
+
     
     
     public void setDeviceList(DeviceList list) {
@@ -58,7 +59,7 @@ public class UpnpBrowserApp extends Application {
         this.argumentList = aList;
     }
 
-  
+
     
     
 }

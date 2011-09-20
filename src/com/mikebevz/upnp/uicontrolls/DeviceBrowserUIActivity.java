@@ -96,6 +96,10 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
         
     }
 
+    
+    
+    
+
     public void OnDeviceDetailsProgressUpdate(Integer integer) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }

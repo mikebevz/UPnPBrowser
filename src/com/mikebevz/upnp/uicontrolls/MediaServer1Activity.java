@@ -6,24 +6,26 @@ package com.mikebevz.upnp.uicontrolls;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.mediaserver.content_directory.Container;
 import com.mikebevz.upnp.mediaserver.content_directory.ContainerListAdapter;
-import com.mikebevz.upnp.mediaserver.content_directory.SaxContentParser;
 import com.mikebevz.upnp.mediaserver1.BrowseTask;
+import com.mikebevz.upnp.mediaserver1.ContainerListActivity;
 import com.mikebevz.upnp.mediaserver1.OnTaskFactory;
 import com.mikebevz.upnp.mediaserver1.TaskFactory;
 import com.mikebevz.upnp.tasks.GetDeviceTask;
 import com.mikebevz.upnp.tasks.OnDeviceDetails;
 import java.util.List;
 import org.cybergarage.upnp.Action;
-import org.cybergarage.upnp.ArgumentList;
 import org.cybergarage.upnp.Device;
 import org.cybergarage.upnp.ServiceList;
 
@@ -31,7 +33,7 @@ import org.cybergarage.upnp.ServiceList;
  *
  * @author mikebevz
  */
-public class MediaServer1Activity extends Activity implements OnDeviceDetails, OnTaskFactory {
+public class MediaServer1Activity extends Activity implements OnDeviceDetails, OnTaskFactory, OnItemClickListener {
 
     // Connection Manager Service
     Action getProtocolInfoAction;
@@ -44,6 +46,7 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
     Action getSearchCapabilitiesAction;
     ServiceList sList;
     private ProgressDialog dialog;
+    private List<Container> containerList;
 
     /** Called when the activity is first created. */
     @Override
@@ -64,69 +67,17 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
         GetDeviceTask task = new GetDeviceTask((UpnpBrowserApp) getApplication());
         task.setOnDeviceDetailsHandler(this);
         task.execute(position);
-        //Device device = (Device) ((UpnpBrowserApp)getApplication()).getDeviceList().get(position);
-        //this.setTitle(device.getFriendlyName());
-
-        /*
-        Service contentDirectory = device.getService("urn:upnp-org:serviceId:ContentDirectory");
         
-        ActionList list = contentDirectory.getActionList();
+    }
+    
+    public void OnDeviceDetailsPreExecute() {
+        dialog = ProgressDialog.show(this, "", "Loading...", true);
         
-        for(int i=0;i<list.size();i++) {
-        Log.d("Action: ", list.getAction(i).getName()); 
-        }
-         */
-
-        //GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
-        //getServiceTask.setOnDeviceServiceListHandler(this);
-        //getServiceTask.execute(device);
-
-
-
-
-        /*
-        action = contentDirectory.getAction("Browse");
-        
-        
-        action.setArgumentValue("ObjectID", "0");
-        action.setArgumentValue("BrowseFlag", "BrowseDirectChildren");
-        action.setArgumentValue("Filter", "*");
-        action.setArgumentValue("StartingIndex", "0");
-        action.setArgumentValue("RequestedCount", "10");
-        action.setArgumentValue("SortCriteria", "");
-        
-        if (action.postControlAction() == true) {
-        ArgumentList outArgList = action.getOutputArgumentList();
-        
-        String result = action.getArgument("Result").getValue();
-        String numberReturned = action.getArgument("NumberReturned").getValue();
-        String totalMatches = action.getArgument("TotalMatches").getValue();
-        String updateID = action.getArgument("UpdateID").getValue();
-        
-        SaxContentParser parser = new SaxContentParser();
-        parser.setMessage(result);
-        List<Container> containers = parser.parse();
-        
-        ContainerListAdapter adapter = new ContainerListAdapter(this);
-        adapter.setContainers(containers);
-        
-        ListView containerList = (ListView)findViewById(R.id.container_list);
-        containerList.setAdapter(adapter);
-        
-        Log.d("Container: ", String.valueOf(containers.size()));
-        
-        
-        }
-        
-        
-         */
-        //getSortCapabilitiesAction = device.getAction("getSortCapabilities");
-        //getSystemUpdateIDAction = device.getAction("getSystemUpdateIdAction");
-
     }
 
     public void OnDeviceDetailsSuccess(Device device) {
-
+        setTitle(device.getFriendlyName());
+        
         BrowseTask task = new BrowseTask();
         task.setOnTaskFactoryHandler(this);
         task.execute(device.getService(TaskFactory.CONTENT_DIRECTORY_SERVICE).getAction(TaskFactory.BROWSE_ACTION));
@@ -137,23 +88,37 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
     public void OnDeviceDetailsProgressUpdate(Integer integer) {
     }
 
-    public void OnDeviceDetailsPreExecute() {
-        dialog = ProgressDialog.show(this, "", "Downloading...", true);
+    
+    
+    public void onTaskFactoryPreExecute() {
+        dialog = ProgressDialog.show(this, "", "Loading...", true);
+        
     }
 
     public void onTaskFactorySuccess(List<Container> result) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-
+        this.containerList = result;
         ContainerListAdapter adapter = new ContainerListAdapter(this);
         adapter.setContainers(result);
-
-        ListView containerList = (ListView) findViewById(R.id.container_list);
-        containerList.setAdapter(adapter);
+        
+        ListView cList = (ListView) findViewById(R.id.container_list);
+        cList.setAdapter(adapter);
+        cList.setOnItemClickListener(this);
 
         Log.d("Container: ", String.valueOf(result.size()));
+        dialog.dismiss();
     }
 
-    public void onTaskFactoryPreExecute() {
-        //throw new UnsupportedOperationException("Not supported yet.");
+    
+
+    public void onItemClick(AdapterView<?> av, View view, int position, long id) {
+        
+        Intent intent = new Intent(this, ContainerListActivity.class);
+        
+        intent.putExtra("objectId", containerList.get(position).getObjectId());
+        startActivity(intent);
+        
     }
 }
+
+
+       

@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.bugsense.trace.BugSenseHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cybergarage.upnp.ControlPoint;
@@ -21,7 +22,6 @@ import org.cybergarage.upnp.Device;
 import org.cybergarage.upnp.device.DeviceChangeListener;
 import org.cybergarage.upnp.device.NotifyListener;
 import org.cybergarage.upnp.ssdp.SSDPPacket;
-import com.bugsense.trace.BugSenseHandler;
 import com.mikebevz.upnp.uicontrolls.DeviceBrowserUIActivity;
 
 public class MainActivity extends Activity implements NotifyListener, DeviceChangeListener, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
@@ -31,6 +31,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     Boolean controlPointStatus = false; // false = stopped, true = running
     ListView devicesList;
     UpnpBrowserApp app;
+    
 
     /** Called when the activity is first created. */
     @Override
@@ -41,7 +42,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         
         setContentView(R.layout.main);
         
-       // BugSenseHandler.setup(this, "a8c5f7db");
+        BugSenseHandler.setup(this, "a8c5f7db");
         
         devicesList = (ListView) findViewById(R.id.devices_list);
 
@@ -62,6 +63,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
             Toast toast = Toast.makeText(getApplicationContext(), "Connect to a WiFi network", Toast.LENGTH_LONG);
             toast.show();
         }
+        
 
     }
 
@@ -72,6 +74,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
             this.setProgressBarIndeterminate(true);
             this.setProgressBarIndeterminateVisibility(true);
         }
+        
     }
     
     
@@ -134,14 +137,15 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
             this.setProgressBarIndeterminate(false);
             this.setProgressBarIndeterminateVisibility(false);
         }
-        //ctrlPoint = null;
+
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        
         Log.d("ControlPoint", "Destroying Activity");
         stopControlPoint();
+        super.onDestroy();
     }
 
     @Override
@@ -149,6 +153,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         super.onPause();
         Log.d("ControlPoint", "Pause Activity");
         stopControlPoint();
+        //app.releaseAdMob(this);
     }
 
     @Override
@@ -156,6 +161,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         super.onRestart();
         Log.d("ControlPoint", "Restart Activity");
         //startControlPoint();
+        
     }
 
     @Override
@@ -169,6 +175,8 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
             Toast toast = Toast.makeText(getApplicationContext(), "WiFi network is not connected. Try to refresh.", Toast.LENGTH_LONG);
             toast.show();
         }
+        
+        //app.setupAdMob(this);
 
     }
 
