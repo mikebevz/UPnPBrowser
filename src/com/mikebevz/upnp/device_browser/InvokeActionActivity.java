@@ -53,15 +53,15 @@ public class InvokeActionActivity extends Activity implements OnClickListener {
         actionPosition = getIntent().getExtras().getInt("position");
         action = (Action) ((UpnpBrowserApp) getApplication()).getActionList().get(actionPosition);
         argumentList = ((UpnpBrowserApp) getApplication()).getArgumentList();
-        
-        Button invokeBtn = (Button)findViewById(R.id.invoke_btn);
+
+        Button invokeBtn = (Button) findViewById(R.id.invoke_btn);
         invokeBtn.setOnClickListener(this);
-        
-        Button resetBtn = (Button)findViewById(R.id.reset_btn);
+
+        Button resetBtn = (Button) findViewById(R.id.reset_btn);
         resetBtn.setOnClickListener(this);
-        
-        setTitle("Invoke " + action.getName()+ " at "+action.getService().getServiceID());
-        
+
+        setTitle("Invoke " + action.getName() + " at " + action.getService().getServiceID());
+
         this.buildUI(argumentList);
     }
 
@@ -70,7 +70,7 @@ public class InvokeActionActivity extends Activity implements OnClickListener {
         for (int i = 0; i < argumentList.size(); i++) {
             Argument arg = argumentList.getArgument(i);
             if (arg.getDirection().equals(DIRECTION_IN)) {
-                
+
                 String name = arg.getName();
                 Log.d("Argument Name", name);
                 String type = arg.getRelatedStateVariable().getDataType();
@@ -78,13 +78,13 @@ public class InvokeActionActivity extends Activity implements OnClickListener {
 
                 AllowedValueList allowedValueList = arg.getRelatedStateVariable().getAllowedValueList();
                 final List<String> allowedValues = new ArrayList<String>();
-                
+
                 if (allowedValueList != null) {
                     for (int j = 0; j < allowedValueList.size(); j++) {
                         Log.d("AllowedValue", allowedValueList.getAllowedValue(j).getValue());
                         allowedValues.add(allowedValueList.getAllowedValue(j).getValue());
                     }
-                    
+
                 }
                 AllowedValueRange allowedValueRange = arg.getRelatedStateVariable().getAllowedValueRange();
                 if (allowedValueRange != null) {
@@ -93,44 +93,44 @@ public class InvokeActionActivity extends Activity implements OnClickListener {
                     Log.d("Allowed Range: Step", allowedValueRange.getStep());
 
                 }
-                
+
                 // Start adding ui elements
-                
+
                 TextView label = new TextView(this);
-                label.setText(name);                
+                label.setText(name);
                 layout.addView(label);
-                
+
                 // Adding latest element of the group first 
-                if(allowedValues.isEmpty()) {
+                if (allowedValues.isEmpty()) {
                     EditText te = new EditText(this);
                     if (type.equalsIgnoreCase(STRING)) {
                         te.setInputType(EditorInfo.TYPE_CLASS_TEXT);
                     }
-                    
+
                     if (type.equalsIgnoreCase(UI4)) {
                         te.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
                     }
-                    
-                    
+
+
                     te.setId(i);
                     te.setText(arg.getValue());
-                    
+
                     layout.addView(te);
-                    
+
                 } else { // Add drop down
                     Spinner spinner = new Spinner(this);
                     SpinnerAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, allowedValues);
                     spinner.setAdapter(adapter);
                     spinner.setId(i);
-                    
+
                     layout.addView(spinner);
                 }
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
 
 
             }
@@ -138,38 +138,73 @@ public class InvokeActionActivity extends Activity implements OnClickListener {
     }
 
     public void onClick(View view) {
-        
+
         if (view.getId() == R.id.reset_btn) {
-        
-        } 
-        
-        
+        }
+
+
         if (view.getId() == R.id.invoke_btn) {
-            
-            for(int i=0; i<argumentList.size();i++) {
+
+
+
+            for (int i = 0; i < argumentList.size(); i++) {
                 Argument arg = argumentList.getArgument(i);
                 //View element = (View)findViewById(i);
                 String argValue = "";
                 if (findViewById(i) instanceof EditText) {
-                    EditText et = (EditText)findViewById(i);
+                    EditText et = (EditText) findViewById(i);
                     argValue = et.getText().toString();
+
+                }
+
+                if (findViewById(i) instanceof Spinner) {
+                    Spinner et = (Spinner) findViewById(i);
+                    argValue = ((ArrayAdapter<String>) et.getAdapter()).getItem(et.getSelectedItemPosition());
+                }
+
+                Log.d(arg.getName() + " Value =", argValue);
+                action.setArgumentValue(arg.getName(), argValue);
+
+            }
+
+            if (action.postControlAction() == true) {
+                ArgumentList outArgList = action.getOutputArgumentList();
+                List<Object> result = new ArrayList<Object>();
+                
+                layout.removeAllViews();
+                
+                for (int i=0;i<outArgList.size();i++) {
+                    String value = action.getArgument(outArgList.getArgument(i).getName()).getValue();
+                    Log.d("Invoke Result", value);
+                    result.add(value);
+                    
+                    TextView argName = new TextView(this);
+                    argName.setText("Argument Name: \n" + outArgList.getArgument(i).getName());
+                    argName.setTextSize(20);
+                    layout.addView(argName);
+                    
+                    TextView argValueLabel = new TextView(this);
+                    argValueLabel.setText("Response");
+                    argValueLabel.setTextSize(20);
+                    layout.addView(argValueLabel);
+                    
+                    TextView argValue = new TextView(this);
+                    argValue.setText(value);
+                    layout.addView(argValue);
                     
                 }
-                
-                if (findViewById(i) instanceof Spinner) {
-                    Spinner et = (Spinner)findViewById(i);
-                    argValue = ((ArrayAdapter<String>)et.getAdapter()).getItem(et.getSelectedItemPosition());
-                }
-                
-                Log.d(arg.getName() + " Value =", argValue);
-                
-                
+                //String result = getAction().getArgument("Result").getValue();
+                //String numberReturned = action.getArgument("NumberReturned").getValue();
+                //String totalMatches = action.getArgument("TotalMatches").getValue();
+                //String updateID = action.getArgument("UpdateID").getValue();
+                //System.out.println(result);
+                //parser.setMessage(result);
                 
             }
-            
-        } 
 
-        
-        
+        }
+
+
+
     }
 }
