@@ -11,7 +11,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-
 //<DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" 
 // xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:sec="http://www.sec.co.kr/" 
 // xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/">
@@ -33,17 +32,76 @@ import org.xml.sax.helpers.DefaultHandler;
 //   <upnp:icon>http://10.0.0.5:30888/__artwork/139884225dfeb716c797f66f1e766540/TVMOBiLi/0-902764585c283cdcd2a0f0647decc397x3y2z1</upnp:icon>
 //</container>
 //</DIDL-Lite>
-
+/**
+ * MP3
+ * 
+ * <DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" 
+ * xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:sec="http://www.sec.co.kr/" xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/">
+ * 
+ * <item id="s0-902764585c283cdcd2a0f0647decc397x2464y5z1268234047" dlna:dlnaManaged="0" parentID="0-902764585c283cdcd2a0f0647decc397x2463y3z1" 
+ * restricted="1">
+ *  <dc:title>If You Love Me (Control-S Remix)</dc:title>
+ *  <upnp:class>object.item.audioItem.musicTrack</upnp:class>
+ *  <dc:date>2010-03-10T15:14:07Z</dc:date>
+ *  <upnp:icon>http://10.0.0.5:30888/__artwork/ae2db52d40dbac95feb1c6f9616cdf15/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x2464y5z1268234047</upnp:icon>
+ *  <upnp:artist>Chanel</upnp:artist>
+ *  <dc:creator>Chanel</dc:creator>
+ *  <upnp:album>MOS Presents Addicted to Bass Winter 2009 (Unmixed)</upnp:album>
+ *  <upnp:genre>Bass</upnp:genre>
+ *  <dc:description>If You Love Me (Control-S Remix)</dc:description>
+ *  <res bitrate="40000" duration="00:06:43.000" size="16191378" sampleFrequency="44100" 
+ *    protocolInfo="http-get:*:audio/mpeg:DLNA.ORG_PN=MP3;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000"
+ *    >http://10.0.0.5:30888/__contentStream/86fe54f306dc1e5a6dc589e0cac375b0/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x2464y5z1268234047.mp3</res>
+ *   <upnp:albumArtURI dlna:profileID="JPEG_TN">
+ *      http://10.0.0.5:30888/__artwork/ae2db52d40dbac95feb1c6f9616cdf15/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x2464y5z1268234047</upnp:albumArtURI>
+ * </item>
+ * 
+ * <item id="s0-902764585c283cdcd2a0f0647decc397x2481y5z1268230914" dlna:dlnaManaged="0" parentID="0-902764585c283cdcd2a0f0647decc397x2463y3z1" restricted="1"><dc:title>Bulla Cake</dc:title><upnp:class>object.item.audioItem.musicTrack</upnp:class><dc:date>2010-03-10T14:21:54Z</dc:date><upnp:icon>http://10.0.0.5:30888/__artwork/0e8cc777a4777d833295cf3f2656f8e4/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x2481y5z1268230914</upnp:icon><upnp:artist>Dexplicit</upnp:artist><dc:creator>Dexplicit</dc:creator><upnp:album>MOS Presents Addicted to Bass Winter 2009 (Unmixed)</upnp:album><upnp:genre>Bass</upnp:genre><dc:description>Bulla Cake</dc:description><res bitrate="40000" duration="00:04:39.000" size="11242669" sampleFrequency="44100" protocolInfo="http-get:*:audio/mpeg:DLNA.ORG_PN=MP3;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000">http://10.0.0.5:30888/__contentStream/a80ca466d238abc87ad8af3307326633/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x2481y5z1268230914.mp3</res><upnp:albumArtURI dlna:profileID="JPEG_TN">http://10.0.0.5:30888/__artwork/0e8cc777a4777d833295cf3f2656f8e4/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x2481y5z1268230914</upnp:albumArtURI></item><item id="s0-902764585c283cdcd2a0f0647decc397x2496y5z1268233437" dlna:dlnaManaged="0" parentID="0-902764585c283cdcd2a0f0647decc397x2463y3z1" restricted="1"><dc:title>Bad Ass</dc:title><upnp:class>object.item.audioItem.musicTrack</upnp:class><dc:date>2010-03-10T15:03:57Z</dc:date><upnp:icon>http://10.0.0.5:30888/__artwork/653de7f774c3f2140937c8384b5d111d/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x2496y5z1268233437</upnp:icon><upnp:artist>Micky Finn &amp; Aphrodite</upnp:artist><dc:creator>Micky Finn &amp; Aphrodite</dc:creator><upnp:album>MOS Presents Addicted to Bass Winter 2009 (Unmixed)</upnp:album><upnp:genre>Bass</upnp:genre><dc:description>Bad Ass</dc:description><res bitrate="40000" duration="00:05:00.000" size="12069230" sampleFrequency="44100" protocolInfo="http-get:*:audio/mpeg:DLNA.ORG_PN=MP3;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000">http://10.0.0.5:30888/__contentStream/d06831434ba99f92f4f53e56e3f0a017/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x2496y5z1268233437.mp3</res><upnp:albumArtURI dlna:profileID="JPEG_TN">http://10.0.0.5:30888/__artwork/653de7f774c3f2140937c8384b5d111d/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x2496y5z1268233437
+ *   </upnp:albumArtURI>
+ *  </item>
+ * <item id="s0-902764585c283cdcd2a0f0647decc397x2512y5z1268227857" dlna:dlnaManaged="0" parentID="0-902764585c283cdcd2a0f0647decc397x2463y3z1
+ * 
+ * 
+ * 
+ * VIDEO
+ * 
+ * <DIDL-Lite xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/" xmlns:dc="http://purl.org/dc/elements/1.1/" 
+ *  xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:sec="http://www.sec.co.kr/" 
+ *  xmlns:dlna="urn:schemas-dlna-org:metadata-1-0/">
+ * 
+ * <item id="s0-902764585c283cdcd2a0f0647decc397x22777y8z1227254470" dlna:dlnaManaged="0" 
+ *  parentID="0-902764585c283cdcd2a0f0647decc397x9147y2z1" restricted="1">
+ *  <dc:title>MOV04705.MPG</dc:title>
+ *  <upnp:class>object.item.videoItem</upnp:class>
+ *  <dc:date>2008-11-21T08:01:10Z</dc:date>
+ *  <upnp:artist>Unknown</upnp:artist>
+ *  <dc:creator>Unknown</dc:creator>
+ *  <upnp:album>turcija</upnp:album>
+ *  <upnp:genre>Unknown</upnp:genre>
+ *  <dc:description>MOV04705.MPG</dc:description>
+ *  <res size="1954013" 
+ *      protocolInfo="http-get:*:video/mpeg:DLNA.ORG_PN=MPEG_PS_PAL;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000">
+ *      http://10.0.0.5:30888/__contentStream/47f6d67dfc4ca4db4eaea9108207c0de/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22777y8z1227254470
+ *  </res>
+ *  <upnp:albumArtURI dlna:profileID="JPEG_TN">
+ *      http://10.0.0.5:30888/__artwork/47f6d67dfc4ca4db4eaea9108207c0de/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22777y8z1227254470</upnp:albumArtURI>
+ * </item>
+ * <item id="s0-902764585c283cdcd2a0f0647decc397x22781y8z1228962340" dlna:dlnaManaged="0" parentID="0-902764585c283cdcd2a0f0647decc397x9147y2z1" restricted="1">
+ *  <dc:title>MOV04798.MPG</dc:title>
+ * <upnp:class>object.item.videoItem</upnp:class><dc:date>2008-12-11T02:25:40Z</dc:date><upnp:artist>Unknown</upnp:artist><dc:creator>Unknown</dc:creator><upnp:album>turcija</upnp:album><upnp:genre>Unknown</upnp:genre><dc:description>MOV04798.MPG</dc:description><res size="1173077" protocolInfo="http-get:*:video/mpeg:DLNA.ORG_PN=MPEG_PS_PAL;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000">http://10.0.0.5:30888/__contentStream/fb8d82a324cd212d8c824af932bdf128/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22781y8z1228962340</res><upnp:albumArtURI dlna:profileID="JPEG_TN">http://10.0.0.5:30888/__artwork/fb8d82a324cd212d8c824af932bdf128/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22781y8z1228962340</upnp:albumArtURI></item><item id="s0-902764585c283cdcd2a0f0647decc397x22785y8z1229217136" dlna:dlnaManaged="0" parentID="0-902764585c283cdcd2a0f0647decc397x9147y2z1" restricted="1"><dc:title>MOV04844.MPG</dc:title><upnp:class>object.item.videoItem</upnp:class><dc:date>2008-12-14T01:12:16Z</dc:date><upnp:artist>Unknown</upnp:artist><dc:creator>Unknown</dc:creator><upnp:album>turcija</upnp:album><upnp:genre>Unknown</upnp:genre><dc:description>MOV04844.MPG</dc:description><res size="2217202" protocolInfo="http-get:*:video/mpeg:DLNA.ORG_PN=MPEG_PS_PAL;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000">http://10.0.0.5:30888/__contentStream/07f3bc384419b8f4e856a09fd587921d/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22785y8z1229217136</res><upnp:albumArtURI dlna:profileID="JPEG_TN">http://10.0.0.5:30888/__artwork/07f3bc384419b8f4e856a09fd587921d/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22785y8z1229217136</upnp:albumArtURI></item><item id="s0-902764585c283cdcd2a0f0647decc397x22789y8z1229290056" dlna:dlnaManaged="0" parentID="0-902764585c283cdcd2a0f0647decc397x9147y2z1" restricted="1"><dc:title>MOV04881.MPG</dc:title><upnp:class>object.item.videoItem</upnp:class><dc:date>2008-12-14T21:27:36Z</dc:date><upnp:artist>Unknown</upnp:artist><dc:creator>Unknown</dc:creator><upnp:album>turcija</upnp:album><upnp:genre>Unknown</upnp:genre><dc:description>MOV04881.MPG</dc:description><res size="5758350" protocolInfo="http-get:*:video/mpeg:DLNA.ORG_PN=MPEG_PS_PAL;DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01500000000000000000000000000000">http://10.0.0.5:30888/__contentStream/21ee90d17d331df43ed11636ef53a2f9/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22789y8z1229290056</res><upnp:albumArtURI dlna:profileID="JPEG_TN">http://10.0.0.5:30888/__artwork/21ee90d17d331df43ed11636ef53a2f9/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22789y8z1229290056
+ *  </upnp:albumArtURI>
+ * </item><item id="s0-902764585c283cdcd2a0f0647de
+ * 
+ */
 /**
  *
  * @author mikebevz
  */
 public class ContentDirectoryXmlHandler extends DefaultHandler {
-    
+
     private List<Container> containers;
     private Container currentContainer;
     private StringBuilder builder;
-    
     final private static String TITLE = "title";
     final private static String CLASS = "class";
     final private static String DATE = "date";
@@ -51,16 +109,13 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     final private static String WRITE_STATUS = "writeStatus";
     final private static String ICON = "icon";
     final private static String CONTAINER = "container";
-    
     // Container Attributes
     final private static String OBJECT_ID = "id";
     final private static String DLNA_MANAGED = "dlnaManaged";
     final private static String PARENT_ID = "parentID";
     final private static String CHILD_COUNT = "childCount";
     final private static String RESTRICTED = "restricted";
-    
-            
-    
+
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         super.characters(ch, start, length);
@@ -70,13 +125,13 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         super.endElement(uri, localName, qName);
-        
+
         if (this.currentContainer != null) {
             if (localName.equalsIgnoreCase(TITLE)) {
                 currentContainer.setTitle(builder.toString());
             } else if (localName.equalsIgnoreCase(CLASS)) {
                 currentContainer.setCclass(builder.toString());
-            //} else if (localName.equalsIgnoreCase(DATE)) {
+                //} else if (localName.equalsIgnoreCase(DATE)) {
                 //currentContainer.setDate(builder.toString());
             } else if (localName.equalsIgnoreCase(DESCRIPTION)) {
                 currentContainer.setDescription(builder.toString());
@@ -86,9 +141,9 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
                 currentContainer.setIcon(builder.toString());
             } else if (localName.equalsIgnoreCase(CONTAINER)) {
                 //currentContainer.setObjectId(builder.toString());
-                
+
                 containers.add(currentContainer);
-            } 
+            }
             builder.setLength(0);
         }
     }
@@ -103,36 +158,36 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
-        
-        
-        
+
+
+
         if (localName.equalsIgnoreCase(CONTAINER)) {
             this.currentContainer = new Container();
             int length = attributes.getLength();
             //Log.d("XML", localName+ " : "+ String.valueOf(attributes.getLength()));
-            for (int i=0;i<length;i++) {
+            for (int i = 0; i < length; i++) {
                 String name = attributes.getLocalName(i);
-                
+
                 if (name.equalsIgnoreCase(OBJECT_ID)) {
                     this.currentContainer.setObjectId(attributes.getValue(i));
                 }
-                
+
                 if (name.equalsIgnoreCase(DLNA_MANAGED)) {
                     this.currentContainer.setDlnaManager(attributes.getValue(i));
                 }
-                
+
                 if (name.equalsIgnoreCase(PARENT_ID)) {
                     this.currentContainer.setParentID(attributes.getValue(i));
                 }
-                
+
                 if (name.equalsIgnoreCase(CHILD_COUNT)) {
                     this.currentContainer.setChildCount(attributes.getValue(i));
                 }
-                
+
                 if (name.equalsIgnoreCase(RESTRICTED)) {
                     this.currentContainer.setRestricted(attributes.getValue(i));
                 }
-                
+
             }
         }
     }
@@ -140,10 +195,4 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     List<Container> getContainers() {
         return this.containers;
     }
-    
-    
-    
-    
-    
-    
 }

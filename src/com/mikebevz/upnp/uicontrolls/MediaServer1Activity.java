@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -25,9 +24,7 @@ import com.mikebevz.upnp.mediaserver1.TaskFactory;
 import com.mikebevz.upnp.tasks.GetDeviceTask;
 import com.mikebevz.upnp.tasks.OnDeviceDetails;
 import java.util.List;
-import org.cybergarage.upnp.Action;
 import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.ServiceList;
 
 /**
  *
@@ -35,18 +32,21 @@ import org.cybergarage.upnp.ServiceList;
  */
 public class MediaServer1Activity extends Activity implements OnDeviceDetails, OnTaskFactory, OnItemClickListener {
 
+    /*
     // Connection Manager Service
-    Action getProtocolInfoAction;
-    Action getCurrentConnectionIDsAction;
-    Action getCurrentConnectionInfoAction;
+    private Action getProtocolInfoAction;
+    private Action getCurrentConnectionIDsAction;
+    private Action getCurrentConnectionInfoAction;
     // ContentDirectory Service
-    Action action;
-    Action getSortCapabilitiesAction;
-    Action getSystemUpdateIDAction;
-    Action getSearchCapabilitiesAction;
-    ServiceList sList;
+    private Action action;
+    private Action getSortCapabilitiesAction;
+    private Action getSystemUpdateIDAction;
+    private Action getSearchCapabilitiesAction;
+    private ServiceList sList;
+     */
     private ProgressDialog dialog;
     private List<Container> containerList;
+    private int deviceNumber;
 
     /** Called when the activity is first created. */
     @Override
@@ -55,11 +55,11 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
         setContentView(R.layout.media_server_frontpage);
 
         Bundle bundle = getIntent().getExtras();
-        int position = bundle.getInt("device");
+        deviceNumber = bundle.getInt("device");
 
         GetDeviceTask task = new GetDeviceTask((UpnpBrowserApp) getApplication());
         task.setOnDeviceDetailsHandler(this);
-        task.execute(position);
+        task.execute(deviceNumber);
     }
 
     public void OnDeviceDetailsPreExecute() {
@@ -69,11 +69,11 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
     public void OnDeviceDetailsSuccess(Device device) {
         setTitle(device.getFriendlyName());
 
-        BrowseTask task = new BrowseTask();
+        BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
         task.setOnTaskFactoryHandler(this);
-        task.execute(device.getService(TaskFactory.CONTENT_DIRECTORY_SERVICE).getAction(TaskFactory.BROWSE_ACTION));
+        task.execute();
 
-       //dialog.dismiss();
+        //dialog.dismiss();
     }
 
     public void OnDeviceDetailsProgressUpdate(Integer integer) {
@@ -97,8 +97,10 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
     }
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
+
         Intent intent = new Intent(this, ContainerListActivity.class);
         intent.putExtra("objectId", containerList.get(position).getObjectId());
+        intent.putExtra("device", deviceNumber);
         startActivity(intent);
     }
 }

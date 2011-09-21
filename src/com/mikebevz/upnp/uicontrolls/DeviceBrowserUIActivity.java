@@ -87,12 +87,8 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
         properties.add("UPC : " +device.getUPC());
         properties.add("URLBase : " +device.getURLBase());
         
-        
-        
         adapter.setData(properties);
         adapter.notifyDataSetChanged();
-        
-        
         
     }
 
@@ -127,6 +123,6 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
     }
 
     public void OnDeviceDetailsPreExecute() {
-        //throw new UnsupportedOperationException("Not supported yet.");
+        //TODO Implement progress dialog
     }
 }

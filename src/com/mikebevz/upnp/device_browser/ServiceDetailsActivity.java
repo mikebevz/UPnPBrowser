@@ -7,18 +7,17 @@ package com.mikebevz.upnp.device_browser;
 import android.view.View;
 import android.app.Activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import com.mikebevz.upnp.ControlUIFactory;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.tasks.GetServiceTask;
 import com.mikebevz.upnp.tasks.OnServiceDetails;
 import java.util.ArrayList;
-import org.cybergarage.upnp.Device;
 import org.cybergarage.upnp.Service;
 
 /**
@@ -29,6 +28,7 @@ public class ServiceDetailsActivity extends Activity implements OnServiceDetails
 
     private GenericKeyValueAdapter adapter;
     private Service service;
+    private ProgressDialog dialog;
     
     /** Called when the activity is first created. */
     @Override
@@ -58,17 +58,7 @@ public class ServiceDetailsActivity extends Activity implements OnServiceDetails
         listView.setAdapter(adapter);
         
     }
-
     
-
-
-    public void onClick(View view) {
-        
-        Intent intent = new Intent(this, ActionListActivity.class);
-        intent.putExtra("position", getIntent().getExtras().getInt("position"));
-        startActivity(intent);
-        
-    }
 
     public void OnServiceDetailsSuccess(Service result) {
         this.service = result;
@@ -86,10 +76,18 @@ public class ServiceDetailsActivity extends Activity implements OnServiceDetails
         
         adapter.setData(properties);
         adapter.notifyDataSetChanged();
+        dialog.dismiss();
     }
 
     public void OnServiceDetailsPreExecute() {
-        // TODO add progress dialog
-        //throw new UnsupportedOperationException("Not supported yet.");
+        dialog = ProgressDialog.show(this, "", "Loading...", true);
+    }
+    
+    public void onClick(View view) {
+        
+        Intent intent = new Intent(this, ActionListActivity.class);
+        intent.putExtra("position", getIntent().getExtras().getInt("position"));
+        startActivity(intent);
+        
     }
 }

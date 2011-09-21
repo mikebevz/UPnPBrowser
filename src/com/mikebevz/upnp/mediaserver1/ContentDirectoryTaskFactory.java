@@ -19,7 +19,7 @@ public class ContentDirectoryTaskFactory {
         
         switch(TaskFactory.name2Int(action.getName())) {
             case TaskFactory.BROWSE_ACTION_I:
-                return new BrowseTask();
+                //return new BrowseTask();
             default:
                 throw new Exception("Action "+ action.getName()+ " is not supported");
                 

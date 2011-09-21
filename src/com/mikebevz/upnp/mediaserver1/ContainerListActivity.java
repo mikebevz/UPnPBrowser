@@ -5,23 +5,77 @@
 package com.mikebevz.upnp.mediaserver1;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.UpnpBrowserApp;
+import com.mikebevz.upnp.mediaserver.content_directory.Container;
+import com.mikebevz.upnp.mediaserver.content_directory.ContainerListAdapter;
+import java.util.List;
+import org.cybergarage.upnp.Device;
 
 /**
  *
  * @author mikebevz
  */
-public class ContainerListActivity extends Activity {
-
+public class ContainerListActivity extends Activity implements OnTaskFactory, OnItemClickListener {
+    
+    private String objectId;
+    private ProgressDialog dialog;
+    private Integer deviceNumber;
+    private List<Container> containerList;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        // ToDo add your GUI initialization code here   
+        
+        setContentView(R.layout.media_server_frontpage);
 
-        Bundle bundle = getIntent().getExtras();
-        String objectId = bundle.getString("objectId");
-        Log.d("ObjectID", objectId);
+        objectId = getIntent().getExtras().getString("objectId");
+        //Log.d("ObjectID", objectId);
+        deviceNumber = getIntent().getExtras().getInt("device");
+        Device device = ((UpnpBrowserApp)getApplication()).getDeviceList().getDevice(deviceNumber);
+        
+        BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
+        task.setOnTaskFactoryHandler(this);
+        task.setObjectID(objectId);
+        task.execute();
+        
+        
     }
+
+    public void onTaskFactoryPreExecute() {
+        dialog = ProgressDialog.show(this, "", "Loading...", true);
+    }
+    
+    public void onTaskFactorySuccess(List<Container> result) {
+        
+        this.containerList = result;
+        ContainerListAdapter adapter = new ContainerListAdapter(this);
+        adapter.setContainers(result);
+
+        ListView cList = (ListView) findViewById(R.id.container_list);
+        cList.setAdapter(adapter);
+        cList.setOnItemClickListener(this);
+        
+        
+        dialog.dismiss();
+    }
+
+    public void onItemClick(AdapterView<?> av, View view, int position, long id) {
+        
+        Intent intent = new Intent(this, ContainerListActivity.class);
+        intent.putExtra("objectId", containerList.get(position).getObjectId());
+        intent.putExtra("device", deviceNumber);
+        startActivity(intent);
+        
+    }
+
+    
 }
