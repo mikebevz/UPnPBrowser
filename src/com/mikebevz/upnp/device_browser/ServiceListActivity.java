@@ -56,6 +56,7 @@ public class ServiceListActivity extends Activity implements OnDeviceServiceList
 
     public void OnDeviceServiceListPreExecute() {
         dialog = ProgressDialog.show(this, "", "Downloading...", true);
+        dialog.setCancelable(true);
     }
     
     

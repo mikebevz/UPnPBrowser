@@ -18,6 +18,9 @@ import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.tasks.GetServiceTask;
 import com.mikebevz.upnp.tasks.OnServiceDetails;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.cybergarage.upnp.Service;
 
 /**
@@ -62,7 +65,9 @@ public class ServiceDetailsActivity extends Activity implements OnServiceDetails
 
     public void OnServiceDetailsSuccess(Service result) {
         this.service = result;
-        //this.setTitle(service.getFriendlyName());
+        List<String> serviceNameList = Arrays.asList(service.getServiceID().split(":"));
+        Collections.reverse(serviceNameList);
+        this.setTitle("Service: " + serviceNameList.toArray()[0].toString());
         
         
         ArrayList<String> properties = new ArrayList<String>();

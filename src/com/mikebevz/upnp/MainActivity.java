@@ -261,7 +261,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         inflater.inflate(R.menu.main_context_menu, menu);
         return true;
     }
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

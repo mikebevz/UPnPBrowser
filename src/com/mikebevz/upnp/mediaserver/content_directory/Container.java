@@ -137,7 +137,7 @@ public class Container {
         this.objectId = objectId;
     }
 
-    void setDlnaManager(String value) {
+    void setDlnaManaged(String value) {
         //throw new UnsupportedOperationException("Not yet implemented");
         this.dlnaManager = value;
     }

@@ -26,6 +26,9 @@ public class DeviceListAdapter extends BaseAdapter {
     
     private DeviceList data;
     private Bitmap diskIcon;
+    private final Bitmap windowsIcon;
+    private final Bitmap appleIcon;
+    private final Bitmap routerIcon;
     
     public DeviceListAdapter(Context context) {
         
@@ -33,6 +36,9 @@ public class DeviceListAdapter extends BaseAdapter {
         
         data = new DeviceList();
         diskIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.disk);
+        windowsIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.windows_device);
+        appleIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple_device);
+        routerIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.router_device);
         
         
     }
@@ -68,9 +74,15 @@ public class DeviceListAdapter extends BaseAdapter {
         
         holder.text.setText(data.getDevice(position).getFriendlyName());
         holder.description.setText(data.getDevice(position).getLocation());
-        holder.icon.setImageBitmap(diskIcon);
+        
+        holder.icon.setImageBitmap(getIconForDevice(data.getDevice(position)));
         
         return cView;
+    }
+    
+    private Bitmap getIconForDevice(Device device) {
+        //TODO implement different icons 
+        return diskIcon;
     }
     
     static class ViewHolder {

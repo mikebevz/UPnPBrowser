@@ -6,8 +6,12 @@ package com.mikebevz.upnp.device_browser;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -29,6 +33,8 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
     private ArgumentListAdapter adapter;
     private ProgressDialog dialog;
     private UpnpBrowserApp app;
+    private Action action;
+    private Integer actionPosition;
 
     /** Called when the activity is first created. */
     @Override
@@ -39,8 +45,9 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
         app = (UpnpBrowserApp)getApplication(); 
         
         Bundle bundle = getIntent().getExtras();
-        int position = bundle.getInt("position");
-        Action action = (Action) ((UpnpBrowserApp)getApplication()).getActionList().get(position);
+        actionPosition = bundle.getInt("position");
+        
+        action = (Action) ((UpnpBrowserApp)getApplication()).getActionList().get(actionPosition);
         
         this.setTitle(action.getName() + " arguments");
         
@@ -79,6 +86,7 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
 
     public void OnActionArgumentsListPreExecute() {
         dialog = ProgressDialog.show(this, "", "Downloading...", true);
+        dialog.setCancelable(true);
     }
 
     
@@ -87,5 +95,37 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.argument_list_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        
+        switch (item.getItemId()) {
+            case R.id.invoke_action:
+                this.invokeAction();
+                return true;
+            default:
+                return true;
+        }
+        
+    }
+
+    private void invokeAction() {
+        
+        Intent intent = new Intent(this, InvokeActionActivity.class);
+        
+        intent.putExtra("position", actionPosition);
+        
+        startActivity(intent);
+        
+    }
+
+    
    
 }

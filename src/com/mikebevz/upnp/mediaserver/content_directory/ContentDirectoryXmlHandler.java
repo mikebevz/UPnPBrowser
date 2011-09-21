@@ -103,6 +103,8 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     private List<Container> containers;
     private Container currentContainer;
     private StringBuilder builder;
+    
+    // Container element
     final private static String TITLE = "title";
     final private static String CLASS = "class";
     final private static String DATE = "date";
@@ -110,12 +112,37 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     final private static String WRITE_STATUS = "writeStatus";
     final private static String ICON = "icon";
     final private static String CONTAINER = "container";
+    
+    // Item element
+    final private static String ITEM = "item";
+    
+    final private static String ARTIST = "artist";
+    final private static String ALBUM = "album";
+    final private static String GENRE = "genre";
+    final private static String RES = "res";
+    final private static String ALBUM_ART_URI = "albumArtURI";
+    
+            
+    
     // Container Attributes
     final private static String OBJECT_ID = "id";
     final private static String DLNA_MANAGED = "dlnaManaged";
     final private static String PARENT_ID = "parentID";
     final private static String CHILD_COUNT = "childCount";
     final private static String RESTRICTED = "restricted";
+    
+    
+    //Res Attributes
+    final private static String SIZE = "size";
+    final private static String PROTOCOL_INFO = "protocolInfo";
+    
+    //AlbumArtURI Attributes
+    final private static String PROFILE_ID = "profileID";
+    
+    
+    
+    private Item currentItem;
+    private List<Item> items;
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
@@ -141,9 +168,34 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
             } else if (localName.equalsIgnoreCase(ICON)) {
                 currentContainer.setIcon(builder.toString());
             } else if (localName.equalsIgnoreCase(CONTAINER)) {
-                //currentContainer.setObjectId(builder.toString());
-
                 containers.add(currentContainer);
+            }
+            builder.setLength(0);
+        }
+        
+        if (this.currentItem != null) {
+            if (localName.equalsIgnoreCase(TITLE)) {
+                currentItem.setTitle(builder.toString());
+            } else if (localName.equalsIgnoreCase(CLASS)) {
+                currentItem.setCclass(builder.toString());
+                //} else if (localName.equalsIgnoreCase(DATE)) {
+                //currentContainer.setDate(builder.toString());
+            } else if (localName.equalsIgnoreCase(DESCRIPTION)) {
+                currentItem.setDescription(builder.toString());
+            } else if (localName.equalsIgnoreCase(ICON)) {
+                currentItem.setIcon(builder.toString());
+            } else if (localName.equalsIgnoreCase(ARTIST)) {
+                currentItem.setArtist(builder.toString());
+            } else if (localName.equalsIgnoreCase(ALBUM)) {
+                currentItem.setAlbum(builder.toString());
+            } else if (localName.equalsIgnoreCase(GENRE)) {
+                currentItem.setGenre(builder.toString());
+            } else if (localName.equalsIgnoreCase(RES)) {
+                currentItem.setRes(builder.toString());
+            } else if (localName.equalsIgnoreCase(ALBUM_ART_URI)) {
+                currentItem.setAlbumArtUri(builder.toString());
+            } else if (localName.equalsIgnoreCase(ITEM)) {
+                items.add(currentItem);
             }
             builder.setLength(0);
         }
@@ -160,12 +212,62 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
 
+        if (localName.equalsIgnoreCase(ITEM)) {
+            this.currentItem = new Item();
+            int length = attributes.getLength();
+            
+            for (int i = 0; i < length; i++) {
+                String name = attributes.getLocalName(i);
 
+                if (name.equalsIgnoreCase(OBJECT_ID)) {
+                    this.currentItem.setObjectId(attributes.getValue(i));
+                }
+
+                if (name.equalsIgnoreCase(DLNA_MANAGED)) {
+                    this.currentItem.setDlnaManaged(attributes.getValue(i));
+                }
+
+                if (name.equalsIgnoreCase(PARENT_ID)) {
+                    this.currentItem.setParentID(attributes.getValue(i));
+                }
+
+                if (name.equalsIgnoreCase(RESTRICTED)) {
+                    this.currentItem.setRestricted(attributes.getValue(i));
+                }
+            }
+        }
+        
+        if (localName.equalsIgnoreCase(RES)) {
+            int length = attributes.getLength();
+            for (int i = 0; i < length; i++) {
+                String name = attributes.getLocalName(i);
+                
+                if (name.equalsIgnoreCase(SIZE)) {
+                    this.currentItem.setResSize(attributes.getValue(i));
+                }
+                
+                if (name.equalsIgnoreCase(PROTOCOL_INFO)) {
+                    this.currentItem.setResProtocolInfo(attributes.getValue(i));
+                }
+            }
+        }
+        
+        if (localName.equalsIgnoreCase(ALBUM_ART_URI)) {
+            int length = attributes.getLength();
+            for (int i = 0; i < length; i++) {
+                String name = attributes.getLocalName(i);
+                
+                if (name.equalsIgnoreCase(PROFILE_ID)) {
+                    this.currentItem.setAlbumArtUriProfileId(attributes.getValue(i));
+                }
+                
+            }
+        }
+        
 
         if (localName.equalsIgnoreCase(CONTAINER)) {
             this.currentContainer = new Container();
             int length = attributes.getLength();
-            //Log.d("XML", localName+ " : "+ String.valueOf(attributes.getLength()));
             for (int i = 0; i < length; i++) {
                 String name = attributes.getLocalName(i);
 
@@ -174,7 +276,7 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
                 }
 
                 if (name.equalsIgnoreCase(DLNA_MANAGED)) {
-                    this.currentContainer.setDlnaManager(attributes.getValue(i));
+                    this.currentContainer.setDlnaManaged(attributes.getValue(i));
                 }
 
                 if (name.equalsIgnoreCase(PARENT_ID)) {

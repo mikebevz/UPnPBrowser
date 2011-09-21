@@ -70,6 +70,7 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
 
     public void OnServiceActionsListSuccess(ActionList aList) {
         this.sList = aList;
+        
         ((UpnpBrowserApp) getApplication()).setActionList(aList);
         Log.d("ServiceList", String.valueOf(sList.size()));
         adapter.setActions(sList);
@@ -78,7 +79,10 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
     }
 
     public void OnServiceActionListPreExecute() {
+        
         dialog = ProgressDialog.show(this, "", "Loading...", true);
+        dialog.setCancelable(true);
+        //dialog.setCancelMessage("Cannot load data. Try again");
     }
 
     public void OnServiceActionsListProgressUpdate(Integer value) {

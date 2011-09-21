@@ -3,4 +3,5 @@
     <string name="app_name">UPnP Browser</string>
     <string name="refresh">Refresh Devices</string>
     <string name="help">Help</string>
+    <string name="invoke_action">Invoke action</string>
 </resources>

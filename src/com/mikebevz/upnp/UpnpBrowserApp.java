@@ -58,6 +58,10 @@ public class UpnpBrowserApp extends Application {
     public void setArgumentList(ArgumentList aList) {
         this.argumentList = aList;
     }
+    
+    public ArgumentList getArgumentList() {
+        return this.argumentList;
+    }
 
 
     
