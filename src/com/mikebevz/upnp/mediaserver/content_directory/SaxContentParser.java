@@ -18,7 +18,7 @@ public class SaxContentParser implements ContentDirectoryParser {
     
     private String message;
     
-    public List<Container> parse() throws RuntimeException {
+    public List<Entity> parse() throws RuntimeException {
         
         SAXParserFactory factory = SAXParserFactory.newInstance();
         
@@ -29,7 +29,7 @@ public class SaxContentParser implements ContentDirectoryParser {
                 parser.parse(new ByteArrayInputStream(this.message.getBytes()), handler);
                 return handler.getContainers(); 
             } else {
-                return new ArrayList<Container>();
+                return new ArrayList<Entity>();
             }
             
         } catch (Exception e) {

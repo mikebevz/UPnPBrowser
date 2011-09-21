@@ -24,6 +24,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -31,28 +32,45 @@ import java.util.List;
  */
 public class ContainerListAdapter extends BaseAdapter {
 
-    private List<Container> containers;
+    private List<Entity> containers;
     private LayoutInflater mInflater;
-    private final Bitmap icon;
+    private final Bitmap icon_container;
+    private final Bitmap icon_item;
+    public static final String CONTAINER_CCLASS = "object.container";
+    public static final String ITEM_CCLASS = "object.item";
+    //private final Bitmap icon_music;
+    //private final Bitmap icon_mp3;
+    
+    private final Pattern isContainer;
+    private final Pattern isItem;
+    
 
     public ContainerListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
-        containers = new ArrayList<Container>();
-        icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.folder);
+        containers = new ArrayList<Entity>();
+        
+        icon_container = BitmapFactory.decodeResource(context.getResources(), R.drawable.folder);
+        icon_item = BitmapFactory.decodeResource(context.getResources(), R.drawable.file);
+        //icon_music = BitmapFactory.decodeResource(context.getResources(), R.drawable.file_music);
+        //icon_mp3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.file_mp3);
+        
+        
+        isContainer = Pattern.compile(CONTAINER_CCLASS);
+        isItem = Pattern.compile(ITEM_CCLASS);
+        
     }
-
     /**
      * @return the containers
      */
-    public List<Container> getContainers() {
+    public List<Entity> getContainers() {
         return containers;
     }
 
     /**
      * @param containers the containers to set
      */
-    public void setContainers(List<Container> containers) {
+    public void setContainers(List<Entity> containers) {
         this.containers = containers;
     }
 
@@ -83,15 +101,33 @@ public class ContainerListAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) cView.getTag();
         }
+        
+        
+        
+        
+        if (isContainer.matcher(this.getContainers().get(position).getCclass()).find()) {
+            Container container = (Container) this.getContainers().get(position);    
+            holder.text.setText(container.getTitle());
+            
+            if (!container.getIcon().equals("")) {
+                holder.icon.setImageBitmap(getImageBitmap(this.getContainers().get(position).getIcon()));
+            } else {
+                holder.icon.setImageBitmap(icon_container);
+            }
 
-        holder.text.setText(this.getContainers().get(position).getTitle());
-        holder.icon.setImageBitmap(icon);
-
-        if (!this.getContainers().get(position).getIcon().equals("")) {
-
-            holder.icon.setImageBitmap(getImageBitmap(this.getContainers().get(position).getIcon()));
+        } else if (isItem.matcher(this.getContainers().get(position).getCclass()).find()) {
+            
+            Item item = (Item) this.getContainers().get(position);
+            holder.text.setText(item.getTitle());
+            
+            if (!item.getAlbumArtUri().equals("")) {
+                holder.icon.setImageBitmap(getImageBitmap(item.getAlbumArtUri()));
+            } else {
+                holder.icon.setImageBitmap(icon_item);
+            }
         }
-        //holder.description.setText(this.getContainers().get(position).getDescription());
+        
+        
 
         return cView;
     }
@@ -103,7 +139,7 @@ public class ContainerListAdapter extends BaseAdapter {
             URLConnection conn = aURL.openConnection();
             conn.connect();
             InputStream is = conn.getInputStream();
-            BufferedInputStream bis = new BufferedInputStream(is, 8*1024);
+            BufferedInputStream bis = new BufferedInputStream(is, 8 * 1024);
             bm = BitmapFactory.decodeStream(bis);
             bis.close();
             is.close();

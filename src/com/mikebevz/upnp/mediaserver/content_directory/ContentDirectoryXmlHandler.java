@@ -4,7 +4,6 @@
  */
 package com.mikebevz.upnp.mediaserver.content_directory;
 
-import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 import org.xml.sax.Attributes;
@@ -103,6 +102,7 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     private List<Container> containers;
     private Container currentContainer;
     private StringBuilder builder;
+    private List<Entity> listItems;
     
     // Container element
     final private static String TITLE = "title";
@@ -169,6 +169,7 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
                 currentContainer.setIcon(builder.toString());
             } else if (localName.equalsIgnoreCase(CONTAINER)) {
                 containers.add(currentContainer);
+                listItems.add((Entity)currentContainer);
             }
             builder.setLength(0);
         }
@@ -196,6 +197,7 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
                 currentItem.setAlbumArtUri(builder.toString());
             } else if (localName.equalsIgnoreCase(ITEM)) {
                 items.add(currentItem);
+                listItems.add((Entity)currentItem);
             }
             builder.setLength(0);
         }
@@ -205,6 +207,8 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     public void startDocument() throws SAXException {
         super.startDocument();
         containers = new ArrayList<Container>();
+        items = new ArrayList<Item>();
+        listItems = new ArrayList<Entity>();
         builder = new StringBuilder();
     }
 
@@ -295,7 +299,9 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
         }
     }
 
-    List<Container> getContainers() {
-        return this.containers;
+    List<Entity> getContainers() {
+        return this.listItems;
     }
+    
+    
 }

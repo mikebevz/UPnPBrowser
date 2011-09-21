@@ -4,7 +4,7 @@
  */
 package com.mikebevz.upnp.mediaserver1;
 
-import com.mikebevz.upnp.mediaserver.content_directory.Container;
+import com.mikebevz.upnp.mediaserver.content_directory.Entity;
 import java.util.List;
 
 /**
@@ -12,6 +12,6 @@ import java.util.List;
  * @author mikebevz
  */
 public interface OnTaskFactory {
-    public void onTaskFactorySuccess(List<Container> result);
+    public void onTaskFactorySuccess(List<Entity> result);
     public void onTaskFactoryPreExecute();
 }

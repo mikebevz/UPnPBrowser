@@ -11,5 +11,5 @@ import java.util.List;
  * @author mikebevz
  */
 public interface ContentDirectoryParser  {
-    List<Container> parse();
+    List<Entity> parse();
 }

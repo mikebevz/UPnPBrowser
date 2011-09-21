@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author mikebevz
  */
-public class Container {
+public class Container implements Entity {
 
     private String objectId;
     private String title;
@@ -20,7 +20,7 @@ public class Container {
     private String description;
     private String writeStatus;
     private String icon;
-    private String dlnaManager;
+    private String dlnaManaged;
     private String parentId;
     private String childCount;
     private String restricted;
@@ -137,20 +137,56 @@ public class Container {
         this.objectId = objectId;
     }
 
-    void setDlnaManaged(String value) {
+    public void setDlnaManaged(String value) {
         //throw new UnsupportedOperationException("Not yet implemented");
-        this.dlnaManager = value;
+        this.dlnaManaged = value;
     }
 
-    void setParentID(String value) {
+    public void setParentID(String value) {
         this.parentId = value;
     }
 
-    void setChildCount(String value) {
+    public void setChildCount(String value) {
         this.childCount = value;
     }
 
-    void setRestricted(String value) {
+    public void setRestricted(String value) {
         this.restricted = value;
+    }
+
+    /**
+     * @return the dlnaManaged
+     */
+    public String getDlnaManager() {
+        return dlnaManaged;
+    }
+
+    /**
+     * @return the parentId
+     */
+    public String getParentId() {
+        return parentId;
+    }
+
+    /**
+     * @return the childCount
+     */
+    public String getChildCount() {
+        return childCount;
+    }
+
+    /**
+     * @return the restricted
+     */
+    public String getRestricted() {
+        return restricted;
+    }
+
+    public String getDlnaManaged() {
+        return this.dlnaManaged;
+    }
+
+    public String getParentID() {
+        return this.parentId;
     }
 }

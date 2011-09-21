@@ -4,14 +4,16 @@
  */
 package com.mikebevz.upnp.mediaserver.content_directory;
 
+import java.util.Date;
+
 /**
  *
  * @author mikebevz
  */
-class Item {
+class Item implements Entity  {
 
     private String objectId;
-    private String dlnaManager;
+    private String dlnaManaged;
     private String parentId;
     private String restricted;
     private String title;
@@ -26,23 +28,24 @@ class Item {
     private String resSize;
     private String resProtocolInfo;
     private String albumArtUriProfileId;
+    private Date date;
 
     public Item() {
     }
 
-    void setObjectId(String value) {
+    public void setObjectId(String value) {
         this.objectId = value;
     }
 
-    void setDlnaManaged(String value) {
-        this.dlnaManager = value;
+    public void setDlnaManaged(String value) {
+        this.dlnaManaged = value;
     }
 
-    void setParentID(String value) {
+    public void setParentID(String value) {
         this.parentId = value;
     }
 
-    void setRestricted(String value) {
+    public void setRestricted(String value) {
         this.restricted = value;
     }
 
@@ -54,10 +57,10 @@ class Item {
     }
 
     /**
-     * @return the dlnaManager
+     * @return the dlnaManaged
      */
     public String getDlnaManager() {
-        return dlnaManager;
+        return dlnaManaged;
     }
 
     /**
@@ -74,51 +77,51 @@ class Item {
         return restricted;
     }
 
-    void setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    void setCclass(String cclass) {
+    public void setCclass(String cclass) {
         this.cclass = cclass;
     }
 
-    void setIcon(String icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    void setArtist(String value) {
+    public void setArtist(String value) {
         this.artist = value;
     }
 
-    void setAlbum(String value) {
+    public void setAlbum(String value) {
         this.album = value;
     }
 
-    void setGenre(String value) {
+    public void setGenre(String value) {
         this.genre = value;
     }
 
-    void setRes(String value) {
+    public void setRes(String value) {
         this.res = value;
     }
 
-    void setAlbumArtUri(String value) {
+    public void setAlbumArtUri(String value) {
         this.albumArtUri = value;
     }
 
-    void setResSize(String value) {
+    public void setResSize(String value) {
         this.resSize = value;
     }
 
-    void setResProtocolInfo(String value) {
+    public void setResProtocolInfo(String value) {
         this.resProtocolInfo = value;
     }
 
-    void setAlbumArtUriProfileId(String value) {
+    public void setAlbumArtUriProfileId(String value) {
         this.albumArtUriProfileId = value;
     }
 
@@ -204,6 +207,22 @@ class Item {
      */
     public String getAlbumArtUriProfileId() {
         return albumArtUriProfileId;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getDlnaManaged() {
+        return this.dlnaManaged;
+    }
+
+    public String getParentID() {
+        return this.parentId;
+    }
+
+    public Date getDate() {
+        return this.date;
     }
     
 }

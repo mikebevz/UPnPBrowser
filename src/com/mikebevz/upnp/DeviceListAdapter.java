@@ -29,6 +29,13 @@ public class DeviceListAdapter extends BaseAdapter {
     private final Bitmap windowsIcon;
     private final Bitmap appleIcon;
     private final Bitmap routerIcon;
+    private static final String WINDOWS_MEDIA_PLAYER_SHARING = "Windows Media Player Sharing";
+    private static final String TVMOBILI_MEDIA_SERVER = "TVMOBiLi | MediaServer";
+    private static final String INTERNET_GATEWAY_DEVICE = "Internet gateway device";
+    private static final String INTERNET_CONNECTION_SHARING = "Internet Connection Sharing";
+    private static final String KIES_SYNC_SERVER = "Kies Sync Server";
+    
+    
     
     public DeviceListAdapter(Context context) {
         
@@ -82,7 +89,28 @@ public class DeviceListAdapter extends BaseAdapter {
     
     private Bitmap getIconForDevice(Device device) {
         //TODO implement different icons 
-        return diskIcon;
+        //String type = device.getDeviceType();
+        //String location = device.getLocation();
+        String modelName = device.getModelName();
+        
+        if (modelName.equalsIgnoreCase(WINDOWS_MEDIA_PLAYER_SHARING)) {
+            return windowsIcon;
+        }
+        
+        if (modelName.equalsIgnoreCase(TVMOBILI_MEDIA_SERVER)) {
+            //TODO make icon for TVMobili Devices
+        }
+        
+        if (modelName.equalsIgnoreCase(KIES_SYNC_SERVER)) {
+            //TODO make icon for Sync Servers
+        }
+        
+        if (modelName.equalsIgnoreCase(INTERNET_GATEWAY_DEVICE) 
+            || modelName.equalsIgnoreCase(INTERNET_CONNECTION_SHARING)) {
+            return routerIcon;
+        }
+        
+        return diskIcon; // Default
     }
     
     static class ViewHolder {

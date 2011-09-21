@@ -14,8 +14,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import com.mikebevz.upnp.mediaserver.content_directory.Container;
 import com.mikebevz.upnp.mediaserver.content_directory.ContainerListAdapter;
+import com.mikebevz.upnp.mediaserver.content_directory.Entity;
 import java.util.List;
 import org.cybergarage.upnp.Device;
 
@@ -28,7 +28,12 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
     private String objectId;
     private ProgressDialog dialog;
     private Integer deviceNumber;
-    private List<Container> containerList;
+    private List<Entity> containerList;
+    
+    
+
+    
+    
     
     /** Called when the activity is first created. */
     @Override
@@ -54,11 +59,15 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
         dialog = ProgressDialog.show(this, "", "Loading...", true);
     }
     
-    public void onTaskFactorySuccess(List<Container> result) {
+    public void onTaskFactorySuccess(List<Entity> result)  {
+            
+        //if (result.get(0).getCclass().matches(CONTAINER_CCLASS)) {
+            
+            this.containerList = result;
+            ContainerListAdapter adapter = new ContainerListAdapter(this);
+            adapter.setContainers(result);
         
-        this.containerList = result;
-        ContainerListAdapter adapter = new ContainerListAdapter(this);
-        adapter.setContainers(result);
+        //}
 
         ListView cList = (ListView) findViewById(R.id.container_list);
         cList.setAdapter(adapter);

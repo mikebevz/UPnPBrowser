@@ -6,6 +6,7 @@ package com.mikebevz.upnp.mediaserver1;
 
 import android.os.AsyncTask;
 import com.mikebevz.upnp.mediaserver.content_directory.Container;
+import com.mikebevz.upnp.mediaserver.content_directory.Entity;
 import com.mikebevz.upnp.mediaserver.content_directory.SaxContentParser;
 import java.util.List;
 import org.cybergarage.upnp.Action;
@@ -16,7 +17,7 @@ import org.cybergarage.upnp.Service;
  *
  * @author mikebevz
  */
-public final class BrowseTask extends AsyncTask<Void, Void, List<Container>> implements TaskFactoryTask {
+public final class BrowseTask extends AsyncTask<Void, Void, List<Entity>> implements TaskFactoryTask {
 
     private OnTaskFactory delegate;
     private Action action;
@@ -45,7 +46,7 @@ public final class BrowseTask extends AsyncTask<Void, Void, List<Container>> imp
     
     
     @Override
-    protected List<Container> doInBackground(Void... params) {
+    protected List<Entity> doInBackground(Void... params) {
         
         setAction(getDevice().getService(getServiceName()).getAction(getActionName()));
         
@@ -72,7 +73,7 @@ public final class BrowseTask extends AsyncTask<Void, Void, List<Container>> imp
         }
 
         
-        List<Container> containers = parser.parse();
+        List<Entity> containers = parser.parse();
             
         return containers;
     }
@@ -86,7 +87,7 @@ public final class BrowseTask extends AsyncTask<Void, Void, List<Container>> imp
     }
 
     @Override
-    protected void onPostExecute(List<Container> result) {
+    protected void onPostExecute(List<Entity> result) {
         super.onPostExecute(result);
         this.getDelegate().onTaskFactorySuccess(result);
     }

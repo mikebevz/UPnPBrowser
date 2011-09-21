@@ -15,8 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import com.mikebevz.upnp.mediaserver.content_directory.Container;
 import com.mikebevz.upnp.mediaserver.content_directory.ContainerListAdapter;
+import com.mikebevz.upnp.mediaserver.content_directory.Entity;
 import com.mikebevz.upnp.mediaserver1.BrowseTask;
 import com.mikebevz.upnp.mediaserver1.ContainerListActivity;
 import com.mikebevz.upnp.mediaserver1.OnTaskFactory;
@@ -45,7 +45,7 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
     private ServiceList sList;
      */
     private ProgressDialog dialog;
-    private List<Container> containerList;
+    private List<Entity> containerList;
     private int deviceNumber;
 
     /** Called when the activity is first created. */
@@ -81,9 +81,10 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
 
     public void onTaskFactoryPreExecute() {
         dialog = ProgressDialog.show(this, "", "Loading...", true);
+        dialog.setCancelable(true);
     }
 
-    public void onTaskFactorySuccess(List<Container> result) {
+    public void onTaskFactorySuccess(List<Entity> result) {
         this.containerList = result;
         ContainerListAdapter adapter = new ContainerListAdapter(this);
         adapter.setContainers(result);
