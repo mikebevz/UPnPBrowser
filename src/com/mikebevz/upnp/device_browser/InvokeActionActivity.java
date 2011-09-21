@@ -42,7 +42,9 @@ public class InvokeActionActivity extends Activity implements OnClickListener {
     private static final String STRING = "string";
     private static final String UI4 = "ui4";
 
-    /** Called when the activity is first created. */
+    /** Called when the activity is first created.
+     * @param icicle 
+     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -137,6 +139,10 @@ public class InvokeActionActivity extends Activity implements OnClickListener {
         }
     }
 
+    /**
+     * 
+     * @param view
+     */
     public void onClick(View view) {
 
         if (view.getId() == R.id.reset_btn) {

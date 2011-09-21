@@ -36,7 +36,9 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
     private Action action;
     private Integer actionPosition;
 
-    /** Called when the activity is first created. */
+    /** Called when the activity is first created.
+     * @param icicle 
+     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -67,6 +69,13 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
     
 
 
+    /**
+     * 
+     * @param av
+     * @param view
+     * @param position
+     * @param id
+     */
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
         //Intent intent = new Intent(this, ArgumentDetails)
                 
@@ -74,6 +83,10 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
 
 
 
+    /**
+     * 
+     * @param aList
+     */
     public void OnActionArgumentsListSuccess(ArgumentList aList) {
         this.aList = aList;
         Log.d("ArgumentsList", String.valueOf(aList.size()));
@@ -84,6 +97,9 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
         dialog.dismiss();
     }
 
+    /**
+     * 
+     */
     public void OnActionArgumentsListPreExecute() {
         dialog = ProgressDialog.show(this, "", "Downloading...", true);
         dialog.setCancelable(true);
@@ -91,11 +107,20 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
 
     
     
+    /**
+     * 
+     * @param integer
+     */
     public void OnActionArgumentsProgressUpdate(Integer integer) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     
+    /**
+     * 
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -103,6 +128,12 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
         return true;
     }
 
+    /**
+     * 
+     * @param featureId
+     * @param item
+     * @return
+     */
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         

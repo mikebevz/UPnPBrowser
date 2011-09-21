@@ -37,6 +37,10 @@ public class DeviceListAdapter extends BaseAdapter {
     
     
     
+    /**
+     * 
+     * @param context
+     */
     public DeviceListAdapter(Context context) {
         
         mInflater = LayoutInflater.from(context);
@@ -50,18 +54,39 @@ public class DeviceListAdapter extends BaseAdapter {
         
     }
 
+    /**
+     * 
+     * @return
+     */
     public int getCount() {
         return data.size();
     }
 
+    /**
+     * 
+     * @param pos
+     * @return
+     */
     public Object getItem(int pos) {
         return data.get(pos);
     }
 
+    /**
+     * 
+     * @param pos
+     * @return
+     */
     public long getItemId(int pos) {
         return pos;
     }
 
+    /**
+     * 
+     * @param position
+     * @param cView
+     * @param parent
+     * @return
+     */
     public View getView(int position, View cView, ViewGroup parent) {
         
         ViewHolder holder;
@@ -120,16 +145,28 @@ public class DeviceListAdapter extends BaseAdapter {
     }
     
     
+    /**
+     * 
+     * @param deviceList
+     */
     public void setDeviceList(DeviceList deviceList) {
         this.data = deviceList;
     }
     
+    /**
+     * 
+     * @param dev
+     */
     public void addDevice(Device dev) {
         data.add(dev);
         notifyDataSetChanged();
         
     }
     
+    /**
+     * 
+     * @param dev
+     */
     public void deleteDevice(Device dev){
         this.data.remove(dev);
         this.notifyDataSetChanged();

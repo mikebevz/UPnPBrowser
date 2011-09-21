@@ -27,7 +27,11 @@ public class GenericKeyValueAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private final Bitmap icon;
     
-     public GenericKeyValueAdapter(Context context) {
+    /**
+     * 
+     * @param context
+     */
+    public GenericKeyValueAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
         data = new ArrayList<String>();
@@ -35,22 +39,43 @@ public class GenericKeyValueAdapter extends BaseAdapter {
     }
     
 
-    public int getCount() {
+     /**
+      * 
+      * @return
+      */
+     public int getCount() {
         
         return data.size();
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * 
+     * @param position
+     * @return
+     */
     public Object getItem(int position) {
         return data.get(position);
         
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * 
+     * @param position
+     * @return
+     */
     public long getItemId(int position) {
         return position;//throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * 
+     * @param position
+     * @param cView
+     * @param parent
+     * @return
+     */
     public View getView(int position, View cView, ViewGroup parent) {
 
         ViewHolder holder;

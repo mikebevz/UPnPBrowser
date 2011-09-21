@@ -33,7 +33,9 @@ public class ServiceDetailsActivity extends Activity implements OnServiceDetails
     private Service service;
     private ProgressDialog dialog;
     
-    /** Called when the activity is first created. */
+    /** Called when the activity is first created.
+     * @param icicle 
+     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -63,6 +65,10 @@ public class ServiceDetailsActivity extends Activity implements OnServiceDetails
     }
     
 
+    /**
+     * 
+     * @param result
+     */
     public void OnServiceDetailsSuccess(Service result) {
         this.service = result;
         List<String> serviceNameList = Arrays.asList(service.getServiceID().split(":"));
@@ -84,10 +90,17 @@ public class ServiceDetailsActivity extends Activity implements OnServiceDetails
         dialog.dismiss();
     }
 
+    /**
+     * 
+     */
     public void OnServiceDetailsPreExecute() {
         dialog = ProgressDialog.show(this, "", "Loading...", true);
     }
     
+    /**
+     * 
+     * @param view
+     */
     public void onClick(View view) {
         
         Intent intent = new Intent(this, ActionListActivity.class);

@@ -29,6 +29,10 @@ public class ArgumentListAdapter extends BaseAdapter {
     private final Bitmap iconin;
     private final Bitmap iconout;
 
+    /**
+     * 
+     * @param context
+     */
     public ArgumentListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
@@ -46,24 +50,45 @@ public class ArgumentListAdapter extends BaseAdapter {
     }
 
     /**
-     * @param argument the argument to set
+     * @param actions 
      */
     public void setArguments(List<Argument> actions) {
         this.argument = actions;
     }
 
+    /**
+     * 
+     * @return
+     */
     public int getCount() {
         return this.getArguments().size();
     }
 
+    /**
+     * 
+     * @param position
+     * @return
+     */
     public Object getItem(int position) {
         return this.getArguments().get(position);
     }
 
+    /**
+     * 
+     * @param position
+     * @return
+     */
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     * 
+     * @param position
+     * @param cView
+     * @param parent
+     * @return
+     */
     public View getView(int position, View cView, ViewGroup parent) {
 
         ViewHolder holder;

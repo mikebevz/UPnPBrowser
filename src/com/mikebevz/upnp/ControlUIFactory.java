@@ -17,16 +17,41 @@ import com.mikebevz.upnp.uicontrolls.SwitchPowerUIActivity;
  */
 public class ControlUIFactory {
     
+    /**
+     * 
+     */
     final public static int SWITCH_POWER = 1000;
+    /**
+     * 
+     */
     final public static String SWITCH_POWER_UPC = "urn:schemas-upnp-org:device:DimmableLight:1";
+    /**
+     * 
+     */
     final public static int MEDIA_SERVER1 = 2000;
+    /**
+     * 
+     */
     final public static String MEDIA_SERVER1_UPC = "urn:schemas-upnp-org:device:MediaServer:1";
+    /**
+     * 
+     */
     final public static int MEDIA_SERVER2 = 3000;
+    /**
+     * 
+     */
     final public static String MEDIA_SERVER2_UPC = "urn:schemas-upnp-org:device:MediaServer:2";
     
     
     
     
+    /**
+     * 
+     * @param context
+     * @param upc
+     * @return
+     * @throws RuntimeException
+     */
     public Intent getIntent(Context context, String upc) throws RuntimeException {
         
         System.out.println("INPUT: " + upc);

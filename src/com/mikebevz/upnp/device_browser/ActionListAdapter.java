@@ -28,6 +28,10 @@ public class ActionListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private final Bitmap icon;
 
+    /**
+     * 
+     * @param context
+     */
     public ActionListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
@@ -49,18 +53,39 @@ public class ActionListAdapter extends BaseAdapter {
         this.actions = actions;
     }
 
+    /**
+     * 
+     * @return
+     */
     public int getCount() {
         return this.getActions().size();
     }
 
+    /**
+     * 
+     * @param position
+     * @return
+     */
     public Object getItem(int position) {
         return this.getActions().get(position);
     }
 
+    /**
+     * 
+     * @param position
+     * @return
+     */
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     * 
+     * @param position
+     * @param cView
+     * @param parent
+     * @return
+     */
     public View getView(int position, View cView, ViewGroup parent) {
 
         ViewHolder holder;

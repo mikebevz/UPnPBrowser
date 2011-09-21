@@ -24,6 +24,10 @@ import org.cybergarage.upnp.device.NotifyListener;
 import org.cybergarage.upnp.ssdp.SSDPPacket;
 import com.mikebevz.upnp.uicontrolls.DeviceBrowserUIActivity;
 
+/**
+ * 
+ * @author mikebevz
+ */
 public class MainActivity extends Activity implements NotifyListener, DeviceChangeListener, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     ControlPoint ctrlPoint = null;
@@ -33,7 +37,9 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     UpnpBrowserApp app;
     
 
-    /** Called when the activity is first created. */
+    /** Called when the activity is first created.
+     * @param savedInstanceState 
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +73,9 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
 
     }
 
+    /**
+     * 
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -140,6 +149,9 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
 
     }
 
+    /**
+     * 
+     */
     @Override
     protected void onDestroy() {
         
@@ -148,6 +160,9 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         super.onDestroy();
     }
 
+    /**
+     * 
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -156,6 +171,9 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         //app.releaseAdMob(this);
     }
 
+    /**
+     * 
+     */
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -164,6 +182,9 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         
     }
 
+    /**
+     * 
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -180,6 +201,10 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
 
     }
 
+    /**
+     * 
+     * @param ssdpp
+     */
     public void deviceNotifyReceived(final SSDPPacket ssdpp) {
 
         Runnable task = new Runnable() {
@@ -196,6 +221,10 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
 
     }
 
+    /**
+     * 
+     * @param device
+     */
     public void deviceAdded(final Device device) {
 
         Runnable task = new Runnable() {
@@ -210,6 +239,10 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
 
     }
 
+    /**
+     * 
+     * @param device
+     */
     public void deviceRemoved(final Device device) {
 
         Runnable task = new Runnable() {
@@ -224,6 +257,13 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
 
     }
 
+    /**
+     * 
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Device dev = (Device) devListAdapter.getItem(position);
 
@@ -236,16 +276,33 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
 
     }
 
+    /**
+     * 
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Device dev = (Device) devListAdapter.getItem(position);
 
         Log.d("Device", "Show Device Details " + dev.getFriendlyName());
     }
 
+    /**
+     * 
+     * @param arg0
+     */
     public void onNothingSelected(AdapterView<?> arg0) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * 
+     * @param menu
+     * @param v
+     * @param menuInfo
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
             ContextMenuInfo menuInfo) {
@@ -255,6 +312,11 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
 
     }
 
+    /**
+     * 
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -262,6 +324,11 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         return true;
     }
     
+    /**
+     * 
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

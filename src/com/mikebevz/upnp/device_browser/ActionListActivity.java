@@ -33,7 +33,9 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
     private ActionListAdapter adapter;
     private ProgressDialog dialog;
 
-    /** Called when the activity is first created. */
+    /** Called when the activity is first created.
+     * @param icicle 
+     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -61,6 +63,13 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
 
     }
 
+    /**
+     * 
+     * @param av
+     * @param view
+     * @param position
+     * @param id
+     */
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
 
         Intent intent = new Intent(this, ArgumentListActivity.class);
@@ -68,6 +77,10 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         startActivity(intent);
     }
 
+    /**
+     * 
+     * @param aList
+     */
     public void OnServiceActionsListSuccess(ActionList aList) {
         this.sList = aList;
         
@@ -78,6 +91,9 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         dialog.dismiss();
     }
 
+    /**
+     * 
+     */
     public void OnServiceActionListPreExecute() {
         
         dialog = ProgressDialog.show(this, "", "Loading...", true);
@@ -85,6 +101,10 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         //dialog.setCancelMessage("Cannot load data. Try again");
     }
 
+    /**
+     * 
+     * @param value
+     */
     public void OnServiceActionsListProgressUpdate(Integer value) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
