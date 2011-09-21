@@ -84,7 +84,8 @@ import org.xml.sax.helpers.DefaultHandler;
  *      http://10.0.0.5:30888/__contentStream/47f6d67dfc4ca4db4eaea9108207c0de/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22777y8z1227254470
  *  </res>
  *  <upnp:albumArtURI dlna:profileID="JPEG_TN">
- *      http://10.0.0.5:30888/__artwork/47f6d67dfc4ca4db4eaea9108207c0de/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22777y8z1227254470</upnp:albumArtURI>
+ *      http://10.0.0.5:30888/__artwork/47f6d67dfc4ca4db4eaea9108207c0de/TVMOBiLi/s0-902764585c283cdcd2a0f0647decc397x22777y8z1227254470
+ * </upnp:albumArtURI>
  * </item>
  * <item id="s0-902764585c283cdcd2a0f0647decc397x22781y8z1228962340" dlna:dlnaManaged="0" parentID="0-902764585c283cdcd2a0f0647decc397x9147y2z1" restricted="1">
  *  <dc:title>MOV04798.MPG</dc:title>

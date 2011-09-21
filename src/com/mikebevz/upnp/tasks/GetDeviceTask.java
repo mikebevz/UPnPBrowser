@@ -5,6 +5,7 @@
 package com.mikebevz.upnp.tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import org.cybergarage.upnp.Device;
 
@@ -15,6 +16,7 @@ import org.cybergarage.upnp.Device;
 public class GetDeviceTask  extends AsyncTask<Integer, Integer, Device> {
     
     OnDeviceDetails delegate;
+    Exception lastException;
     
     private final UpnpBrowserApp app;
     
@@ -27,19 +29,35 @@ public class GetDeviceTask  extends AsyncTask<Integer, Integer, Device> {
         super.onPreExecute();
         this.delegate.OnDeviceDetailsPreExecute();
     }
-    
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+        this.delegate.OnDeviceDetailsCancelled(lastException);
+    }
     
     
     @Override
     protected Device doInBackground(Integer... positions) {
         //publishProgress(100);
-        Device dev = (Device) app.getDeviceList().get(positions[0]);
-        return dev;
+        Device dev = null;
+        try {
+            dev = (Device) app.getDeviceList().get(positions[0]);
+        }catch (Exception e) {
+            lastException = e;
+        } finally {
+            return dev;
+        }
+        
     }
     
     @Override
     protected void onPostExecute(Device result) {
-        this.delegate.OnDeviceDetailsSuccess(result);
+        if (result == null) {
+            this.cancel(true);
+        } else {
+            this.delegate.OnDeviceDetailsSuccess(result);
+        }
     }
 
     public void setOnDeviceDetailsHandler(OnDeviceDetails delegate) {

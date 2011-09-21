@@ -10,6 +10,7 @@ import android.app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
@@ -125,4 +126,11 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
     public void OnDeviceDetailsPreExecute() {
         //TODO Implement progress dialog
     }
+
+    public void OnDeviceDetailsCancelled(Exception e) {
+        Log.e("DeviceBrowser", e.getMessage());
+       // throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    
 }

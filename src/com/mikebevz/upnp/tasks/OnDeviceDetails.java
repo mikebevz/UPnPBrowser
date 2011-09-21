@@ -4,6 +4,7 @@
  */
 package com.mikebevz.upnp.tasks;
 
+import android.os.AsyncTask.Status;
 import org.cybergarage.upnp.Device;
 
 /**
@@ -15,5 +16,7 @@ public interface OnDeviceDetails {
     public void OnDeviceDetailsSuccess(Device result);
     public void OnDeviceDetailsProgressUpdate(Integer integer);
     public void OnDeviceDetailsPreExecute();
+
+    public void OnDeviceDetailsCancelled(Exception lastException);
     
 }

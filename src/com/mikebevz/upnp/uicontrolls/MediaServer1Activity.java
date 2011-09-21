@@ -103,4 +103,11 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
         intent.putExtra("device", deviceNumber);
         startActivity(intent);
     }
+
+
+    public void OnDeviceDetailsCancelled(Exception lastException) {
+        Log.e("MediaServer", lastException.getMessage());
+        dialog.dismiss();
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
