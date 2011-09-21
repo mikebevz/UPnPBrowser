@@ -19,8 +19,6 @@ import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.GenericKeyValueAdapter;
 import com.mikebevz.upnp.device_browser.GenericKeyValueAdapter;
-import com.mikebevz.upnp.mediaserver1.activities.ServiceListActivity;
-import com.mikebevz.upnp.mediaserver1.activities.ServiceListActivity;
 import com.mikebevz.upnp.tasks.GetDeviceTask;
 import java.util.ArrayList;
 import org.cybergarage.upnp.Device;

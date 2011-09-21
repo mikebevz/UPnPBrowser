@@ -4,6 +4,7 @@
  */
 package com.mikebevz.upnp.mediaserver1;
 
+import android.util.Log;
 import com.mikebevz.upnp.mediaserver1.models.Entity;
 import com.mikebevz.upnp.mediaserver1.models.Container;
 import com.mikebevz.upnp.mediaserver1.models.Item;
@@ -106,7 +107,6 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     private Container currentContainer;
     private StringBuilder builder;
     private List<Entity> listItems;
-    
     // Container element
     final private static String TITLE = "title";
     final private static String CLASS = "class";
@@ -115,35 +115,24 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     final private static String WRITE_STATUS = "writeStatus";
     final private static String ICON = "icon";
     final private static String CONTAINER = "container";
-    
     // Item element
     final private static String ITEM = "item";
-    
     final private static String ARTIST = "artist";
     final private static String ALBUM = "album";
     final private static String GENRE = "genre";
     final private static String RES = "res";
     final private static String ALBUM_ART_URI = "albumArtURI";
-    
-            
-    
     // Container Attributes
     final private static String OBJECT_ID = "id";
     final private static String DLNA_MANAGED = "dlnaManaged";
     final private static String PARENT_ID = "parentID";
     final private static String CHILD_COUNT = "childCount";
     final private static String RESTRICTED = "restricted";
-    
-    
     //Res Attributes
     final private static String SIZE = "size";
     final private static String PROTOCOL_INFO = "protocolInfo";
-    
     //AlbumArtURI Attributes
     final private static String PROFILE_ID = "profileID";
-    
-    
-    
     private Item currentItem;
     private List<Item> items;
 
@@ -172,11 +161,11 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
                 currentContainer.setIcon(builder.toString());
             } else if (localName.equalsIgnoreCase(CONTAINER)) {
                 containers.add(currentContainer);
-                listItems.add((Entity)currentContainer);
+                listItems.add((Entity) currentContainer);
             }
             builder.setLength(0);
         }
-        
+
         if (this.currentItem != null) {
             if (localName.equalsIgnoreCase(TITLE)) {
                 currentItem.setTitle(builder.toString());
@@ -200,7 +189,7 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
                 currentItem.setAlbumArtUri(builder.toString());
             } else if (localName.equalsIgnoreCase(ITEM)) {
                 items.add(currentItem);
-                listItems.add((Entity)currentItem);
+                listItems.add((Entity) currentItem);
             }
             builder.setLength(0);
         }
@@ -222,7 +211,7 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
         if (localName.equalsIgnoreCase(ITEM)) {
             this.currentItem = new Item();
             int length = attributes.getLength();
-            
+
             for (int i = 0; i < length; i++) {
                 String name = attributes.getLocalName(i);
 
@@ -243,34 +232,38 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
                 }
             }
         }
-        
+
         if (localName.equalsIgnoreCase(RES)) {
             int length = attributes.getLength();
             for (int i = 0; i < length; i++) {
                 String name = attributes.getLocalName(i);
-                
+
                 if (name.equalsIgnoreCase(SIZE)) {
                     this.currentItem.setResSize(attributes.getValue(i));
                 }
-                
+
                 if (name.equalsIgnoreCase(PROTOCOL_INFO)) {
                     this.currentItem.setResProtocolInfo(attributes.getValue(i));
                 }
             }
         }
-        
+
         if (localName.equalsIgnoreCase(ALBUM_ART_URI)) {
             int length = attributes.getLength();
             for (int i = 0; i < length; i++) {
                 String name = attributes.getLocalName(i);
-                
+                Log.d("Album Art URI", name);
                 if (name.equalsIgnoreCase(PROFILE_ID)) {
+                    if (this.currentItem == null) {
+                        this.currentItem = new Item(); //Throws NullPointerException all the time. Trying like this
+                    }
                     this.currentItem.setAlbumArtUriProfileId(attributes.getValue(i));
+
                 }
-                
+
             }
         }
-        
+
 
         if (localName.equalsIgnoreCase(CONTAINER)) {
             this.currentContainer = new Container();
@@ -305,6 +298,4 @@ public class ContentDirectoryXmlHandler extends DefaultHandler {
     List<Entity> getContainers() {
         return this.listItems;
     }
-    
-    
 }
