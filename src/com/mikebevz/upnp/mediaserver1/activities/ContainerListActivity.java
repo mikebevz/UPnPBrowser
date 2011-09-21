@@ -94,6 +94,7 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
 
         String cclass = entityList.get(position).getCclass();
         Log.d("CClass", cclass);
+        
 
         if (cclass.matches(CONTAINER_STORAGE_FOLDER) || cclass.matches(CONTAINER_PHOTO_ALBUM)
              || cclass.matches(CONTAINER_MUSIC_ALBUM) || cclass.matches(CONTAINER_MUSIC_ARTIST)
@@ -116,6 +117,19 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 Log.e("PlayMP3", e.getMessage());
+            }
+        }
+        
+        if (cclass.matches(ITEM_VIDEO)) {
+            Item item = (Item) entityList.get(position);
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+            Uri data = Uri.parse(item.getRes());
+            intent.setDataAndType(data, "video/*");
+
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Log.e("PlayVideo", e.getMessage());
             }
         }
 
