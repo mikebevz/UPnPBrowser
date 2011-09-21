@@ -5,8 +5,6 @@
 package com.mikebevz.upnp.mediaserver1;
 
 import android.os.AsyncTask;
-import com.mikebevz.upnp.mediaserver.content_directory.Entity;
-import com.mikebevz.upnp.mediaserver.content_directory.SaxContentParser;
 import java.util.List;
 import org.cybergarage.upnp.Action;
 import org.cybergarage.upnp.Device;

@@ -6,10 +6,10 @@ package com.mikebevz.upnp;
 
 import android.content.Context;
 import android.content.Intent;
-import com.mikebevz.upnp.uicontrolls.DeviceBrowserUIActivity;
-import com.mikebevz.upnp.uicontrolls.MediaServer2Activity;
-import com.mikebevz.upnp.uicontrolls.MediaServer1Activity;
-import com.mikebevz.upnp.uicontrolls.SwitchPowerUIActivity;
+import com.mikebevz.upnp.device_browser.activities.DeviceBrowserUIActivity;
+import com.mikebevz.upnp.activities.MediaServer2Activity;
+import com.mikebevz.upnp.mediaserver1.activities.MediaServer1Activity;
+import com.mikebevz.upnp.networklight.activities.SwitchPowerUIActivity;
 
 /**
  *

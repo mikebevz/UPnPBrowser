@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_launcher"
         
         >
-        <activity android:name=".MainActivity"
+        <activity android:name=".activities.MainActivity"
                   android:label="@string/app_name" 
                   android:debuggable="true"
                   >
@@ -25,37 +25,39 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".DeviceDetailsActivity"
+        <activity android:name=".device_browser.activities.DeviceDetailsActivity"
                   android:label="@string/app_name" />
                   
                   
-        <activity android:name=".uicontrolls.SwitchPowerUIActivity"
+        <activity android:name=".network_light.activities.SwitchPowerUIActivity"
                   android:label="@string/app_name" />
                   
-        <activity android:name=".uicontrolls.DeviceBrowserUIActivity"
+        <activity android:name=".device_browser.activities.DeviceBrowserUIActivity"
                   android:label="@string/app_name" />     
                   
-        <activity android:name=".uicontrolls.MediaServer1Activity"
-                  android:label="@string/app_name" />        
-        <activity android:name=".uicontrolls.MediaServer2Activity"
-                  android:label="@string/app_name" />     
-                  
-        <activity android:name=".device_browser.ServiceListActivity"
-                  android:label="@string/app_name" />  
-                  
-        <activity android:name=".device_browser.ServiceDetailsActivity"
-                  android:label="@string/app_name" />           
-                  
-        <activity android:name=".device_browser.ActionListActivity"
+        <activity android:name=".media1server1.MediaServer1Activity"
                   android:label="@string/app_name" />   
-        <activity android:name=".device_browser.ArgumentListActivity"
+                  
+        <activity android:name=".activities.MediaServer2Activity"
+                  android:label="@string/app_name" />     
+                  
+        <activity android:name=".device_browser.activities.ServiceListActivity"
                   android:label="@string/app_name" />  
                   
-        <activity android:name=".device_browser.InvokeActionActivity"
+        <activity android:name=".device_browser.activities.ServiceDetailsActivity"
+                  android:label="@string/app_name" />           
+                  
+        <activity android:name=".device_browser.activities.ActionListActivity"
+                  android:label="@string/app_name" />   
+                  
+        <activity android:name=".device_browser.activities.ArgumentListActivity"
+                  android:label="@string/app_name" />  
+                  
+        <activity android:name=".device_browser.activities.InvokeActionActivity"
                   android:label="@string/app_name" />           
                   
                   
-        <activity android:name=".mediaserver1.ContainerListActivity" />          
+        <activity android:name=".mediaserver1.activities.ContainerListActivity" />          
                   
     </application>
 </manifest> 

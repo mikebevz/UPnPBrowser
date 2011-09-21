@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.uicontrolls;
+package com.mikebevz.upnp.device_browser.activities;
 
 import android.view.View;
 import com.mikebevz.upnp.tasks.OnDeviceDetails;
@@ -18,7 +18,9 @@ import com.mikebevz.upnp.ControlUIFactory;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.GenericKeyValueAdapter;
-import com.mikebevz.upnp.device_browser.ServiceListActivity;
+import com.mikebevz.upnp.device_browser.GenericKeyValueAdapter;
+import com.mikebevz.upnp.mediaserver1.activities.ServiceListActivity;
+import com.mikebevz.upnp.mediaserver1.activities.ServiceListActivity;
 import com.mikebevz.upnp.tasks.GetDeviceTask;
 import java.util.ArrayList;
 import org.cybergarage.upnp.Device;

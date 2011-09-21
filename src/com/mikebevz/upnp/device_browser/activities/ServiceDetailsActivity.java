@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.device_browser;
+package com.mikebevz.upnp.device_browser.activities;
 
+import com.mikebevz.upnp.device_browser.activities.ActionListActivity;
 import android.view.View;
 import android.app.Activity;
 
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
+import com.mikebevz.upnp.device_browser.GenericKeyValueAdapter;
 import com.mikebevz.upnp.tasks.GetServiceTask;
 import com.mikebevz.upnp.tasks.OnServiceDetails;
 import java.util.ArrayList;

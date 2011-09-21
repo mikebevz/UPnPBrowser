@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.uicontrolls;
+package com.mikebevz.upnp.networklight.activities;
 
 import android.widget.RadioGroup;
 import com.mikebevz.upnp.R;

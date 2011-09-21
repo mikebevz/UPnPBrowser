@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.uicontrolls;
+package com.mikebevz.upnp.mediaserver1.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -15,8 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import com.mikebevz.upnp.mediaserver.content_directory.ContainerListAdapter;
-import com.mikebevz.upnp.mediaserver.content_directory.Entity;
+import com.mikebevz.upnp.mediaserver1.ContainerListAdapter;
+import com.mikebevz.upnp.mediaserver1.Entity;
 import com.mikebevz.upnp.mediaserver1.BrowseTask;
 import com.mikebevz.upnp.mediaserver1.ContainerListActivity;
 import com.mikebevz.upnp.mediaserver1.OnTaskFactory;

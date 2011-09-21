@@ -14,8 +14,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import com.mikebevz.upnp.mediaserver.content_directory.ContainerListAdapter;
-import com.mikebevz.upnp.mediaserver.content_directory.Entity;
 import java.util.List;
 import org.cybergarage.upnp.Device;
 

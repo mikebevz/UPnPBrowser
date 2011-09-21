@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.mediaserver.content_directory;
+package com.mikebevz.upnp.mediaserver1;
 
 import java.util.ArrayList;
 import java.util.List;

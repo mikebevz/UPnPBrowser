@@ -1,4 +1,4 @@
-package com.mikebevz.upnp;
+package com.mikebevz.upnp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.bugsense.trace.BugSenseHandler;
+import com.mikebevz.upnp.DeviceListAdapter;
+import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.UpnpBrowserApp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cybergarage.upnp.ControlPoint;
@@ -22,7 +25,7 @@ import org.cybergarage.upnp.Device;
 import org.cybergarage.upnp.device.DeviceChangeListener;
 import org.cybergarage.upnp.device.NotifyListener;
 import org.cybergarage.upnp.ssdp.SSDPPacket;
-import com.mikebevz.upnp.uicontrolls.DeviceBrowserUIActivity;
+import com.mikebevz.upnp.device_browser.activities.DeviceBrowserUIActivity;
 
 /**
  * 

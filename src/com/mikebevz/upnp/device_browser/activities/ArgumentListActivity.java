@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.device_browser;
+package com.mikebevz.upnp.device_browser.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -18,6 +18,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
+import com.mikebevz.upnp.device_browser.ArgumentListAdapter;
 import com.mikebevz.upnp.tasks.GetActionArgumentsTask;
 import com.mikebevz.upnp.tasks.OnActionArgumentsList;
 import org.cybergarage.upnp.Action;

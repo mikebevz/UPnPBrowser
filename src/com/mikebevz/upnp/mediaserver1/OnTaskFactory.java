@@ -4,7 +4,6 @@
  */
 package com.mikebevz.upnp.mediaserver1;
 
-import com.mikebevz.upnp.mediaserver.content_directory.Entity;
 import java.util.List;
 
 /**
