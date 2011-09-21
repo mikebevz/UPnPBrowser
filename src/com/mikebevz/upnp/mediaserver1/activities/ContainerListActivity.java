@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.mediaserver1;
+package com.mikebevz.upnp.mediaserver1.activities;
 
+import com.mikebevz.upnp.mediaserver1.models.Entity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,6 +15,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
+import com.mikebevz.upnp.mediaserver1.BrowseTask;
+import com.mikebevz.upnp.mediaserver1.ContainerListAdapter;
+import com.mikebevz.upnp.mediaserver1.OnTaskFactory;
+import com.mikebevz.upnp.mediaserver1.TaskFactory;
 import java.util.List;
 import org.cybergarage.upnp.Device;
 

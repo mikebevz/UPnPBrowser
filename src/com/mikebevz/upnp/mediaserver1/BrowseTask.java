@@ -4,6 +4,7 @@
  */
 package com.mikebevz.upnp.mediaserver1;
 
+import com.mikebevz.upnp.mediaserver1.models.Entity;
 import android.os.AsyncTask;
 import java.util.List;
 import org.cybergarage.upnp.Action;

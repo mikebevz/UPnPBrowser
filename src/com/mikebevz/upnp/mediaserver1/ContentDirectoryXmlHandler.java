@@ -4,6 +4,9 @@
  */
 package com.mikebevz.upnp.mediaserver1;
 
+import com.mikebevz.upnp.mediaserver1.models.Entity;
+import com.mikebevz.upnp.mediaserver1.models.Container;
+import com.mikebevz.upnp.mediaserver1.models.Item;
 import java.util.ArrayList;
 import java.util.List;
 import org.xml.sax.Attributes;

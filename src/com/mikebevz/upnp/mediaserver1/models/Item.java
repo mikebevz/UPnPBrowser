@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.mediaserver1;
+package com.mikebevz.upnp.mediaserver1.models;
 
 import java.util.Date;
 
@@ -10,7 +10,7 @@ import java.util.Date;
  *
  * @author mikebevz
  */
-class Item implements Entity  {
+public class Item implements Entity  {
 
     private String objectId;
     private String dlnaManaged;
