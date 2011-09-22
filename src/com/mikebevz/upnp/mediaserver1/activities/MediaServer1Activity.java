@@ -15,11 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import com.mikebevz.upnp.mediaserver1.ContainerListAdapter;
 import com.mikebevz.upnp.mediaserver1.models.Entity;
-import com.mikebevz.upnp.mediaserver1.BrowseTask;
-import com.mikebevz.upnp.mediaserver1.OnTaskFactory;
-import com.mikebevz.upnp.mediaserver1.TaskFactory;
+import com.mikebevz.upnp.mediaserver1.ContainerListAdapter;
 import com.mikebevz.upnp.tasks.GetDeviceTask;
 import com.mikebevz.upnp.tasks.OnDeviceDetails;
 import java.util.List;
@@ -29,23 +26,12 @@ import org.cybergarage.upnp.Device;
  *
  * @author mikebevz
  */
-public class MediaServer1Activity extends Activity implements OnDeviceDetails, OnTaskFactory, OnItemClickListener {
+public class MediaServer1Activity extends Activity implements OnDeviceDetails,  OnItemClickListener {
 
-    /*
-    // Connection Manager Service
-    private Action getProtocolInfoAction;
-    private Action getCurrentConnectionIDsAction;
-    private Action getCurrentConnectionInfoAction;
-    // ContentDirectory Service
-    private Action action;
-    private Action getSortCapabilitiesAction;
-    private Action getSystemUpdateIDAction;
-    private Action getSearchCapabilitiesAction;
-    private ServiceList sList;
-     */
     private ProgressDialog dialog;
     private List<Entity> containerList;
     private int deviceNumber;
+    ContainerListAdapter adapter;
 
     /** Called when the activity is first created. */
     @Override
@@ -67,39 +53,25 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails, O
 
     public void OnDeviceDetailsSuccess(Device device) {
         setTitle(device.getFriendlyName());
-
-        BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
-        task.setOnTaskFactoryHandler(this);
-        task.execute();
-
-        //dialog.dismiss();
+        
+        
+        adapter = new ContainerListAdapter(this, device);
+        containerList = adapter.getContainers();
+        ListView cList = (ListView) findViewById(R.id.container_list);
+        cList.setAdapter(adapter);
+        cList.setOnItemClickListener(this);
+        
     }
 
     public void OnDeviceDetailsProgressUpdate(Integer integer) {
     }
 
-    public void onTaskFactoryPreExecute() {
-        dialog = ProgressDialog.show(this, "", "Loading...", true);
-        dialog.setCancelable(true);
-    }
-
-    public void onTaskFactorySuccess(List<Entity> result) {
-        this.containerList = result;
-        ContainerListAdapter adapter = new ContainerListAdapter(this);
-        adapter.setContainers(result);
-
-        ListView cList = (ListView) findViewById(R.id.container_list);
-        cList.setAdapter(adapter);
-        cList.setOnItemClickListener(this);
-
-        Log.d("Containers: ", String.valueOf(result.size()));
-        dialog.dismiss();
-    }
+   
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
 
         Intent intent = new Intent(this, ContainerListActivity.class);
-        intent.putExtra("objectId", containerList.get(position).getObjectId());
+        intent.putExtra("objectId", adapter.getContainers().get(position).getObjectId());
         intent.putExtra("device", deviceNumber);
         startActivity(intent);
     }

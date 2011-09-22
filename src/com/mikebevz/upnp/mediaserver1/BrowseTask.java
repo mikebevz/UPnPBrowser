@@ -6,6 +6,7 @@ package com.mikebevz.upnp.mediaserver1;
 
 import com.mikebevz.upnp.mediaserver1.models.Entity;
 import android.os.AsyncTask;
+import android.util.Log;
 import java.util.List;
 import org.cybergarage.upnp.Action;
 import org.cybergarage.upnp.Device;
@@ -15,7 +16,7 @@ import org.cybergarage.upnp.Service;
  *
  * @author mikebevz
  */
-public final class BrowseTask extends AsyncTask<Void, Void, List<Entity>> implements TaskFactoryTask {
+public final class BrowseTask extends AsyncTask<Void, Void, BrowserTaskResult> implements TaskFactoryTask {
 
     private OnTaskFactory delegate;
     private Action action;
@@ -44,11 +45,11 @@ public final class BrowseTask extends AsyncTask<Void, Void, List<Entity>> implem
     
     
     @Override
-    protected List<Entity> doInBackground(Void... params) {
+    protected BrowserTaskResult doInBackground(Void... params) {
         
         setAction(getDevice().getService(getServiceName()).getAction(getActionName()));
         
-        getAction().setArgumentValue("ObjectID", getObjectID());
+        getAction().setArgumentValue("ObjectID", getObjectId());
         getAction().setArgumentValue("BrowseFlag", getBrowseFlag());
         getAction().setArgumentValue("Filter", getFilter());
         getAction().setArgumentValue("StartingIndex", getStartingIndex());
@@ -56,36 +57,38 @@ public final class BrowseTask extends AsyncTask<Void, Void, List<Entity>> implem
         getAction().setArgumentValue("SortCriteria", getSortCriteria());
 
         SaxContentParser parser = new SaxContentParser();
-
+        BrowserTaskResult res = new BrowserTaskResult();
+        
         if (getAction().postControlAction() == true) {
             //ArgumentList outArgList = action.getOutputArgumentList();
 
-            String result = getAction().getArgument("Result").getValue();
+            
+            res.setResult(getAction().getArgument("Result").getValue());
+            res.setNumberReturned(getAction().getArgument("NumberReturned").getValue());
+            res.setTotalMatches(getAction().getArgument("TotalMatches").getValue());
+            res.setUpdateID(getAction().getArgument("UpdateID").getValue());
+            
+            //String result = ;
             //String numberReturned = action.getArgument("NumberReturned").getValue();
             //String totalMatches = action.getArgument("TotalMatches").getValue();
             //String updateID = action.getArgument("UpdateID").getValue();
-            System.out.println(result);
-            parser.setMessage(result);
+            Log.d("XML Parsing Result",res.getResult());
+            parser.setMessage(res.getResult());
 
 
         }
-
         
-        List<Entity> containers = parser.parse();
+        
+        //List<Entity> containers = parser.parse();
+        res.setEntities(parser.parse());
             
-        return containers;
+        return res;
     }
     
-    public void setObjectID(String objectId) {
-        this.setObjectId(objectId);
-    }
-    
-    public String getObjectID() {
-        return this.getObjectId();
-    }
+   
 
     @Override
-    protected void onPostExecute(List<Entity> result) {
+    protected void onPostExecute(BrowserTaskResult result) {
         super.onPostExecute(result);
         this.getDelegate().onTaskFactorySuccess(result);
     }

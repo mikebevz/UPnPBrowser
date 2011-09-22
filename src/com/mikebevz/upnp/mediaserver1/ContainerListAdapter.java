@@ -4,10 +4,12 @@
  */
 package com.mikebevz.upnp.mediaserver1;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import com.mikebevz.upnp.mediaserver1.activities.ContainerListActivity;
 import com.mikebevz.upnp.mediaserver1.models.Entity;
 import com.mikebevz.upnp.mediaserver1.models.Container;
 import com.mikebevz.upnp.mediaserver1.models.Item;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -28,12 +30,13 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import org.cybergarage.upnp.Device;
 
 /**
  *
  * @author mikebevz
  */
-public class ContainerListAdapter extends BaseAdapter {
+public class ContainerListAdapter extends BaseAdapter implements OnTaskFactory  {
 
     private List<Entity> containers;
     private LayoutInflater mInflater;
@@ -46,12 +49,20 @@ public class ContainerListAdapter extends BaseAdapter {
     
     private final Pattern isContainer;
     private final Pattern isItem;
-    
+    private final Context context;
+    private final Device device;
+    private ProgressDialog dialog;
+    private String objectId;
 
-    public ContainerListAdapter(Context context) {
+    
+    public ContainerListAdapter(Context context, Device device) {
+        //super(context, wrapped, pendingResource);
+        this.context = context;
+        this.device = device;
         mInflater = LayoutInflater.from(context);
 
         containers = new ArrayList<Entity>();
+        
         
         icon_container = BitmapFactory.decodeResource(context.getResources(), R.drawable.folder);
         icon_item = BitmapFactory.decodeResource(context.getResources(), R.drawable.file);
@@ -62,7 +73,42 @@ public class ContainerListAdapter extends BaseAdapter {
         isContainer = Pattern.compile(CONTAINER_CCLASS);
         isItem = Pattern.compile(ITEM_CCLASS);
         
+        
+        BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
+        task.setOnTaskFactoryHandler(this);
+        task.execute();
     }
+
+    public ContainerListAdapter(Context context, Device device, String objectId) {
+        setObjectId(objectId);
+        
+        this.context = context;
+        this.device = device;
+        mInflater = LayoutInflater.from(context);
+
+        containers = new ArrayList<Entity>();
+        
+        
+        icon_container = BitmapFactory.decodeResource(context.getResources(), R.drawable.folder);
+        icon_item = BitmapFactory.decodeResource(context.getResources(), R.drawable.file);
+        //icon_music = BitmapFactory.decodeResource(context.getResources(), R.drawable.file_music);
+        //icon_mp3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.file_mp3);
+        
+        
+        isContainer = Pattern.compile(CONTAINER_CCLASS);
+        isItem = Pattern.compile(ITEM_CCLASS);
+        
+        
+        BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
+        task.setOnTaskFactoryHandler(this);
+        task.setObjectId(getObjectId());
+       
+        task.execute();
+        
+    }
+    
+    
+    
     /**
      * @return the containers
      */
@@ -151,6 +197,30 @@ public class ContainerListAdapter extends BaseAdapter {
         }
         return bm;
     }
+
+    public void onTaskFactorySuccess(BrowserTaskResult result) {
+        //throw new UnsupportedOperationException("Not supported yet.");
+        this.setContainers(result.getEntities());
+        this.notifyDataSetChanged();
+        dialog.dismiss();
+    }
+
+    public void onTaskFactoryPreExecute() {
+        //throw new UnsupportedOperationException("Not supported yet.");
+        dialog = ProgressDialog.show(context, "Loading", "It takes some time depending on your WiFi router load", true, true);
+    }
+
+    private String getObjectId() {
+        return this.objectId;
+    }
+
+    private void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
+
+    
+
+    
 
     static class ViewHolder {
 

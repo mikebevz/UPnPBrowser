@@ -19,6 +19,7 @@ import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.mediaserver1.BrowseTask;
+import com.mikebevz.upnp.mediaserver1.BrowserTaskResult;
 import com.mikebevz.upnp.mediaserver1.ContainerListAdapter;
 import com.mikebevz.upnp.mediaserver1.OnTaskFactory;
 import com.mikebevz.upnp.mediaserver1.TaskFactory;
@@ -44,9 +45,8 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
     public static final String ITEM_VIDEO = "object.item.videoItem";
     public static final String ITEM_PHOTO = "object.item.imageItem.photo";
     public static final String ITEM_MUSIC = "object.item.audioItem.musicTrack";
-    //
-    //
-    //
+    
+    ContainerListAdapter adapter;
     
     /** Called when the activity is first created. */
     @Override
@@ -59,11 +59,17 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
         //Log.d("ObjectID", objectId);
         deviceNumber = getIntent().getExtras().getInt("device");
         Device device = ((UpnpBrowserApp) getApplication()).getDeviceList().getDevice(deviceNumber);
-
-        BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
-        task.setOnTaskFactoryHandler(this);
-        task.setObjectID(objectId);
-        task.execute();
+        
+        adapter = new ContainerListAdapter(this, device, objectId);
+        
+        ListView cList = (ListView) findViewById(R.id.container_list);
+        entityList = adapter.getContainers();
+        cList.setAdapter(adapter);
+        cList.setOnItemClickListener(this);
+        //BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
+        //task.setOnTaskFactoryHandler(this);
+        //task.setObjectID(objectId);
+        //task.execute();
 
 
     }
@@ -72,19 +78,16 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
         dialog = ProgressDialog.show(this, "", "Loading...", true);
     }
 
-    public void onTaskFactorySuccess(List<Entity> result) {
+    public void onTaskFactorySuccess(BrowserTaskResult result) {
 
-        //if (result.get(0).getCclass().matches(CONTAINER_CCLASS)) {
+        this.entityList = result.getEntities();
+        //ContainerListAdapter adapter = new ContainerListAdapter(this);
+        //adapter.setContainers(entityList);
 
-        this.entityList = result;
-        ContainerListAdapter adapter = new ContainerListAdapter(this);
-        adapter.setContainers(result);
-
-        //}
-
-        ListView cList = (ListView) findViewById(R.id.container_list);
-        cList.setAdapter(adapter);
-        cList.setOnItemClickListener(this);
+        
+        //ListView cList = (ListView) findViewById(R.id.container_list);
+        //cList.setAdapter(adapter);
+        //cList.setOnItemClickListener(this);
 
 
         dialog.dismiss();
@@ -92,7 +95,7 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
 
-        String cclass = entityList.get(position).getCclass();
+        String cclass = adapter.getContainers().get(position).getCclass();
         Log.d("CClass", cclass);
         
 
@@ -100,7 +103,7 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
              || cclass.matches(CONTAINER_MUSIC_ALBUM) || cclass.matches(CONTAINER_MUSIC_ARTIST)
              || cclass.matches(CONTAINER_MUSIC_GENRE)) {
             Intent intent = new Intent(this, ContainerListActivity.class);
-            intent.putExtra("objectId", entityList.get(position).getObjectId());
+            intent.putExtra("objectId", adapter.getContainers().get(position).getObjectId());
             intent.putExtra("device", deviceNumber);
             startActivity(intent);
         }

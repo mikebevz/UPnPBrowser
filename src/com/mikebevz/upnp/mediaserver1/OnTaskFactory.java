@@ -12,6 +12,6 @@ import java.util.List;
  * @author mikebevz
  */
 public interface OnTaskFactory {
-    public void onTaskFactorySuccess(List<Entity> result);
+    public void onTaskFactorySuccess(BrowserTaskResult result);
     public void onTaskFactoryPreExecute();
 }
