@@ -111,7 +111,7 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
         
         
         if (cclass.matches(ITEM_MUSIC)) {
-            Item item = (Item) entityList.get(position);
+            Item item = (Item) adapter.getContainers().get(position);
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
             Uri data = Uri.parse(item.getRes());
             intent.setDataAndType(data, "audio/mp3");
@@ -124,7 +124,7 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
         }
         
         if (cclass.matches(ITEM_VIDEO)) {
-            Item item = (Item) entityList.get(position);
+            Item item = (Item) adapter.getContainers().get(position);
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
             Uri data = Uri.parse(item.getRes());
             intent.setDataAndType(data, "video/*");
