@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.mediaserver1.BrowseTask;
@@ -31,7 +32,7 @@ import org.cybergarage.upnp.Device;
  *
  * @author mikebevz
  */
-public class ContainerListActivity extends Activity implements OnTaskFactory, OnItemClickListener {
+public class ContainerListActivity extends Activity implements OnItemClickListener {
 
     private String objectId;
     private ProgressDialog dialog;
@@ -64,34 +65,24 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
         
         ListView cList = (ListView) findViewById(R.id.container_list);
         entityList = adapter.getContainers();
-        cList.setAdapter(adapter);
-        cList.setOnItemClickListener(this);
-        //BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
-        //task.setOnTaskFactoryHandler(this);
-        //task.setObjectID(objectId);
-        //task.execute();
-
-
-    }
-
-    public void onTaskFactoryPreExecute() {
-        dialog = ProgressDialog.show(this, "", "Loading...", true);
-    }
-
-    public void onTaskFactorySuccess(BrowserTaskResult result) {
-
-        this.entityList = result.getEntities();
-        //ContainerListAdapter adapter = new ContainerListAdapter(this);
-        //adapter.setContainers(entityList);
-
         
-        //ListView cList = (ListView) findViewById(R.id.container_list);
-        //cList.setAdapter(adapter);
-        //cList.setOnItemClickListener(this);
+        cList.setOnItemClickListener(this);
+        //cList.setFooterDividersEnabled(true);
+        
+        //TextView tv = new TextView(this);
+        //tv.setText("Loading...");
+        //cList.addFooterView(tv);
+        //cList.setTranscriptMode(ALWAYS_SC);
+        cList.setItemsCanFocus(false);
+        cList.setSmoothScrollbarEnabled(true);
+        cList.setAdapter(adapter);
+        
+        
+        
 
 
-        dialog.dismiss();
     }
+
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
 
@@ -137,4 +128,6 @@ public class ContainerListActivity extends Activity implements OnTaskFactory, On
         }
 
     }
+
+  
 }

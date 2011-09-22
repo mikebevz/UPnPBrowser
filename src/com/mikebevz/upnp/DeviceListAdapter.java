@@ -35,6 +35,9 @@ public class DeviceListAdapter extends BaseAdapter {
     private static final String INTERNET_CONNECTION_SHARING = "Internet Connection Sharing";
     private static final String KIES_SYNC_SERVER = "Kies Sync Server";
     
+    private static final String INTERNET_GATEWAY_DEVICE_TYPE = "urn:schemas-upnp-org:device:InternetGatewayDevice:1";
+    private static final String INTERNET_GATEWAY_AP_TYPE = "urn:schemas-wifialliance-org:device:WFADevice:1";
+    
     
     
     /**
@@ -114,7 +117,7 @@ public class DeviceListAdapter extends BaseAdapter {
     
     private Bitmap getIconForDevice(Device device) {
         //TODO implement different icons 
-        //String type = device.getDeviceType();
+        String type = device.getDeviceType();
         //String location = device.getLocation();
         String modelName = device.getModelName();
         
@@ -131,7 +134,9 @@ public class DeviceListAdapter extends BaseAdapter {
         }
         
         if (modelName.equalsIgnoreCase(INTERNET_GATEWAY_DEVICE) 
-            || modelName.equalsIgnoreCase(INTERNET_CONNECTION_SHARING)) {
+            || modelName.equalsIgnoreCase(INTERNET_CONNECTION_SHARING)
+            || type.equalsIgnoreCase(INTERNET_GATEWAY_DEVICE_TYPE)
+            || type.equalsIgnoreCase(INTERNET_GATEWAY_AP_TYPE)) {
             return routerIcon;
         }
         

@@ -59,8 +59,8 @@ public class InvokeActionActivity extends Activity implements OnClickListener {
         Button invokeBtn = (Button) findViewById(R.id.invoke_btn);
         invokeBtn.setOnClickListener(this);
 
-        Button resetBtn = (Button) findViewById(R.id.reset_btn);
-        resetBtn.setOnClickListener(this);
+        //Button resetBtn = (Button) findViewById(R.id.reset_btn);
+        //resetBtn.setOnClickListener(this);
 
         setTitle("Invoke " + action.getName() + " at " + action.getService().getServiceID());
 
@@ -145,8 +145,8 @@ public class InvokeActionActivity extends Activity implements OnClickListener {
      */
     public void onClick(View view) {
 
-        if (view.getId() == R.id.reset_btn) {
-        }
+        //if (view.getId() == R.id.reset_btn) {
+        //}
 
 
         if (view.getId() == R.id.invoke_btn) {

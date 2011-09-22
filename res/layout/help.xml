@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    
+    <ScrollView 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+        <LinearLayout 
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+            <TextView 
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="UPnP Browser. version 1.1.0\n\n\n
+Using this tool you are able to spot UPnP devices on your network and browse their services/actions/arguments.\n\n
+When you see the list of arguments of an action you can invoke the given action selecting 'Invoke' option from the menu.\n\n
+You can find sourcecode of this application at https://github.com/mikebevz/UPnPBrowser\n\n
+If you need a feature, want to report a bug - make a new issue on Github.\n \n
+In case you just wanna say thank you drop me a letter at myb@theappfellas.com.\n\n
+Cheers,\n\n
+Mike"
+            />
+            
+            
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

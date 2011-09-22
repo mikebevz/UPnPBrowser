@@ -6,7 +6,6 @@ package com.mikebevz.upnp.mediaserver1;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import com.mikebevz.upnp.mediaserver1.activities.ContainerListActivity;
 import com.mikebevz.upnp.mediaserver1.models.Entity;
 import com.mikebevz.upnp.mediaserver1.models.Container;
 import com.mikebevz.upnp.mediaserver1.models.Item;
@@ -53,6 +52,7 @@ public class ContainerListAdapter extends BaseAdapter implements OnTaskFactory  
     private final Device device;
     private ProgressDialog dialog;
     private String objectId;
+    private String numberReturned;
 
     
     public ContainerListAdapter(Context context, Device device) {
@@ -138,7 +138,18 @@ public class ContainerListAdapter extends BaseAdapter implements OnTaskFactory  
     public View getView(int position, View cView, ViewGroup parent) {
 
         ViewHolder holder;
-
+        Log.d("Number of elements", String.valueOf(getContainers().size()));
+        Log.d("Number returned", getNumberReturned());
+        Integer numElements = getContainers().size();
+        Integer numReturned = Integer.parseInt(getNumberReturned());
+        
+        
+        if (numElements == position+1) {
+            Log.d("List","Let's get some more results");
+        }
+        
+        Log.d("Position", String.valueOf(position));
+        
         if (cView == null) {
             cView = mInflater.inflate(R.layout.list_item_icon_text, null);
 
@@ -201,6 +212,7 @@ public class ContainerListAdapter extends BaseAdapter implements OnTaskFactory  
     public void onTaskFactorySuccess(BrowserTaskResult result) {
         //throw new UnsupportedOperationException("Not supported yet.");
         this.setContainers(result.getEntities());
+        this.setNumberReturned(result.getNumberReturned());
         this.notifyDataSetChanged();
         dialog.dismiss();
     }
@@ -216,6 +228,17 @@ public class ContainerListAdapter extends BaseAdapter implements OnTaskFactory  
 
     private void setObjectId(String objectId) {
         this.objectId = objectId;
+    }
+
+    private void setNumberReturned(String numberReturned) {
+        this.numberReturned = numberReturned;
+    }
+
+    /**
+     * @return the numberReturned
+     */
+    public String getNumberReturned() {
+        return numberReturned;
     }
 
     

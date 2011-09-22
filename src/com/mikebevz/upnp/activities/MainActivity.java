@@ -51,15 +51,17 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         
         setContentView(R.layout.main);
         
-        //BugSenseHandler.setup(this, "a8c5f7db");
+        BugSenseHandler.setup(this, "a8c5f7db");
         
         devicesList = (ListView) findViewById(R.id.devices_list);
 
-        setTitle("Available UPnP Devices");
+        
         
         devListAdapter = new DeviceListAdapter(this);   
-
+        
+        
         try {
+            setTitle("Scanning for devices...");
             startControlPoint();
 
             devListAdapter.setDeviceList(ctrlPoint.getDeviceList());
@@ -83,6 +85,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     protected void onStart() {
         super.onStart();
         if (controlPointStatus == true) {
+            setTitle("Available UPnP Devices");
             this.setProgressBarIndeterminate(true);
             this.setProgressBarIndeterminateVisibility(true);
         }
@@ -358,6 +361,11 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
                     toast.show();
                     return false;
                 } 
+            
+            case R.id.help:
+                Intent intent = new Intent(this, HelpActivity.class);
+                startActivity(intent);
+                return true;
                 
             default:
                 return super.onOptionsItemSelected(item);

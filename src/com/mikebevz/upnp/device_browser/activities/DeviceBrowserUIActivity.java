@@ -18,7 +18,6 @@ import com.mikebevz.upnp.ControlUIFactory;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.GenericKeyValueAdapter;
-import com.mikebevz.upnp.device_browser.GenericKeyValueAdapter;
 import com.mikebevz.upnp.tasks.GetDeviceTask;
 import java.util.ArrayList;
 import org.cybergarage.upnp.Device;
@@ -50,8 +49,8 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
         Button servicesBtn = (Button) findViewById(R.id.services_btn);
         servicesBtn.setOnClickListener(this);
         
-        Button contentBtn = (Button) findViewById(R.id.content_btn);
-        contentBtn.setOnClickListener(this);
+        //Button contentBtn = (Button) findViewById(R.id.content_btn);
+        //contentBtn.setOnClickListener(this);
         
         adapter = new GenericKeyValueAdapter(this);
         
@@ -87,6 +86,10 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
         properties.add("UDN : " +device.getUDN());
         properties.add("UPC : " +device.getUPC());
         properties.add("URLBase : " +device.getURLBase());
+        properties.add("LeaseTime: "+ device.getLeaseTime());
+        properties.add("ElapsedTime: "+ device.getElapsedTime());
+        properties.add("DescriptionFilePath: "+ device.getDescriptionFilePath());
+        
         
         adapter.setData(properties);
         adapter.notifyDataSetChanged();
@@ -105,10 +108,10 @@ public class DeviceBrowserUIActivity extends Activity implements OnDeviceDetails
     public void onClick(View view) {
         Intent intent;
         switch(view.getId()) {
-            case R.id.content_btn:
-                ControlUIFactory factory = new ControlUIFactory();
-                intent = factory.getIntent(this, device.getDeviceType());
-                break;    
+            //case R.id.content_btn:
+            //    ControlUIFactory factory = new ControlUIFactory();
+            //    intent = factory.getIntent(this, device.getDeviceType());
+            //    break;    
             case R.id.services_btn:
                 intent = new Intent(this, ServiceListActivity.class);
                 break;

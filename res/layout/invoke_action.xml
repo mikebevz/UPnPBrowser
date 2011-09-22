@@ -25,13 +25,13 @@
                 android:layout_height="wrap_content"
                 android:text="Invoke Action"
                 android:id="@+id/invoke_btn"/>
-                
+            <!--    
             <Button 
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Reset"
                 android:id="@+id/reset_btn"/>
-            
+            -->
         </LinearLayout>
 
     </ScrollView>
