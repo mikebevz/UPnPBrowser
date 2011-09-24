@@ -4,7 +4,6 @@
  */
 package com.mikebevz.upnp.device_browser.activities;
 
-import com.mikebevz.upnp.device_browser.activities.ActionListActivity;
 import android.view.View;
 import android.app.Activity;
 
@@ -15,23 +14,17 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
-import com.mikebevz.upnp.UpnpBrowserApp;
-import com.mikebevz.upnp.device_browser.GenericKeyValueAdapter;
-import com.mikebevz.upnp.tasks.GetServiceTask;
-import com.mikebevz.upnp.tasks.OnServiceDetails;
+import com.mikebevz.upnp.device_browser.ServiceDetailsAdapter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import org.cybergarage.upnp.Service;
 
 /**
  *
  * @author mikebevz
  */
-public class ServiceDetailsActivity extends Activity implements OnServiceDetails, OnClickListener {
+public class ServiceDetailsActivity extends Activity implements OnClickListener {
 
-    private GenericKeyValueAdapter adapter;
+    private ServiceDetailsAdapter adapter;
     private Service service;
     private ProgressDialog dialog;
     
@@ -46,17 +39,12 @@ public class ServiceDetailsActivity extends Activity implements OnServiceDetails
         
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("position");
-       
-        
-        GetServiceTask task = new GetServiceTask((UpnpBrowserApp)this.getApplication());
-        task.setOnServiceDetailsHandler(this);
-        task.execute(position);
         
         Button servicesBtn = (Button) findViewById(R.id.services_btn);
         servicesBtn.setOnClickListener(this);
         
         
-        adapter = new GenericKeyValueAdapter(this);
+        adapter = new ServiceDetailsAdapter(this, position);
         
         ArrayList<String> properties = new ArrayList<String>();
         adapter.setData(properties);
@@ -67,37 +55,7 @@ public class ServiceDetailsActivity extends Activity implements OnServiceDetails
     }
     
 
-    /**
-     * 
-     * @param result
-     */
-    public void OnServiceDetailsSuccess(Service result) {
-        this.service = result;
-        List<String> serviceNameList = Arrays.asList(service.getServiceID().split(":"));
-        Collections.reverse(serviceNameList);
-        this.setTitle("Service: " + serviceNameList.toArray()[0].toString());
-        
-        
-        ArrayList<String> properties = new ArrayList<String>();
-        properties.add("ControlURL : " +service.getControlURL());
-        properties.add("DescriptionURL : " +service.getDescriptionURL());
-        properties.add("EventSubURL : " +service.getEventSubURL());
-        properties.add("SCPDURL : " +service.getSCPDURL());
-        properties.add("SID : " +service.getSID());
-        properties.add("ServiceID : " +service.getServiceID());
-        properties.add("ServiceType : " +service.getServiceType());
-        
-        adapter.setData(properties);
-        adapter.notifyDataSetChanged();
-        dialog.dismiss();
-    }
-
-    /**
-     * 
-     */
-    public void OnServiceDetailsPreExecute() {
-        dialog = ProgressDialog.show(this, "", "Loading...", true);
-    }
+ 
     
     /**
      * 

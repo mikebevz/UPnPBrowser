@@ -48,7 +48,7 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails,  
     }
 
     public void OnDeviceDetailsPreExecute() {
-        //dialog = ProgressDialog.show(this, "", "Loading...", true);
+        //dialog = ProgressDialog.show(this, "", getResources().getString(R.string.loading), true);
     }
 
     public void OnDeviceDetailsSuccess(Device device) {

@@ -49,7 +49,7 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         List<String> list = Arrays.asList(service.getServiceID().split(":"));
         Collections.reverse(list);
 
-        this.setTitle("Actions at " + list.toArray()[0].toString());
+        this.setTitle("@string/actions_at" + list.toArray()[0].toString());
 
         GetServiceActionsTask getActionsTask = new GetServiceActionsTask();
         getActionsTask.setOnServiceActionListHandler(this);
@@ -97,7 +97,7 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
      */
     public void OnServiceActionListPreExecute() {
         
-        dialog = ProgressDialog.show(this, "", "Loading...", true);
+        dialog = ProgressDialog.show(this, "", getResources().getString(R.string.loading), true);
         dialog.setCancelable(true);
         //dialog.setCancelMessage("Cannot load data. Try again");
     }

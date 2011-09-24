@@ -14,31 +14,27 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.bugsense.trace.BugSenseHandler;
 import com.mikebevz.upnp.DeviceListAdapter;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.cybergarage.upnp.ControlPoint;
 import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.device.DeviceChangeListener;
-import org.cybergarage.upnp.device.NotifyListener;
-import org.cybergarage.upnp.ssdp.SSDPPacket;
 import com.mikebevz.upnp.device_browser.activities.DeviceBrowserUIActivity;
+import com.google.ads.*;
 
 /**
  * 
  * @author mikebevz
  */
-public class MainActivity extends Activity implements NotifyListener, DeviceChangeListener, AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
-    ControlPoint ctrlPoint = null;
+    //ControlPoint ctrlPoint = null;
     DeviceListAdapter devListAdapter;
     Boolean controlPointStatus = false; // false = stopped, true = running
     ListView devicesList;
     UpnpBrowserApp app;
-    
+    private AdView av;
 
     /** Called when the activity is first created.
      * @param savedInstanceState 
@@ -47,34 +43,32 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        
-        
+
         setContentView(R.layout.main);
-        
-        BugSenseHandler.setup(this, "a8c5f7db");
-        
+
+       // BugSenseHandler.setup(this, "a8c5f7db");
+
         devicesList = (ListView) findViewById(R.id.devices_list);
+        av = (AdView)findViewById(R.id.ad_view);
+        
+        
+        AdRequest request = new AdRequest();
+        request.addTestDevice("B3EEABB8EE11C2BE770B684D95219ECB");    
+        av.loadAd(request);
+        
+        
+        devListAdapter = new DeviceListAdapter(this);
 
-        
-        
-        devListAdapter = new DeviceListAdapter(this);   
-        
-        
         try {
-            setTitle("Scanning for devices...");
-            startControlPoint();
-
-            devListAdapter.setDeviceList(ctrlPoint.getDeviceList());
+            setTitle(R.string.scanning_for_devices);
+            devListAdapter.startControlPoint();
 
             devicesList.setAdapter(devListAdapter);
             devicesList.setOnItemClickListener(this);
-
-            app = (UpnpBrowserApp) getApplication();
         } catch (Exception e) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Connect to a WiFi network", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.connect_to_wifi, Toast.LENGTH_LONG);
             toast.show();
         }
-        
 
     }
 
@@ -84,74 +78,12 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     @Override
     protected void onStart() {
         super.onStart();
-        if (controlPointStatus == true) {
-            setTitle("Available UPnP Devices");
-            this.setProgressBarIndeterminate(true);
-            this.setProgressBarIndeterminateVisibility(true);
+        if (devListAdapter.getControlPointStatus() == true) {
+            setTitle(R.string.available_upnp_devices);
+            //this.setProgressBarIndeterminate(true);
+            //this.setProgressBarIndeterminateVisibility(true);
         }
         
-    }
-    
-    
-
-    private void startControlPoint() throws Exception {
-        app = (UpnpBrowserApp) getApplication();
-
-        if (!app.IsWifiConnected()) {
-            Log.d("WifiCheck", "Wifi Is not Connected!");
-            setTitle("WiFi is not connected!");
-            throw new Exception("WiFi is not Connected"); 
-        } else {
-
-            Log.d("ControlPoint", "Start ControlPoint");
-            if (ctrlPoint == null) {
-                Log.d("ControlPoint", "Start - Create New ControlPoint");
-                ctrlPoint = new ControlPoint();
-                ctrlPoint.addNotifyListener(this);
-                ctrlPoint.addDeviceChangeListener(this);
-
-            }
-            Log.d("ControlPoint", "Start - Starting ControlPoint");
-            if (controlPointStatus == false) {
-                ctrlPoint.start();
-                this.setProgressBarIndeterminate(true);
-                this.setProgressBarIndeterminateVisibility(true);
-                controlPointStatus = true;
-            }
-        }
-    }
-
-    private void resumeControlPoint() throws Exception {
-        Log.d("ControlPoint", "Resuming ControlPoint");
-        if (!app.IsWifiConnected()) {
-            throw new Exception("WiFi is not Connected"); 
-        } else {
-            if (controlPointStatus == false) {
-                Log.d("ControlPoint", "Resume - Start ControlPoint");
-                ctrlPoint.start();
-                ctrlPoint.addNotifyListener(this);
-                ctrlPoint.addDeviceChangeListener(this);
-                ctrlPoint.removeExpiredDevices();
-                
-                this.setProgressBarIndeterminate(true);
-                this.setProgressBarIndeterminateVisibility(true);
-                
-                controlPointStatus = true;
-            }
-        }
-
-    }
-
-    private void stopControlPoint() {
-        Log.d("ControlPoint", "Stopping ControlPoint");
-        if (controlPointStatus == true) {
-            ctrlPoint.stop();
-            ctrlPoint.removeNotifyListener(this);
-            ctrlPoint.removeDeviceChangeListener(this);
-            controlPointStatus = false;
-            this.setProgressBarIndeterminate(false);
-            this.setProgressBarIndeterminateVisibility(false);
-        }
 
     }
 
@@ -160,9 +92,8 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
      */
     @Override
     protected void onDestroy() {
-        
         Log.d("ControlPoint", "Destroying Activity");
-        stopControlPoint();
+        devListAdapter.stopControlPoint();
         super.onDestroy();
     }
 
@@ -173,8 +104,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     protected void onPause() {
         super.onPause();
         Log.d("ControlPoint", "Pause Activity");
-        stopControlPoint();
-        //app.releaseAdMob(this);
+        devListAdapter.stopControlPoint();
     }
 
     /**
@@ -184,8 +114,6 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     protected void onRestart() {
         super.onRestart();
         Log.d("ControlPoint", "Restart Activity");
-        //startControlPoint();
-        
     }
 
     /**
@@ -196,70 +124,13 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         super.onResume();
         Log.d("ControlPoint", "Resume Activity");
         try {
-            resumeControlPoint();
+            devListAdapter.resumeControlPoint();
         } catch (Exception ex) {
             Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, null, ex);
-            Toast toast = Toast.makeText(getApplicationContext(), "WiFi network is not connected. Try to refresh.", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.wifi_isnt_connected_refresh, Toast.LENGTH_LONG);
             toast.show();
         }
-        
-        //app.setupAdMob(this);
 
-    }
-
-    /**
-     * 
-     * @param ssdpp
-     */
-    public void deviceNotifyReceived(final SSDPPacket ssdpp) {
-
-        Runnable task = new Runnable() {
-
-            public void run() {
-
-                devListAdapter.setDeviceList(ctrlPoint.getDeviceList());
-                System.out.println("Device Notify Received: " + ssdpp.getUSN());
-                devListAdapter.notifyDataSetChanged();
-            }
-        };
-
-        runOnUiThread(task);
-
-    }
-
-    /**
-     * 
-     * @param device
-     */
-    public void deviceAdded(final Device device) {
-
-        Runnable task = new Runnable() {
-
-            public void run() {
-                System.out.println("Device Added " + device.getFriendlyName());
-                devListAdapter.addDevice(device);
-            }
-        };
-
-        runOnUiThread(task);
-
-    }
-
-    /**
-     * 
-     * @param device
-     */
-    public void deviceRemoved(final Device device) {
-
-        Runnable task = new Runnable() {
-
-            public void run() {
-                System.out.println("Device Deleted " + device.getFriendlyName());
-                devListAdapter.deleteDevice(device);
-            }
-        };
-
-        runOnUiThread(task);
 
     }
 
@@ -273,10 +144,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Device dev = (Device) devListAdapter.getItem(position);
 
-        app.setDeviceList(ctrlPoint.getDeviceList());
-        //ControlUIFactory factory = new ControlUIFactory();
-
-        Intent intent = new Intent(this, DeviceBrowserUIActivity.class);//factory.getIntent(this, dev.getDeviceType());
+        Intent intent = new Intent(this, DeviceBrowserUIActivity.class);
         intent.putExtra("device", position);
         startActivity(intent);
 
@@ -300,7 +168,6 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
      * @param arg0
      */
     public void onNothingSelected(AdapterView<?> arg0) {
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /**
@@ -329,7 +196,7 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
         inflater.inflate(R.menu.main_context_menu, menu);
         return true;
     }
-    
+
     /**
      * 
      * @param item
@@ -339,41 +206,36 @@ public class MainActivity extends Activity implements NotifyListener, DeviceChan
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_network:
-                
-               if (controlPointStatus == true) {
-                   stopControlPoint();
-               }
-                
-               try {
-                    
-                    startControlPoint();
-                    
-                    devListAdapter.setDeviceList(ctrlPoint.getDeviceList());
+
+                if (controlPointStatus == true) {
+                    devListAdapter.stopControlPoint();
+                }
+
+                try {
+
+                    devListAdapter.startControlPoint();
+
                     devicesList.setAdapter(devListAdapter);
                     devicesList.setOnItemClickListener(this);
-                    
-                    Toast toast = Toast.makeText(this, "Restarting scanning...", Toast.LENGTH_SHORT);
+
+                    Toast toast = Toast.makeText(this, R.string.restarting_scanning, Toast.LENGTH_SHORT);
                     toast.show();
-                    
+
                     return true;
                 } catch (Exception e) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "WiFi network is not connected. Try to refresh.", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.wifi_isnt_connected_refresh, Toast.LENGTH_LONG);
                     toast.show();
                     return false;
-                } 
-            
+                }
+
             case R.id.help:
                 Intent intent = new Intent(this, HelpActivity.class);
                 startActivity(intent);
                 return true;
-                
+
             default:
                 return super.onOptionsItemSelected(item);
         }
-        
+
     }
-    
-    
-    
-    
 }

@@ -4,6 +4,7 @@
  */
 package com.mikebevz.upnp.tasks;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.mikebevz.upnp.UpnpBrowserApp;
@@ -20,29 +21,31 @@ public class GetDeviceTask  extends AsyncTask<Integer, Integer, Device> {
     
     private final UpnpBrowserApp app;
     
-    public GetDeviceTask(UpnpBrowserApp app) {
-        this.app = app;
+    public GetDeviceTask(Context context) {
+        this.app = (UpnpBrowserApp) context.getApplicationContext();
+        
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        this.delegate.OnDeviceDetailsPreExecute();
+        delegate.OnDeviceDetailsPreExecute();
     }
 
     @Override
     protected void onCancelled() {
-        super.onCancelled();
         this.delegate.OnDeviceDetailsCancelled(lastException);
+        super.onCancelled();
     }
     
     
     @Override
     protected Device doInBackground(Integer... positions) {
-        //publishProgress(100);
         Device dev = null;
         try {
             dev = (Device) app.getDeviceList().get(positions[0]);
+            Log.d("DeviceList", String.valueOf(app.getDeviceList().size()));
+            return dev;
         }catch (Exception e) {
             lastException = e;
         } finally {

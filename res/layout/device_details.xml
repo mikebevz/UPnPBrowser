@@ -13,14 +13,14 @@
     android:id="@+id/services_btn"
 />
 
-<!--
+
 <Button 
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:text="Browse Content"
     android:id="@+id/content_btn"
 />
--->
+
 
 <TextView 
     android:layout_width="fill_parent"

@@ -70,7 +70,7 @@ public class ContainerListActivity extends Activity implements OnItemClickListen
         //cList.setFooterDividersEnabled(true);
         
         //TextView tv = new TextView(this);
-        //tv.setText("Loading...");
+        //tv.setText(R.string.loading);
         //cList.addFooterView(tv);
         //cList.setTranscriptMode(ALWAYS_SC);
         cList.setItemsCanFocus(false);
