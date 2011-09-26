@@ -14,6 +14,6 @@
     <string name="wifi_isnt_connected">WiFi is not connected!</string>
     <string name="wifi_isnt_connected_refresh">WiFi network is not connected. Try to refresh.</string>
     <string name="restarting_scanning">Restarting scanning...</string>
-    
+    <string name="wifi_disabled">WiFi disabled</string>
     
 </resources>

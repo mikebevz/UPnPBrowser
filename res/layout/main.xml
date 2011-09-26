@@ -10,21 +10,24 @@
     
     
     <ListView 
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="0sp"
         android:layout_weight="1"
         android:id="@+id/devices_list"
         android:choiceMode="singleChoice"
         />
-        
+     
+    <!--
     <com.google.ads.AdView android:id="@+id/ad_view"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
+                         android:layout_width="320sp"
+                         android:layout_height="50sp"
                          ads:adUnitId="a14e78bd9e0dc0e"
                          ads:adSize="BANNER"
                          ads:loadAdOnCreate="true"
                          
                          />        
+                         
+                         --> 
     
  
         

@@ -4,6 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/main_layout"
+    
     >
         
 <Button 
@@ -11,6 +12,7 @@
     android:layout_height="wrap_content"
     android:text="Browse Services"
     android:id="@+id/services_btn"
+    android:padding="10sp"
 />
 
 
@@ -19,6 +21,7 @@
     android:layout_height="wrap_content"
     android:text="Browse Content"
     android:id="@+id/content_btn"
+    android:padding="10sp"
 />
 
 
@@ -27,6 +30,7 @@
     android:layout_height="wrap_content"
     android:text="Device Details"
     android:textSize="25sp"
+    android:padding="10sp"
 /> 
 <ListView 
     android:layout_width="fill_parent"

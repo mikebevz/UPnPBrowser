@@ -5,6 +5,7 @@
 package com.mikebevz.upnp;
 
 import android.app.Application;
+import android.app.Dialog;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import org.cybergarage.upnp.ActionList;
@@ -23,6 +24,22 @@ public class UpnpBrowserApp extends Application {
     private ServiceList serviceList;
     private ArgumentList argumentList;
 
+    private Boolean contentBrowser = false;
+    private boolean debug = false;
+    private ConnectivityManager connManager;
+    private NetworkInfo mWifi;
+
+    
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        
+        
+        
+        
+    }
+
+    
     
     
     /**
@@ -31,6 +48,7 @@ public class UpnpBrowserApp extends Application {
      */
     public void setDeviceList(DeviceList list) {
         this.deviceList = list;
+        
     }
     
     /**
@@ -78,8 +96,10 @@ public class UpnpBrowserApp extends Application {
      * @return
      */
     public Boolean IsWifiConnected() {
-        ConnectivityManager connManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        
+        connManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        
         return mWifi.isConnected();
     }
 
@@ -97,6 +117,31 @@ public class UpnpBrowserApp extends Application {
      */
     public ArgumentList getArgumentList() {
         return this.argumentList;
+    }
+
+    /**
+     * @return the contentBrowser
+     */
+    public Boolean getContentBrowser() {
+        return contentBrowser;
+    }
+
+    /**
+     * @param contentBrowser the contentBrowser to set
+     */
+    public void setContentBrowser(Boolean contentBrowser) {
+        this.contentBrowser = contentBrowser;
+    }
+
+    public boolean isDebug() {
+        return this.debug;
+    }
+
+    public boolean isWifiEnabled() {
+        connManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        
+        return mWifi.isAvailable();
     }
 
 

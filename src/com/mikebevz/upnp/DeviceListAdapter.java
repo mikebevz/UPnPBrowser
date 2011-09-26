@@ -5,6 +5,8 @@
 package com.mikebevz.upnp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -26,10 +28,9 @@ import org.cybergarage.upnp.ssdp.SSDPPacket;
  *
  * @author mikebevz
  */
-public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListener, NotifyListener  {
-    
+public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListener, NotifyListener {
+
     private LayoutInflater mInflater;
-    
     private DeviceList data;
     private Bitmap diskIcon;
     private final Bitmap windowsIcon;
@@ -40,36 +41,38 @@ public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListe
     private static final String INTERNET_GATEWAY_DEVICE = "Internet gateway device";
     private static final String INTERNET_CONNECTION_SHARING = "Internet Connection Sharing";
     private static final String KIES_SYNC_SERVER = "Kies Sync Server";
-    
     private static final String INTERNET_GATEWAY_DEVICE_TYPE = "urn:schemas-upnp-org:device:InternetGatewayDevice:1";
     private static final String INTERNET_GATEWAY_AP_TYPE = "urn:schemas-wifialliance-org:device:WFADevice:1";
     private final Activity context;
-    
     ControlPoint ctrlPoint = null;
     Boolean controlPointStatus = false; // false = stopped, true = running
     ListView devicesList;
     UpnpBrowserApp app;
-    
-    
-    
+    private final ProgressDialog dialog;
+    private Resources resources;
+
     /**
      * 
      * @param context
      */
     public DeviceListAdapter(Activity context) {
         this.context = context;
-        
+
         mInflater = LayoutInflater.from(context);
-        
+
         data = new DeviceList();
-        
+
         diskIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.disk);
         windowsIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.windows_device);
         appleIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple_device);
         routerIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.router_device);
-        
+
         app = (UpnpBrowserApp) context.getApplication();
-        
+
+        Resources resource = context.getResources();
+
+        dialog = ProgressDialog.show(context, resource.getString(R.string.loading), resource.getString(R.string.loading_message), true, true);
+
     }
 
     /**
@@ -106,54 +109,54 @@ public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListe
      * @return
      */
     public View getView(int position, View cView, ViewGroup parent) {
-        
+
         ViewHolder holder;
-        
+
         if (cView == null) {
             cView = mInflater.inflate(R.layout.list_item_icon_text, null);
-            
+
             holder = new ViewHolder();
-            holder.text = (TextView)cView.findViewById(R.id.text);
-            holder.description = (TextView)cView.findViewById(R.id.description);
-            holder.icon = (ImageView)cView.findViewById(R.id.icon);
-            
+            holder.text = (TextView) cView.findViewById(R.id.text);
+            holder.description = (TextView) cView.findViewById(R.id.description);
+            holder.icon = (ImageView) cView.findViewById(R.id.icon);
+
             cView.setTag(holder);
         } else {
             holder = (ViewHolder) cView.getTag();
         }
-        
+
         holder.text.setText(data.getDevice(position).getFriendlyName());
         holder.description.setText(data.getDevice(position).getLocation());
         holder.icon.setImageBitmap(getIconForDevice(data.getDevice(position)));
-        
+
         return cView;
     }
-    
+
     private Bitmap getIconForDevice(Device device) {
         //TODO implement different icons 
         String type = device.getDeviceType();
         //String location = device.getLocation();
         String modelName = device.getModelName();
-        
+
         if (modelName.equalsIgnoreCase(WINDOWS_MEDIA_PLAYER_SHARING)) {
             return windowsIcon;
         }
-        
+
         if (modelName.equalsIgnoreCase(TVMOBILI_MEDIA_SERVER)) {
             //TODO make icon for TVMobili Devices
         }
-        
+
         if (modelName.equalsIgnoreCase(KIES_SYNC_SERVER)) {
             //TODO make icon for Sync Servers
         }
-        
-        if (modelName.equalsIgnoreCase(INTERNET_GATEWAY_DEVICE) 
-            || modelName.equalsIgnoreCase(INTERNET_CONNECTION_SHARING)
-            || type.equalsIgnoreCase(INTERNET_GATEWAY_DEVICE_TYPE)
-            || type.equalsIgnoreCase(INTERNET_GATEWAY_AP_TYPE)) {
+
+        if (modelName.equalsIgnoreCase(INTERNET_GATEWAY_DEVICE)
+                || modelName.equalsIgnoreCase(INTERNET_CONNECTION_SHARING)
+                || type.equalsIgnoreCase(INTERNET_GATEWAY_DEVICE_TYPE)
+                || type.equalsIgnoreCase(INTERNET_GATEWAY_AP_TYPE)) {
             return routerIcon;
         }
-        
+
         return diskIcon; // Default
     }
 
@@ -164,14 +167,19 @@ public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListe
     public boolean getControlPointStatus() {
         return controlPointStatus;
     }
-    
+
+    public void cancel() {
+
+        dialog.dismiss();
+    }
+
     static class ViewHolder {
+
         TextView text;
         TextView description;
         ImageView icon;
     }
-    
-    
+
     /**
      * 
      * @param deviceList
@@ -179,8 +187,9 @@ public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListe
     public void setDeviceList(DeviceList deviceList) {
         this.data = deviceList;
         app.setDeviceList(data);
+
     }
-    
+
     /**
      * 
      * @param dev
@@ -189,19 +198,22 @@ public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListe
         Log.d("DeviceNotify", "Device Added " + dev.getFriendlyName());
         data.add(dev);
         notifyDataSetChanged();
+
+        dialog.dismiss();
+
     }
-    
+
     /**
      * 
      * @param dev
      */
-    public void deleteDevice(Device dev){
+    public void deleteDevice(Device dev) {
         Log.d("DeviceNotify", "Device Deleted " + dev.getFriendlyName());
         data.remove(dev);
         notifyDataSetChanged();
     }
-    
-        /**
+
+    /**
      * 
      * @param device
      */
@@ -210,8 +222,9 @@ public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListe
         Runnable task = new Runnable() {
 
             public void run() {
-                
+
                 addDevice(device);
+
             }
         };
 
@@ -228,16 +241,16 @@ public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListe
         Runnable task = new Runnable() {
 
             public void run() {
-                
+
                 deleteDevice(device);
             }
         };
-        
+
         context.runOnUiThread(task);
 
     }
-    
-        /**
+
+    /**
      * 
      * @param ssdpp
      */
@@ -246,7 +259,7 @@ public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListe
         Runnable task = new Runnable() {
 
             public void run() {
-                
+
                 setDeviceList(ctrlPoint.getDeviceList());
                 Log.d("DeviceNotify", "Device Notify Received: " + ssdpp.getUSN());
                 notifyDataSetChanged();
@@ -256,55 +269,67 @@ public class DeviceListAdapter extends BaseAdapter implements  DeviceChangeListe
         context.runOnUiThread(task);
 
     }
-    
-    public void startControlPoint() throws Exception {
+
+    public void startControlPoint() throws WifiNotConnectedException, WifiDisabledException {
         app = (UpnpBrowserApp) context.getApplication();
+        resources = context.getResources();
 
-        if (!app.IsWifiConnected()) {
-            Log.d("WifiCheck", "Wifi Is not Connected!");
-            context.setTitle(R.string.wifi_isnt_connected);
-            throw new Exception("@strings/wifi_isnt_connected");
-        } else {
-
-            Log.d("ControlPoint", "Start ControlPoint");
-            if (ctrlPoint == null) {
-                Log.d("ControlPoint", "Start - Create New ControlPoint");
-                ctrlPoint = new ControlPoint();
-                ctrlPoint.addNotifyListener(this);
-                ctrlPoint.addDeviceChangeListener(this);
-                
-            }
-            Log.d("ControlPoint", "Start - Starting ControlPoint");
-            if (controlPointStatus == false) {
-                ctrlPoint.start();
-                this.context.setProgressBarIndeterminate(true);
-                this.context.setProgressBarIndeterminateVisibility(true);
-                setDeviceList(ctrlPoint.getDeviceList());
-                controlPointStatus = true;
-            }
+        if (!app.isWifiEnabled()) {
+            throw new WifiDisabledException(resources.getString(R.string.wifi_disabled));
         }
+        
+        if (!app.IsWifiConnected()) {
+            throw new WifiNotConnectedException(resources.getString(R.string.wifi_isnt_connected));
+        } 
+
+        //Log.d("ControlPoint", "Start ControlPoint");
+        if (ctrlPoint == null) {
+            Log.d("ControlPoint", "Start - Create New ControlPoint");
+            ctrlPoint = new ControlPoint();
+            ctrlPoint.addNotifyListener(this);
+            ctrlPoint.addDeviceChangeListener(this);
+
+        }
+
+        if (controlPointStatus == false) {
+            Log.d("ControlPoint", "Start - Starting ControlPoint");
+            ctrlPoint.start();
+
+            this.context.setProgressBarIndeterminate(true);
+            this.context.setProgressBarIndeterminateVisibility(true);
+
+            setDeviceList(ctrlPoint.getDeviceList());
+
+            controlPointStatus = true;
+        }
+        //}
     }
 
     public void resumeControlPoint() throws Exception {
         Log.d("ControlPoint", "Resuming ControlPoint");
+        this.startControlPoint();
+        ctrlPoint.removeExpiredDevices();
+
+        /**
+         * 
         if (!app.IsWifiConnected()) {
-            throw new Exception(context.getResources().getString(R.string.wifi_isnt_connected));
+        throw new Exception(context.getResources().getString(R.string.wifi_isnt_connected));
         } else {
-            if (controlPointStatus == false) {
-                Log.d("ControlPoint", "Resume - Start ControlPoint");
-                ctrlPoint.start();
-                ctrlPoint.addNotifyListener(this);
-                ctrlPoint.addDeviceChangeListener(this);
-                ctrlPoint.removeExpiredDevices();
-                setDeviceList(ctrlPoint.getDeviceList());
-                
-                this.context.setProgressBarIndeterminate(true);
-                this.context.setProgressBarIndeterminateVisibility(true);
-
-                controlPointStatus = true;
-            }
+        if (controlPointStatus == false) {
+        Log.d("ControlPoint", "Resume - Start ControlPoint");
+        ctrlPoint.start();
+        ctrlPoint.addNotifyListener(this);
+        ctrlPoint.addDeviceChangeListener(this);
+        ctrlPoint.removeExpiredDevices();
+        setDeviceList(ctrlPoint.getDeviceList());
+        
+        this.context.setProgressBarIndeterminate(true);
+        this.context.setProgressBarIndeterminateVisibility(true);
+        
+        controlPointStatus = true;
         }
-
+        }
+         */
     }
 
     public void stopControlPoint() {

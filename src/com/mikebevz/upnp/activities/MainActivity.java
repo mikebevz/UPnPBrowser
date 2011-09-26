@@ -13,15 +13,16 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
+import com.bugsense.trace.BugSenseHandler;
 import com.mikebevz.upnp.DeviceListAdapter;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.cybergarage.upnp.Device;
 import com.mikebevz.upnp.device_browser.activities.DeviceBrowserUIActivity;
 import com.google.ads.*;
+import com.mikebevz.upnp.ActivityState;
+
+
 
 /**
  * 
@@ -29,12 +30,27 @@ import com.google.ads.*;
  */
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
-    //ControlPoint ctrlPoint = null;
-    DeviceListAdapter devListAdapter;
+    private ActivityState state;
+    
+    
+    DeviceListAdapter devListAdapter = null;
     Boolean controlPointStatus = false; // false = stopped, true = running
     ListView devicesList;
     UpnpBrowserApp app;
     private AdView av;
+    
+    public final ActivityState STATE_WIFI_DISABLED = new StateWifiDisabled(this);
+    public final ActivityState STATE_WIFI_NOTCONNECTED = new StateWifiNotConnected(this);
+    public final ActivityState STATE_APP_STARTED = new StateAppStarted(this);
+    public final ActivityState STATE_CONTROL_POINT_STOPPED = new StateControlPointStopped(this);
+    public final ActivityState STATE_CONTROL_POINT_STARTED = new StateControlPointStarted(this);
+    
+    // States
+    // 1 - wifi disabled
+    // 3 - wifi is not connected
+    // 5 - control point started
+    // 6 - control point stopped
+    
 
     /** Called when the activity is first created.
      * @param savedInstanceState 
@@ -42,60 +58,40 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
-        setContentView(R.layout.main);
-
-       // BugSenseHandler.setup(this, "a8c5f7db");
-
-        devicesList = (ListView) findViewById(R.id.devices_list);
-        av = (AdView)findViewById(R.id.ad_view);
+        //setState(STATE_APP_STARTED);
         
+        app = ((UpnpBrowserApp)getApplication());
         
-        AdRequest request = new AdRequest();
-        request.addTestDevice("B3EEABB8EE11C2BE770B684D95219ECB");    
-        av.loadAd(request);
-        
-        
-        devListAdapter = new DeviceListAdapter(this);
-
-        try {
-            setTitle(R.string.scanning_for_devices);
-            devListAdapter.startControlPoint();
-
-            devicesList.setAdapter(devListAdapter);
-            devicesList.setOnItemClickListener(this);
-        } catch (Exception e) {
-            Toast toast = Toast.makeText(getApplicationContext(), R.string.connect_to_wifi, Toast.LENGTH_LONG);
-            toast.show();
+        if (app.isDebug()) {
+            BugSenseHandler.setup(this, "a8c5f7db");
         }
+
+        
+        
+        /*
+        if (app.isAdEnabled()) {
+            av = (AdView)findViewById(R.id.ad_view);
+            AdRequest request = new AdRequest();
+            request.addTestDevice("B3EEABB8EE11C2BE770B684D95219ECB");    
+            av.loadAd(request);
+        }
+        */
+        
+        setState(STATE_CONTROL_POINT_STARTED);
 
     }
 
     /**
      * 
      */
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (devListAdapter.getControlPointStatus() == true) {
-            setTitle(R.string.available_upnp_devices);
-            //this.setProgressBarIndeterminate(true);
-            //this.setProgressBarIndeterminateVisibility(true);
-        }
-        
+    //@Override
+    //protected void onStart() {
+    //    super.onStart();  
+    //}
 
-    }
-
-    /**
-     * 
-     */
-    @Override
-    protected void onDestroy() {
-        Log.d("ControlPoint", "Destroying Activity");
-        devListAdapter.stopControlPoint();
-        super.onDestroy();
-    }
+    
 
     /**
      * 
@@ -103,8 +99,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("ControlPoint", "Pause Activity");
-        devListAdapter.stopControlPoint();
+        //Log.d("ControlPoint", "Pause Activity");
+        //devListAdapter.stopControlPoint();
+        
+        setState(STATE_CONTROL_POINT_STOPPED);
+        
     }
 
     /**
@@ -114,6 +113,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     protected void onRestart() {
         super.onRestart();
         Log.d("ControlPoint", "Restart Activity");
+        
+        setState(STATE_CONTROL_POINT_STARTED);
+        
     }
 
     /**
@@ -123,15 +125,31 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     protected void onResume() {
         super.onResume();
         Log.d("ControlPoint", "Resume Activity");
+        
+        setState(STATE_CONTROL_POINT_STARTED);
+        
+        /*
         try {
             devListAdapter.resumeControlPoint();
         } catch (Exception ex) {
             Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, null, ex);
             Toast toast = Toast.makeText(getApplicationContext(), R.string.wifi_isnt_connected_refresh, Toast.LENGTH_LONG);
             toast.show();
-        }
+            devListAdapter.cancel();
+        }*/
 
 
+    }
+    
+    /**
+     * 
+     */
+    @Override
+    protected void onDestroy() {
+        Log.d("ControlPoint", "Destroying Activity");
+        //devListAdapter.stopControlPoint();
+        setState(STATE_CONTROL_POINT_STOPPED);
+        super.onDestroy();
     }
 
     /**
@@ -206,27 +224,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_network:
-
-                if (controlPointStatus == true) {
-                    devListAdapter.stopControlPoint();
-                }
-
-                try {
-
-                    devListAdapter.startControlPoint();
-
-                    devicesList.setAdapter(devListAdapter);
-                    devicesList.setOnItemClickListener(this);
-
-                    Toast toast = Toast.makeText(this, R.string.restarting_scanning, Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    return true;
-                } catch (Exception e) {
-                    Toast toast = Toast.makeText(getApplicationContext(), R.string.wifi_isnt_connected_refresh, Toast.LENGTH_LONG);
-                    toast.show();
-                    return false;
-                }
+                
+                setState(STATE_CONTROL_POINT_STOPPED);
+                setState(STATE_CONTROL_POINT_STARTED);
+                return true;
 
             case R.id.help:
                 Intent intent = new Intent(this, HelpActivity.class);
@@ -237,5 +238,32 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    /**
+     * @return the state
+     */
+    public ActivityState getState() {
+        return state;
+    }
+
+    /**
+     * @param state the state to set
+     */
+    public void setState(ActivityState state) {
+        Log.d("State: ", state.getClass().getName());
+        if (this.state != state) {
+            Log.d("Setting State: ", state.getClass().getName());
+            this.state = state;
+            this.state.setSettings();
+        }
+    }
+
+    public void onWifiNotConnected() {
+        setState(STATE_WIFI_NOTCONNECTED);
+    }
+
+    void onWifiDisabled() {
+        setState(STATE_WIFI_DISABLED);
     }
 }
