@@ -11,9 +11,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.mikebevz.upnp.ControlUIFactory;
 import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.R.layout;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.DeviceDetailsAdapter;
 import org.cybergarage.upnp.Device;
@@ -26,6 +28,7 @@ public class DeviceBrowserUIActivity extends Activity implements OnClickListener
 
     private DeviceDetailsAdapter adapter;
     private Device device;
+    private LinearLayout layout;
 
     /** Called when the activity is first created. */
     @Override
@@ -37,8 +40,30 @@ public class DeviceBrowserUIActivity extends Activity implements OnClickListener
         Button servicesBtn = (Button) findViewById(R.id.services_btn);
         servicesBtn.setOnClickListener(this);
 
-        Button contentBtn = (Button) findViewById(R.id.content_btn);
-        contentBtn.setOnClickListener(this);
+        
+        
+        if (((UpnpBrowserApp)getApplication()).getContentBrowser() == true) {
+            
+            /**
+             * <Button 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Browse Content"
+    android:id="@+id/content_btn"
+    android:padding="10sp"
+/>
+
+             */
+            
+            Button contentBtn = new Button(this);
+            //Button contentBtn = (Button) findViewById(R.id.content_btn);
+            contentBtn.setOnClickListener(this);
+            
+            layout = (LinearLayout)findViewById(R.id.main_layout);
+            layout.addView(contentBtn, 1);
+        }
+        
+        
         
         
         Bundle bundle = getIntent().getExtras();

@@ -49,8 +49,8 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         List<String> list = Arrays.asList(service.getServiceID().split(":"));
         Collections.reverse(list);
 
-        this.setTitle("@string/actions_at" + list.toArray()[0].toString());
-
+        this.setTitle(getApplication().getResources().getString(R.string.actions_at) + list.toArray()[0].toString());
+        
         GetServiceActionsTask getActionsTask = new GetServiceActionsTask();
         getActionsTask.setOnServiceActionListHandler(this);
         getActionsTask.execute(service);

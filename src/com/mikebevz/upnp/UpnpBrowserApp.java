@@ -5,7 +5,6 @@
 package com.mikebevz.upnp;
 
 import android.app.Application;
-import android.app.Dialog;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import org.cybergarage.upnp.ActionList;
@@ -25,7 +24,7 @@ public class UpnpBrowserApp extends Application {
     private ArgumentList argumentList;
 
     private Boolean contentBrowser = false;
-    private boolean debug = false;
+    private boolean debug = true; // True to use BugSense
     private ConnectivityManager connManager;
     private NetworkInfo mWifi;
 
