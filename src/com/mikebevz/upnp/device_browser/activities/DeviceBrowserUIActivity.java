@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import com.mikebevz.upnp.ControlUIFactory;
 import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.DeviceDetailsAdapter;
 import org.cybergarage.upnp.Device;
 
@@ -42,6 +43,8 @@ public class DeviceBrowserUIActivity extends Activity implements OnClickListener
         
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("device");
+        
+        device = ((UpnpBrowserApp)getApplication()).getDeviceList().getDevice(position);
         
         adapter = new DeviceDetailsAdapter(this, position);
         
