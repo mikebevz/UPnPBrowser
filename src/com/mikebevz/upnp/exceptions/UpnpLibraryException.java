@@ -2,15 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp;
+package com.mikebevz.upnp.exceptions;
 
 /**
  *
  * @author mikebevz
  */
-public class WifiNotConnectedException extends Exception {
+public class UpnpLibraryException extends Exception {
 
-    public WifiNotConnectedException(String string) {
+    public UpnpLibraryException(String string) {
         super(string);
     }
     

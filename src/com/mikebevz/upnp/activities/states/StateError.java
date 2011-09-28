@@ -2,17 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.activities;
+package com.mikebevz.upnp.activities.states;
 
 import android.widget.TextView;
 import com.mikebevz.upnp.ActivityState;
 import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.activities.MainActivity;
 
 /**
  *
  * @author mikebevz
  */
-class StateError implements ActivityState {
+public class StateError implements ActivityState {
     
     private final MainActivity activity;
 

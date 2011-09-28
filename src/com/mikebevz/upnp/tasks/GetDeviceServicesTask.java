@@ -40,12 +40,4 @@ public class GetDeviceServicesTask  extends AsyncTask<Device, Integer, ServiceLi
     public void setOnDeviceServiceListHandler(OnDeviceServiceList delegate) {
         this.delegate = delegate;
     }
-
-    @Override
-    protected void onProgressUpdate(Integer... values) {
-        this.delegate.OnDeviceServiceListProgressUpdate(values[0]);
-    }
-    
-    
-    
 }

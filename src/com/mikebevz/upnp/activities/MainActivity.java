@@ -1,5 +1,11 @@
 package com.mikebevz.upnp.activities;
 
+import com.mikebevz.upnp.activities.states.StateWifiDisabled;
+import com.mikebevz.upnp.activities.states.StateControlPointStarted;
+import com.mikebevz.upnp.activities.states.StateControlPointStopped;
+import com.mikebevz.upnp.activities.states.StateAppStarted;
+import com.mikebevz.upnp.activities.states.StateError;
+import com.mikebevz.upnp.activities.states.StateWifiNotConnected;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,9 +39,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private ActivityState state;
     
     
-    DeviceListAdapter devListAdapter = null;
+    public DeviceListAdapter devListAdapter = null;
     Boolean controlPointStatus = false; // false = stopped, true = running
-    ListView devicesList;
+    public ListView devicesList;
     UpnpBrowserApp app;
     private AdView av;
     
@@ -61,7 +67,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         super.onCreate(savedInstanceState);
         
         getWindow().requestFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        //setState(STATE_APP_STARTED);
         
         app = ((UpnpBrowserApp)getApplication());
         
@@ -69,7 +74,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
             BugSenseHandler.setup(this, "a8c5f7db");
         }
 
-        
         
         /*
         if (app.isAdEnabled()) {

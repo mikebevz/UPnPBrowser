@@ -2,22 +2,23 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.activities;
+package com.mikebevz.upnp.activities.states;
 
 import android.content.Context;
 import android.widget.ListView;
 import com.mikebevz.upnp.ActivityState;
 import com.mikebevz.upnp.DeviceListAdapter;
 import com.mikebevz.upnp.R;
-import com.mikebevz.upnp.UpnpLibraryException;
-import com.mikebevz.upnp.WifiDisabledException;
-import com.mikebevz.upnp.WifiNotConnectedException;
+import com.mikebevz.upnp.activities.MainActivity;
+import com.mikebevz.upnp.exceptions.UpnpLibraryException;
+import com.mikebevz.upnp.exceptions.WifiDisabledException;
+import com.mikebevz.upnp.exceptions.WifiNotConnectedException;
 
 /**
  *
  * @author mikebevz
  */
-class StateAppStarted implements ActivityState {
+public class StateAppStarted implements ActivityState {
     private final Context context;
     private final MainActivity mainActivity;
 

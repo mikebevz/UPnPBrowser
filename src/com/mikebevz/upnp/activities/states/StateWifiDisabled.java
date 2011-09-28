@@ -2,21 +2,22 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mikebevz.upnp.activities;
+package com.mikebevz.upnp.activities.states;
 
 import android.content.Context;
 import com.mikebevz.upnp.ActivityState;
 import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.activities.MainActivity;
 
 /**
  *
  * @author mikebevz
  */
-class StateWifiDisabled implements ActivityState {
+public class StateWifiDisabled implements ActivityState {
     private final Context context;
     private final MainActivity mainActivity;
 
-    StateWifiDisabled(Context context) {
+    public StateWifiDisabled(Context context) {
         this.context = context;
         this.mainActivity = (MainActivity)context;
     }

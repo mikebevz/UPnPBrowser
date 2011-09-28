@@ -4,6 +4,9 @@
  */
 package com.mikebevz.upnp;
 
+import com.mikebevz.upnp.exceptions.WifiNotConnectedException;
+import com.mikebevz.upnp.exceptions.UpnpLibraryException;
+import com.mikebevz.upnp.exceptions.WifiDisabledException;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.Resources;

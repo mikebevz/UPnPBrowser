@@ -10,6 +10,4 @@ package com.mikebevz.upnp;
  */
 public interface ActivityState {
     public void setSettings();
-
-    
 }

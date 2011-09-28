@@ -15,7 +15,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import com.mikebevz.upnp.device_browser.activities.ServiceDetailsActivity;
 import com.mikebevz.upnp.device_browser.ServiceListAdapter;
 import com.mikebevz.upnp.tasks.GetDeviceServicesTask;
 import com.mikebevz.upnp.tasks.OnDeviceServiceList;
@@ -72,11 +71,6 @@ public class ServiceListActivity extends Activity implements OnDeviceServiceList
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
-    }
-
-    public void OnDeviceServiceListProgressUpdate(Integer value) {
-        Log.d("Progress", String.valueOf(value));
-        setProgress(value);
     }
 
     public void onItemClick(AdapterView<?> av, View view, int position, long id) {
