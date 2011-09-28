@@ -95,7 +95,9 @@ public class ArgumentListActivity extends Activity implements OnActionArgumentsL
         app.setArgumentList(aList);
         adapter.setArguments(aList);
         adapter.notifyDataSetChanged();
-        dialog.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     /**

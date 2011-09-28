@@ -69,7 +69,9 @@ public class ServiceListActivity extends Activity implements OnDeviceServiceList
         ((UpnpBrowserApp)getApplication()).setServiceList(sList);
         adapter.setServices(sList);
         adapter.notifyDataSetChanged();
-        dialog.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     public void OnDeviceServiceListProgressUpdate(Integer value) {

@@ -162,7 +162,9 @@ public class DeviceDetailsAdapter extends BaseAdapter implements OnDeviceDetails
 
         this.setData(properties);
         this.notifyDataSetChanged();
-        dialog.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
 
     }
 
@@ -177,6 +179,8 @@ public class DeviceDetailsAdapter extends BaseAdapter implements OnDeviceDetails
 
     public void OnDeviceDetailsCancelled(Exception e) {
         Log.e("DeviceBrowser", e.getMessage());
-        dialog.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 }

@@ -214,7 +214,9 @@ public class ContainerListAdapter extends BaseAdapter implements OnTaskFactory  
         this.setContainers(result.getEntities());
         this.setNumberReturned(result.getNumberReturned());
         this.notifyDataSetChanged();
-        dialog.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     public void onTaskFactoryPreExecute() {

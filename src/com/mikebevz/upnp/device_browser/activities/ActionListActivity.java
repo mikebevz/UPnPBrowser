@@ -89,7 +89,9 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
         Log.d("ServiceList", String.valueOf(sList.size()));
         adapter.setActions(sList);
         adapter.notifyDataSetChanged();
-        dialog.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     /**

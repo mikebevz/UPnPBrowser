@@ -79,7 +79,8 @@ public class MediaServer1Activity extends Activity implements OnDeviceDetails,  
 
     public void OnDeviceDetailsCancelled(Exception lastException) {
         Log.e("MediaServer", lastException.getMessage());
-        dialog.dismiss();
-        //throw new UnsupportedOperationException("Not supported yet.");
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 }

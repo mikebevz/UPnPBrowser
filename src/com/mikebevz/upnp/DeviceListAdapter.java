@@ -169,12 +169,12 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
     }
 
     public void cancel() {
-
-        dialog.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     static class ViewHolder {
-
         TextView text;
         TextView description;
         ImageView icon;
@@ -191,21 +191,23 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
     }
 
     /**
-     * 
-     * @param dev
+     * Add device to the list
+     * @param dev Device added
      */
     public void addDevice(Device dev) {
         Log.d("DeviceNotify", "Device Added " + dev.getFriendlyName());
         data.add(dev);
         notifyDataSetChanged();
 
-        dialog.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
 
     }
 
     /**
-     * 
-     * @param dev
+     * Delete device from the list
+     * @param dev Device to be deleted
      */
     public void deleteDevice(Device dev) {
         Log.d("DeviceNotify", "Device Deleted " + dev.getFriendlyName());
@@ -220,16 +222,12 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
     public void deviceAdded(final Device device) {
 
         Runnable task = new Runnable() {
-
             public void run() {
-
                 addDevice(device);
 
             }
         };
-
         context.runOnUiThread(task);
-
     }
 
     /**
@@ -239,9 +237,7 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
     public void deviceRemoved(final Device device) {
 
         Runnable task = new Runnable() {
-
             public void run() {
-
                 deleteDevice(device);
             }
         };
@@ -257,9 +253,7 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
     public void deviceNotifyReceived(final SSDPPacket ssdpp) {
 
         Runnable task = new Runnable() {
-
             public void run() {
-
                 setDeviceList(ctrlPoint.getDeviceList());
                 Log.d("DeviceNotify", "Device Notify Received: " + ssdpp.getUSN());
                 notifyDataSetChanged();
@@ -277,14 +271,12 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
         if (!app.isWifiEnabled()) {
             throw new WifiDisabledException(resources.getString(R.string.wifi_disabled));
         }
-        
+
         if (!app.IsWifiConnected()) {
             throw new WifiNotConnectedException(resources.getString(R.string.wifi_isnt_connected));
-        } 
+        }
 
-        //Log.d("ControlPoint", "Start ControlPoint");
         if (ctrlPoint == null) {
-            Log.d("ControlPoint", "Start - Create New ControlPoint");
             ctrlPoint = new ControlPoint();
             ctrlPoint.addNotifyListener(this);
             ctrlPoint.addDeviceChangeListener(this);
@@ -292,13 +284,13 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
         }
 
         if (controlPointStatus == false) {
-            Log.d("ControlPoint", "Start - Starting ControlPoint");
             //Issue #2 fix.
             try {
                 ctrlPoint.start();
             } catch (NullPointerException e) {
-                throw new UpnpLibraryException("Unknown socket error. Try to refresh scanning.");
+                throw new UpnpLibraryException(this.context.getApplication().getResources().getString(R.string.unknown_socket_error));
             }
+
             this.context.setProgressBarIndeterminate(true);
             this.context.setProgressBarIndeterminateVisibility(true);
 
@@ -306,7 +298,7 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
 
             controlPointStatus = true;
         }
-        //}
+
     }
 
     public void resumeControlPoint() throws Exception {

@@ -159,7 +159,9 @@ public class ServiceDetailsAdapter extends BaseAdapter implements OnServiceDetai
         
         setData(properties);
         notifyDataSetChanged();
-        dialog.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     /**
