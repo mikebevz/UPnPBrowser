@@ -48,12 +48,9 @@ public class StateAppStarted implements ActivityState {
         } catch (WifiDisabledException e) {
             mainActivity.setState(mainActivity.STATE_WIFI_DISABLED);
         } catch (UpnpLibraryException e) {
-            mainActivity.STATE_ERROR.setMessage("Unknown error", e.getMessage());
+            mainActivity.STATE_ERROR.setMessage("Unknown error", e.getLocalizedMessage());
             mainActivity.setState(mainActivity.STATE_ERROR);
             
         }
-    }
-    
-    
-    
+    }   
 }

@@ -23,14 +23,6 @@
                 android:text="You need to enable WiFi to start using this application"
             />
             
-            <Button 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Refresh"
-                android:layout_gravity="center"
-            />
-
-            
             
 
 

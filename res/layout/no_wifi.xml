@@ -23,15 +23,6 @@
                 android:text="Please connect to a WiFi network and click Refresh button"
             />
             
-            <Button 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Refresh"
-                android:layout_gravity="center"
-            />
-
-            
-            
 
 
 </LinearLayout>

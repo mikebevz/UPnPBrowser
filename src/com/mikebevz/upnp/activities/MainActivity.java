@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.bugsense.trace.BugSenseHandler;
 import com.mikebevz.upnp.DeviceListAdapter;
 import com.mikebevz.upnp.R;
@@ -229,15 +230,18 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.refresh_network:
-                
+                            
                 setState(STATE_CONTROL_POINT_STOPPED);
                 setState(STATE_CONTROL_POINT_STARTED);
+                Toast.makeText(this, "Restarting scanning", Toast.LENGTH_LONG).show();
                 return true;
 
             case R.id.help:
                 Intent intent = new Intent(this, HelpActivity.class);
                 startActivity(intent);
                 return true;
+                
+                
 
             default:
                 return super.onOptionsItemSelected(item);
