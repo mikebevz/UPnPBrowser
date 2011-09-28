@@ -44,6 +44,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     public final ActivityState STATE_APP_STARTED = new StateAppStarted(this);
     public final ActivityState STATE_CONTROL_POINT_STOPPED = new StateControlPointStopped(this);
     public final ActivityState STATE_CONTROL_POINT_STARTED = new StateControlPointStarted(this);
+    public final StateError STATE_ERROR = new StateError(this);
     
     // States
     // 1 - wifi disabled

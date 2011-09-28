@@ -8,8 +8,10 @@ package com.mikebevz.upnp;
  *
  * @author mikebevz
  */
-public interface ActivityState {
-    public void setSettings();
+public class UpnpLibraryException extends Exception {
 
+    public UpnpLibraryException(String string) {
+        super(string);
+    }
     
 }

@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.mikebevz.upnp.ActivityState;
 import com.mikebevz.upnp.DeviceListAdapter;
 import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.UpnpLibraryException;
 import com.mikebevz.upnp.WifiDisabledException;
 import com.mikebevz.upnp.WifiNotConnectedException;
 
@@ -49,9 +50,13 @@ class StateControlPointStarted implements ActivityState {
             
             
         } catch (WifiNotConnectedException e) {
-            mainActivity.onWifiNotConnected();
+            mainActivity.setState(mainActivity.STATE_WIFI_NOTCONNECTED);
         } catch (WifiDisabledException e) {
-            mainActivity.onWifiDisabled();
+            mainActivity.setState(mainActivity.STATE_WIFI_DISABLED);
+            
+        } catch (UpnpLibraryException e) {
+            mainActivity.setState(mainActivity.STATE_ERROR);
+            mainActivity.STATE_ERROR.setMessage("Unknown error", e.getMessage());
         }
         
         

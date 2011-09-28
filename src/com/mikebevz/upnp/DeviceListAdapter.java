@@ -270,7 +270,7 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
 
     }
 
-    public void startControlPoint() throws WifiNotConnectedException, WifiDisabledException {
+    public void startControlPoint() throws WifiNotConnectedException, WifiDisabledException, UpnpLibraryException {
         app = (UpnpBrowserApp) context.getApplication();
         resources = context.getResources();
 
@@ -293,8 +293,12 @@ public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListen
 
         if (controlPointStatus == false) {
             Log.d("ControlPoint", "Start - Starting ControlPoint");
-            ctrlPoint.start();
-
+            //Issue #2 fix.
+            try {
+                ctrlPoint.start();
+            } catch (NullPointerException e) {
+                throw new UpnpLibraryException("Unknown socket error. Try to refresh scanning.");
+            }
             this.context.setProgressBarIndeterminate(true);
             this.context.setProgressBarIndeterminateVisibility(true);
 
