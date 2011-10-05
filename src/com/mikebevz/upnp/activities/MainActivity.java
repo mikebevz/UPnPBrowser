@@ -19,34 +19,27 @@ import com.mikebevz.upnp.activities.states.*;
 import com.mikebevz.upnp.device_browser.activities.DeviceBrowserUIActivity;
 import org.cybergarage.upnp.Device;
 
-
 /**
  * @author mikebevz
  */
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
 private ActivityState state;
-
-
 public DeviceListAdapter devListAdapter = null;
-Boolean controlPointStatus = false; // false = stopped, true = running
+//Boolean controlPointStatus = false; // false = stopped, true = running
 public ListView devicesList;
 private AdView av;
 
+// WiFi is disabled
 public final ActivityState STATE_WIFI_DISABLED = new StateWifiDisabled(this);
+// WiFi is not connected to any network
 public final ActivityState STATE_WIFI_NOTCONNECTED = new StateWifiNotConnected(this);
-//public final ActivityState STATE_APP_STARTED = new StateAppStarted(this);
+// Control point stopped scanning
 private final ActivityState STATE_CONTROL_POINT_STOPPED = new StateControlPointStopped(this);
+// Control point started scanning
 private final ActivityState STATE_CONTROL_POINT_STARTED = new StateControlPointStarted(this);
+// Application wide error happened
 public final StateError STATE_ERROR = new StateError(this);
-
-// States
-// 1 - wifi disabled
-// 2 - wifi is not connected
-// 3 - control point started
-// 4 - control point stopped
-// 5 - error state
-
 
 @Override
 public void onCreate(Bundle savedInstanceState) {
@@ -94,9 +87,6 @@ protected void onResume() {
   setState(STATE_CONTROL_POINT_STARTED);
 }
 
-/**
- *
- */
 @Override
 protected void onDestroy() {
   Log.d("ControlPoint", "Destroying Activity");
@@ -104,12 +94,6 @@ protected void onDestroy() {
   super.onDestroy();
 }
 
-/**
- * @param parent
- * @param view
- * @param position
- * @param id
- */
 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
   Device dev = (Device) devListAdapter.getItem(position);
 
@@ -119,29 +103,14 @@ public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 
 }
 
-/**
- * @param parent
- * @param view
- * @param position
- * @param id
- */
 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
   Device dev = (Device) devListAdapter.getItem(position);
-
   Log.d("Device", "Show Device Details " + dev.getFriendlyName());
 }
 
-/**
- * @param arg0
- */
 public void onNothingSelected(AdapterView<?> arg0) {
 }
 
-/**
- * @param menu
- * @param v
- * @param menuInfo
- */
 @Override
 public void onCreateContextMenu(ContextMenu menu, View v,
                                 ContextMenuInfo menuInfo) {
@@ -151,10 +120,6 @@ public void onCreateContextMenu(ContextMenu menu, View v,
 
 }
 
-/**
- * @param menu
- * @return
- */
 @Override
 public boolean onCreateOptionsMenu(Menu menu) {
   MenuInflater inflater = getMenuInflater();
@@ -162,10 +127,6 @@ public boolean onCreateOptionsMenu(Menu menu) {
   return true;
 }
 
-/**
- * @param item
- * @return
- */
 @Override
 public boolean onOptionsItemSelected(MenuItem item) {
   switch (item.getItemId()) {
@@ -188,16 +149,10 @@ public boolean onOptionsItemSelected(MenuItem item) {
 
 }
 
-/**
- * @return the state
- */
 public ActivityState getState() {
   return state;
 }
 
-/**
- * @param state the state to set
- */
 public void setState(ActivityState state) {
   Log.d("State: ", state.getClass().getName());
   if (this.state != state) {

@@ -126,7 +126,6 @@ public View getView(int position, View cView, ViewGroup parent) {
 private Bitmap getIconForDevice(Device device) {
   //TODO implement different icons
   String type = device.getDeviceType();
-  //String location = device.getLocation();
   String modelName = device.getModelName();
 
   if (modelName.equalsIgnoreCase(WINDOWS_MEDIA_PLAYER_SHARING)) {

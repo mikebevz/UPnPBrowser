@@ -50,6 +50,8 @@ public void onCreate(Bundle icicle) {
     Button contentBtn = new Button(this);
     //Button contentBtn = (Button) findViewById(R.id.content_btn);
     contentBtn.setOnClickListener(this);
+    contentBtn.setId(R.id.content_btn);
+    contentBtn.setText(R.string.browse_content);
 
     LinearLayout layout = (LinearLayout) findViewById(R.id.main_layout);
     layout.addView(contentBtn, 1);

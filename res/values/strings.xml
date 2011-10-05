@@ -16,6 +16,5 @@
     <string name="restarting_scanning">Restarting scanning...</string>
     <string name="wifi_disabled">WiFi disabled</string>
     <string name="unknown_socket_error">Unknown socket error. Try to refresh scanning.</string>
-    
-    
+    <string name="browse_content">Browse content</string>
 </resources>
