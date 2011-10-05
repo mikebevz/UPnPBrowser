@@ -50,6 +50,7 @@ public void onCreate(Bundle savedInstanceState) {
   UpnpBrowserApp app = ((UpnpBrowserApp) getApplication());
 
   if (app.isDebug()) {
+    // Bugsense library for handling crashes
     BugSenseHandler.setup(this, "a8c5f7db");
   }
 

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import com.mikebevz.upnp.exceptions.UpnpLibraryException;
 import com.mikebevz.upnp.exceptions.WifiDisabledException;
@@ -43,7 +42,6 @@ private static final String INTERNET_GATEWAY_AP_TYPE = "urn:schemas-wifialliance
 private final Activity context;
 private ControlPoint ctrlPoint = null;
 private Boolean controlPointStatus = false; // false = stopped, true = running
-ListView devicesList;
 private UpnpBrowserApp app;
 private final ProgressDialog dialog;
 
@@ -52,65 +50,40 @@ private final ProgressDialog dialog;
  */
 public DeviceListAdapter(Activity context) {
   this.context = context;
-
   mInflater = LayoutInflater.from(context);
-
   data = new DeviceList();
-
   diskIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.disk);
   windowsIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.windows_device);
-  Bitmap appleIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple_device);
+  //Bitmap appleIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple_device);
   routerIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.router_device);
-
   app = (UpnpBrowserApp) context.getApplication();
-
   Resources resource = context.getResources();
-
   dialog = ProgressDialog.show(context, resource.getString(R.string.loading), resource.getString(R.string.loading_message), true, true);
 
 }
 
-/**
- * @return
- */
 public int getCount() {
   return data.size();
 }
 
-/**
- * @param pos
- * @return
- */
 public Object getItem(int pos) {
   return data.get(pos);
 }
 
-/**
- * @param pos
- * @return
- */
 public long getItemId(int pos) {
   return pos;
 }
 
-/**
- * @param position
- * @param cView
- * @param parent
- * @return
- */
 public View getView(int position, View cView, ViewGroup parent) {
 
   ViewHolder holder;
 
   if (cView == null) {
     cView = mInflater.inflate(R.layout.list_item_icon_text, null);
-
     holder = new ViewHolder();
     holder.text = (TextView) cView.findViewById(R.id.text);
     holder.description = (TextView) cView.findViewById(R.id.description);
     holder.icon = (ImageView) cView.findViewById(R.id.icon);
-
     cView.setTag(holder);
   } else {
     holder = (ViewHolder) cView.getTag();
@@ -147,7 +120,7 @@ private Bitmap getIconForDevice(Device device) {
     return routerIcon;
   }
 
-  return diskIcon; // Default
+  return diskIcon; // Default icon
 }
 
 public DeviceList getDeviceList() {
@@ -170,9 +143,6 @@ static class ViewHolder {
   ImageView icon;
 }
 
-/**
- * @param deviceList
- */
 void setDeviceList(DeviceList deviceList) {
   this.data = deviceList;
   app.setDeviceList(data);
@@ -206,9 +176,6 @@ void deleteDevice(Device dev) {
   notifyDataSetChanged();
 }
 
-/**
- * @param device
- */
 public void deviceAdded(final Device device) {
 
   Runnable task = new Runnable() {
@@ -220,9 +187,6 @@ public void deviceAdded(final Device device) {
   context.runOnUiThread(task);
 }
 
-/**
- * @param device
- */
 public void deviceRemoved(final Device device) {
 
   Runnable task = new Runnable() {
@@ -235,9 +199,6 @@ public void deviceRemoved(final Device device) {
 
 }
 
-/**
- * @param ssdpp
- */
 public void deviceNotifyReceived(final SSDPPacket ssdpp) {
 
   Runnable task = new Runnable() {
@@ -272,9 +233,8 @@ public void startControlPoint() throws WifiNotConnectedException, WifiDisabledEx
   }
 
   if (!controlPointStatus) {
-    //Issue #2 fix.
+    //Issue #2 fix. Catch Exceptions coming from underlying library.
     try {
-      //ctrlPoint.set
       ctrlPoint.start();
     } catch (NullPointerException e) {
       throw new UpnpLibraryException(this.context.getApplication().getResources().getString(R.string.unknown_socket_error));
@@ -290,32 +250,12 @@ public void startControlPoint() throws WifiNotConnectedException, WifiDisabledEx
 
 }
 
+/*
 public void resumeControlPoint() throws Exception {
-  Log.d("ControlPoint", "Resuming ControlPoint");
-  this.startControlPoint();
-  ctrlPoint.removeExpiredDevices();
-
-  /**
-   *
-   if (!app.IsWifiConnected()) {
-   throw new Exception(context.getResources().getString(R.string.wifi_isnt_connected));
-   } else {
-   if (controlPointStatus == false) {
-   Log.d("ControlPoint", "Resume - Start ControlPoint");
-   ctrlPoint.start();
-   ctrlPoint.addNotifyListener(this);
-   ctrlPoint.addDeviceChangeListener(this);
-   ctrlPoint.removeExpiredDevices();
-   setDeviceList(ctrlPoint.getDeviceList());
-
-   this.context.setProgressBarIndeterminate(true);
-   this.context.setProgressBarIndeterminateVisibility(true);
-
-   controlPointStatus = true;
-   }
-   }
-   */
+this.startControlPoint();
+ctrlPoint.removeExpiredDevices();
 }
+*/
 
 public void stopControlPoint() {
   Log.d("ControlPoint", "Stopping ControlPoint");

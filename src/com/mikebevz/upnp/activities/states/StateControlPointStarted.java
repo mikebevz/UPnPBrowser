@@ -16,12 +16,11 @@ import com.mikebevz.upnp.exceptions.WifiNotConnectedException;
  * @author mikebevz
  */
 public class StateControlPointStarted implements ActivityState {
-//private final Context context;
 private final MainActivity mainActivity;
 
 
 public StateControlPointStarted(Context context) {
-  //this.context = context;
+
   this.mainActivity = (MainActivity) context;
 
 }
