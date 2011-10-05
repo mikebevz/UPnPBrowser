@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mikebevz.upnp.tasks;
 
 import android.os.AsyncTask;
@@ -9,37 +5,33 @@ import org.cybergarage.upnp.ActionList;
 import org.cybergarage.upnp.Service;
 
 /**
- *
  * @author mikebevz
  */
-public class GetServiceActionsTask  extends AsyncTask<Service, Integer, ActionList> {
-    
-    OnServiceActionsList delegate;
+public class GetServiceActionsTask extends AsyncTask<Service, Integer, ActionList> {
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        delegate.OnServiceActionListPreExecute();
-    }
-    
-    
-    @Override
-    protected ActionList doInBackground(Service... services) {
-        
-        return services[0].getActionList();
-    }
-    
-    @Override
-    protected void onPostExecute(ActionList result) {
-        this.delegate.OnServiceActionsListSuccess(result);
-    }
+private OnServiceActionsList delegate;
 
-    public void setOnServiceActionListHandler(OnServiceActionsList delegate) {
-        this.delegate = delegate;
-    }
+@Override
+protected void onPreExecute() {
+  super.onPreExecute();
+  delegate.OnServiceActionListPreExecute();
+}
 
-    @Override
-    protected void onProgressUpdate(Integer... values) {
-        this.delegate.OnServiceActionsListProgressUpdate(values[0]);
-    }
+
+@Override
+protected ActionList doInBackground(Service... services) {
+
+  return services[0].getActionList();
+}
+
+@Override
+protected void onPostExecute(ActionList result) {
+  this.delegate.OnServiceActionsListSuccess(result);
+}
+
+public void setOnServiceActionListHandler(OnServiceActionsList delegate) {
+  this.delegate = delegate;
+}
+
+
 }

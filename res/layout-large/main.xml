@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Large Screen Layout -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:id="@+id/main_layout"
+              android:layout_centerHorizontal="true"
+              android:orientation="vertical"
+    >
+
+  <ListView
+      android:layout_width="fill_parent"
+      android:layout_height="0sp"
+      android:layout_weight="1"
+      android:id="@+id/devices_list"
+      android:choiceMode="singleChoice"
+      />
+
+  <!--
+<com.google.ads.AdView android:id="@+id/ad_view"
+  android:layout_width="320sp"
+  android:layout_height="50sp"
+  ads:adUnitId="a14e78bd9e0dc0e"
+  ads:adSize="BANNER"
+  ads:loadAdOnCreate="true"
+
+  />
+
+  -->
+
+
+</LinearLayout>
+

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mikebevz.upnp.activities.states;
 
 import android.content.Context;
@@ -10,22 +6,20 @@ import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.activities.MainActivity;
 
 /**
- *
  * @author mikebevz
  */
 public class StateWifiDisabled implements ActivityState {
-    private final Context context;
-    private final MainActivity mainActivity;
+private final MainActivity mainActivity;
 
-    public StateWifiDisabled(Context context) {
-        this.context = context;
-        this.mainActivity = (MainActivity)context;
-    }
+public StateWifiDisabled(Context context) {
+  //Context context1 = context;
+  this.mainActivity = (MainActivity) context;
+}
 
-    public void setSettings() {
-        mainActivity.devListAdapter.cancel();
-        mainActivity.setContentView(R.layout.wifi_disabled);
-        
-    }
-    
+public void setSettings() {
+  mainActivity.devListAdapter.cancel();
+  mainActivity.setContentView(R.layout.wifi_disabled);
+
+}
+
 }

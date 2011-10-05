@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mikebevz.upnp.activities.states;
 
 import android.content.Context;
@@ -16,51 +12,51 @@ import com.mikebevz.upnp.exceptions.WifiNotConnectedException;
 
 /**
  * ControlPoint is started so we can initialize list of devices and setup listeners
- * 
+ *
  * @author mikebevz
  */
 public class StateControlPointStarted implements ActivityState {
-    //private final Context context;
-    private MainActivity mainActivity;
-    
+//private final Context context;
+private final MainActivity mainActivity;
 
-    public StateControlPointStarted(Context context) {
-        //this.context = context;
-        this.mainActivity = (MainActivity)context;
-        
+
+public StateControlPointStarted(Context context) {
+  //this.context = context;
+  this.mainActivity = (MainActivity) context;
+
+}
+
+public void setSettings() {
+  mainActivity.setTitle(R.string.available_upnp_devices);
+
+
+  try {
+    mainActivity.setContentView(R.layout.main);
+
+    if (mainActivity.devListAdapter == null) {
+      mainActivity.devListAdapter = new DeviceListAdapter(mainActivity);
     }
 
-    public void setSettings() {
-        mainActivity.setTitle(R.string.available_upnp_devices);
-        
-        
-        try {
-            mainActivity.setContentView(R.layout.main);
-            
-            if (mainActivity.devListAdapter == null) {
-                mainActivity.devListAdapter = new DeviceListAdapter(mainActivity);
-            }
-            
-            mainActivity.devListAdapter.startControlPoint();
-            
-            
-            mainActivity.devicesList = (ListView) mainActivity.findViewById(R.id.devices_list);
-            
-            mainActivity.devicesList.setAdapter(mainActivity.devListAdapter);            
-            mainActivity.devicesList.setOnItemClickListener(mainActivity);
-            
-            
-        } catch (WifiNotConnectedException e) {
-            mainActivity.setState(mainActivity.STATE_WIFI_NOTCONNECTED);
-        } catch (WifiDisabledException e) {
-            mainActivity.setState(mainActivity.STATE_WIFI_DISABLED);
-            
-        } catch (UpnpLibraryException e) {
-            mainActivity.setState(mainActivity.STATE_ERROR);
-            mainActivity.STATE_ERROR.setMessage("Unknown error", e.getMessage());
-        }
-        
-        
-    }
-    
+    mainActivity.devListAdapter.startControlPoint();
+
+
+    mainActivity.devicesList = (ListView) mainActivity.findViewById(R.id.devices_list);
+
+    mainActivity.devicesList.setAdapter(mainActivity.devListAdapter);
+    mainActivity.devicesList.setOnItemClickListener(mainActivity);
+
+
+  } catch (WifiNotConnectedException e) {
+    mainActivity.setState(mainActivity.STATE_WIFI_NOTCONNECTED);
+  } catch (WifiDisabledException e) {
+    mainActivity.setState(mainActivity.STATE_WIFI_DISABLED);
+
+  } catch (UpnpLibraryException e) {
+    mainActivity.setState(mainActivity.STATE_ERROR);
+    mainActivity.STATE_ERROR.setMessage("Unknown error", e.getMessage());
+  }
+
+
+}
+
 }

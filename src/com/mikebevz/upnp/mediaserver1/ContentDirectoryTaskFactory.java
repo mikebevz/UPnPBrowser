@@ -1,32 +1,25 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mikebevz.upnp.mediaserver1;
 
 import android.os.AsyncTask;
 import org.cybergarage.upnp.Action;
 
 /**
- *
  * @author mikebevz
  */
-public class ContentDirectoryTaskFactory {
-    
-    
+class ContentDirectoryTaskFactory {
 
-    AsyncTask getTaskForAction(Action action) throws Exception {
-        
-        switch(TaskFactory.name2Int(action.getName())) {
-            case TaskFactory.BROWSE_ACTION_I:
-                //return new BrowseTask();
-            default:
-                throw new Exception("Action "+ action.getName()+ " is not supported");
-                
-        }
-        
-    }
-    
 
-    
+AsyncTask getTaskForAction(Action action) throws Exception {
+
+  switch (TaskFactory.name2Int(action.getName())) {
+    case TaskFactory.BROWSE_ACTION_I:
+      //return new BrowseTask();
+    default:
+      throw new Exception("Action " + action.getName() + " is not supported");
+
+  }
+
+}
+
+
 }

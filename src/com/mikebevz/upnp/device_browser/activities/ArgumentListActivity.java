@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mikebevz.upnp.device_browser.activities;
 
 import android.app.Activity;
@@ -12,9 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
@@ -25,141 +18,80 @@ import org.cybergarage.upnp.Action;
 import org.cybergarage.upnp.ArgumentList;
 
 /**
- *
  * @author mikebevz
  */
-public class ArgumentListActivity extends Activity implements OnActionArgumentsList, OnItemClickListener {
-    
-    private ArgumentList aList;
-    private ArgumentListAdapter adapter;
-    private ProgressDialog dialog;
-    private UpnpBrowserApp app;
-    private Action action;
-    private Integer actionPosition;
+public class ArgumentListActivity extends Activity implements OnActionArgumentsList {
 
-    /** Called when the activity is first created.
-     * @param icicle 
-     */
-    @Override
-    public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-        setContentView(R.layout.list_view);  
-        
-        app = (UpnpBrowserApp)getApplication(); 
-        
-        Bundle bundle = getIntent().getExtras();
-        actionPosition = bundle.getInt("position");
-        
-        action = (Action) ((UpnpBrowserApp)getApplication()).getActionList().get(actionPosition);
-        
-        this.setTitle(action.getName() + " arguments");
-        
+private ArgumentListAdapter adapter;
+private ProgressDialog dialog;
+private UpnpBrowserApp app;
+private Integer actionPosition;
 
-        GetActionArgumentsTask getArgumentsTask = new GetActionArgumentsTask();
-        getArgumentsTask.setOnActionArgumentsListHandler(this);        
-        getArgumentsTask.execute(action);
-        
-        
-        ListView listView = (ListView)findViewById(R.id.list_view);
-        
-        adapter = new ArgumentListAdapter(this);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
-        
-    }
-    
+@Override
+public void onCreate(Bundle icicle) {
+  super.onCreate(icicle);
+  setContentView(R.layout.list_view);
+
+  app = (UpnpBrowserApp) getApplication();
+
+  Bundle bundle = getIntent().getExtras();
+  actionPosition = bundle.getInt("position");
+
+  Action action = (Action) ((UpnpBrowserApp) getApplication()).getActionList().get(actionPosition);
+
+  this.setTitle(action.getName() + " arguments");
 
 
-    /**
-     * 
-     * @param av
-     * @param view
-     * @param position
-     * @param id
-     */
-    public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-        //Intent intent = new Intent(this, ArgumentDetails)
-                
-    }
+  GetActionArgumentsTask getArgumentsTask = new GetActionArgumentsTask();
+  getArgumentsTask.setOnActionArgumentsListHandler(this);
+  getArgumentsTask.execute(action);
 
 
+  ListView listView = (ListView) findViewById(R.id.list_view);
 
-    /**
-     * 
-     * @param aList
-     */
-    public void OnActionArgumentsListSuccess(ArgumentList aList) {
-        this.aList = aList;
-        Log.d("ArgumentsList", String.valueOf(aList.size()));
-        //aList.getArgument(0).getActionNode().get
-        app.setArgumentList(aList);
-        adapter.setArguments(aList);
-        adapter.notifyDataSetChanged();
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
-    }
+  adapter = new ArgumentListAdapter(this);
+  listView.setAdapter(adapter);
+}
 
-    /**
-     * 
-     */
-    public void OnActionArgumentsListPreExecute() {
-        dialog = ProgressDialog.show(this, "", "Downloading...", true);
-        dialog.setCancelable(true);
-    }
 
-    
-    
-    /**
-     * 
-     * @param integer
-     */
-    public void OnActionArgumentsProgressUpdate(Integer integer) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
+public void OnActionArgumentsListSuccess(ArgumentList aList) {
+  Log.d("ArgumentsList", String.valueOf(aList.size()));
+  app.setArgumentList(aList);
+  adapter.setArguments(aList);
+  adapter.notifyDataSetChanged();
+  if (dialog.isShowing()) {
+    dialog.dismiss();
+  }
+}
 
-    
-    /**
-     * 
-     * @param menu
-     * @return
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.argument_list_menu, menu);
-        return true;
-    }
+public void OnActionArgumentsListPreExecute() {
+  dialog = ProgressDialog.show(this, "", "Downloading...", true);
+  dialog.setCancelable(true);
+}
 
-    /**
-     * 
-     * @param featureId
-     * @param item
-     * @return
-     */
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        
-        switch (item.getItemId()) {
-            case R.id.invoke_action:
-                this.invokeAction();
-                return true;
-            default:
-                return true;
-        }
-        
-    }
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+  MenuInflater inflater = getMenuInflater();
+  inflater.inflate(R.menu.argument_list_menu, menu);
+  return true;
+}
 
-    private void invokeAction() {
-        
-        Intent intent = new Intent(this, InvokeActionActivity.class);
-        
-        intent.putExtra("position", actionPosition);
-        
-        startActivity(intent);
-        
-    }
+@Override
+public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
-    
-   
+  switch (item.getItemId()) {
+    case R.id.invoke_action:
+      this.invokeAction();
+      return true;
+    default:
+      return true;
+  }
+
+}
+
+private void invokeAction() {
+  Intent intent = new Intent(this, InvokeActionActivity.class);
+  intent.putExtra("position", actionPosition);
+  startActivity(intent);
+}
 }

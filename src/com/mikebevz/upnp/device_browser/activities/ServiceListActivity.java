@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mikebevz.upnp.device_browser.activities;
 
 import android.app.Activity;
@@ -22,62 +18,61 @@ import org.cybergarage.upnp.Device;
 import org.cybergarage.upnp.ServiceList;
 
 /**
- *
  * @author mikebevz
  */
 public class ServiceListActivity extends Activity implements OnDeviceServiceList, OnItemClickListener {
-    
-    private ServiceList sList;
-    private ServiceListAdapter adapter;
-    private ProgressDialog dialog;
 
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-        setContentView(R.layout.list_view);  
-        
-        
-        Bundle bundle = getIntent().getExtras();
-        int position = bundle.getInt("device");
-        Device device = (Device) ((UpnpBrowserApp)getApplication()).getDeviceList().get(position);
-        this.setTitle("Services at " + device.getFriendlyName());
-        
-        GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
-        getServiceTask.setOnDeviceServiceListHandler(this);
-        getServiceTask.execute(device);
-        
-        
-        ListView listView = (ListView)findViewById(R.id.list_view);
-        adapter = new ServiceListAdapter(this);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
-        
-    }
+private ServiceListAdapter adapter;
+private ProgressDialog dialog;
 
-    public void OnDeviceServiceListPreExecute() {
-        dialog = ProgressDialog.show(this, "", getResources().getString(R.string.loading) , true);
-        dialog.setCancelable(true);
-    }
-    
-    
-    
-    public void OnDeviceServiceListSuccess(ServiceList sList) {
-        this.sList = sList;
-        Log.d("ServiceList", String.valueOf(sList.size()));
-        ((UpnpBrowserApp)getApplication()).setServiceList(sList);
-        adapter.setServices(sList);
-        adapter.notifyDataSetChanged();
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
-    }
+/**
+ * Called when the activity is first created.
+ */
+@Override
+public void onCreate(Bundle icicle) {
+  super.onCreate(icicle);
+  setContentView(R.layout.list_view);
 
-    public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-        
-        Intent intent = new Intent(this, ServiceDetailsActivity.class);
-        intent.putExtra("position", position);
-        startActivity(intent);
-        
-    }
+
+  Bundle bundle = getIntent().getExtras();
+  int position = bundle.getInt("device");
+  Device device = (Device) ((UpnpBrowserApp) getApplication()).getDeviceList().get(position);
+  this.setTitle("Services at " + device.getFriendlyName());
+
+  GetDeviceServicesTask getServiceTask = new GetDeviceServicesTask();
+  getServiceTask.setOnDeviceServiceListHandler(this);
+  getServiceTask.execute(device);
+
+
+  ListView listView = (ListView) findViewById(R.id.list_view);
+  adapter = new ServiceListAdapter(this);
+  listView.setAdapter(adapter);
+  listView.setOnItemClickListener(this);
+
+}
+
+public void OnDeviceServiceListPreExecute() {
+  dialog = ProgressDialog.show(this, "", getResources().getString(R.string.loading), true);
+  dialog.setCancelable(true);
+}
+
+
+public void OnDeviceServiceListSuccess(ServiceList sList) {
+  //ServiceList sList1 = sList;
+  Log.d("ServiceList", String.valueOf(sList.size()));
+  ((UpnpBrowserApp) getApplication()).setServiceList(sList);
+  adapter.setServices(sList);
+  adapter.notifyDataSetChanged();
+  if (dialog.isShowing()) {
+    dialog.dismiss();
+  }
+}
+
+public void onItemClick(AdapterView<?> av, View view, int position, long id) {
+
+  Intent intent = new Intent(this, ServiceDetailsActivity.class);
+  intent.putExtra("position", position);
+  startActivity(intent);
+
+}
 }

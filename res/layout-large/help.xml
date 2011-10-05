@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:padding="10sp"
+    >
+
+
+  <ScrollView
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:textSize="30sp"
+          android:text="UPnP Browser. version 1.1.0"/>
+
+      <TextView
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:text="Using this tool you are able to spot UPnP devices on your network and browse their services/actions/arguments.\n\n
+When you see the list of arguments of an action you can invoke the given action selecting 'Invoke' option from the menu.\n\n
+This application is in its early stage of development, therefore bugs shouldn't not be a surprise. However, we work hard on fixing those.\n\n
+The source code of this application is available from https://github.com/mikebevz/UPnPBrowser\n\n
+If you need a feature or want to report a bug - make a new issue on Github.\n\n
+In case you just wanna say thank you drop me a letter at myb@theappfellas.com.\n\n
+We use http://bugsense.com for collecting the crash reports that are automatically sent to the BugSense server and we've got notification that a new bug appeared.\n\n
+Cheers,\n\n
+Mike Bevz\n\n
+myb@theappfellas.com"
+          />
+
+
+    </LinearLayout>
+
+  </ScrollView>
+
+
+</LinearLayout>
