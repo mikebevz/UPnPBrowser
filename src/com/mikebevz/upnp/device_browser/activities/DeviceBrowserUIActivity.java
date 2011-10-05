@@ -36,19 +36,7 @@ public void onCreate(Bundle icicle) {
 
   if (((UpnpBrowserApp) getApplication()).getContentBrowser()) {
 
-    /**
-     * <Button
-     android:layout_width="fill_parent"
-     android:layout_height="wrap_content"
-     android:text="Browse Content"
-     android:id="@+id/content_btn"
-     android:padding="10sp"
-     />
-
-     */
-
     Button contentBtn = new Button(this);
-    //Button contentBtn = (Button) findViewById(R.id.content_btn);
     contentBtn.setOnClickListener(this);
     contentBtn.setId(R.id.content_btn);
     contentBtn.setText(R.string.browse_content);

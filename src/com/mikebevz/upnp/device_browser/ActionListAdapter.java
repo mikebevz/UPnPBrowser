@@ -31,16 +31,10 @@ public ActionListAdapter(Context context) {
   icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.action);
 }
 
-/**
- * @return the actions
- */
 List<Action> getActions() {
   return actions;
 }
 
-/**
- * @param actions the actions to set
- */
 public void setActions(List<Action> actions) {
   this.actions = actions;
 }
@@ -73,11 +67,8 @@ public View getView(int position, View cView, ViewGroup parent) {
   } else {
     holder = (ViewHolder) cView.getTag();
   }
-
-  //List<String> list = Arrays.asList(this.getActions().get(position).getName().split(":"));
-  //Collections.reverse(list);
-
   holder.text.setText(this.getActions().get(position).getName());
+
   holder.description.setText("Input args: " + String.valueOf(this.getActions().get(position).getInputArgumentList().size())
                                + " / Output args: " + String.valueOf(this.getActions().get(position).getOutputArgumentList().size()));
   holder.icon.setImageBitmap(icon);
@@ -86,7 +77,6 @@ public View getView(int position, View cView, ViewGroup parent) {
 }
 
 static class ViewHolder {
-
   TextView text;
   TextView description;
   ImageView icon;

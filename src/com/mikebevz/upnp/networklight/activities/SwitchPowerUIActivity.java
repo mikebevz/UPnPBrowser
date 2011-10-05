@@ -14,14 +14,12 @@ import org.cybergarage.upnp.*;
 /**
  * @author mikebevz
  */
-public class SwitchPowerUIActivity extends Activity implements SeekBar.OnSeekBarChangeListener, OnCheckedChangeListener {
+public class SwitchPowerUIActivity extends Activity implements SeekBar.OnSeekBarChangeListener,
+                                                                 OnCheckedChangeListener {
 
 private Action setTargetAction;
 private Action setStatusAction;
 
-/**
- * Called when the activity is first created.
- */
 @Override
 public void onCreate(Bundle icicle) {
   super.onCreate(icicle);
@@ -47,7 +45,6 @@ public void onCreate(Bundle icicle) {
     UPnPStatus err = loadlevel.getQueryStatus();
     Log.e("PostUPnPValue", err.getCode() + ": " + err.getDescription());
   }
-
 
   setStatusAction = device.getAction("SetTarget");
   RadioGroup radioGroup = (RadioGroup) findViewById(R.id.power_switch);
@@ -101,12 +98,8 @@ public void onCreate(Bundle icicle) {
 }
 
 public void onProgressChanged(SeekBar slider, int value, boolean fromUser) {
-  //Log.d("Changed", String.valueOf(value));
-
   setTargetAction.setArgumentValue("newLoadlevelTarget", value);
-
   if (setTargetAction.postControlAction()) {
-
   } else {
     UPnPStatus err = setTargetAction.getControlStatus();
     Log.e("PostUPnPValue", err.getCode() + ": " + err.getDescription());
@@ -114,17 +107,14 @@ public void onProgressChanged(SeekBar slider, int value, boolean fromUser) {
 }
 
 public void onStartTrackingTouch(SeekBar slider) {
-  //throw new UnsupportedOperationException("Not supported yet.");
 }
 
 public void onStopTrackingTouch(SeekBar slider) {
-  //throw new UnsupportedOperationException("Not supported yet.");
 }
 
 public void onCheckedChanged(RadioGroup group, int checkedId) {
   if (checkedId == R.id.power_switch_on) {
     setStatusAction.setArgumentValue("NewTargetValue", 1);
-
   }
 
   if (checkedId == R.id.power_switch_off) {
@@ -132,7 +122,6 @@ public void onCheckedChanged(RadioGroup group, int checkedId) {
   }
 
   if (setStatusAction.postControlAction()) {
-
   } else {
     UPnPStatus err = setStatusAction.getControlStatus();
     Log.e("PostUPnPValue", err.getCode() + ": " + err.getDescription());

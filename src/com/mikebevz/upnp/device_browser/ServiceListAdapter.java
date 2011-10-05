@@ -34,16 +34,10 @@ public ServiceListAdapter(Context context) {
   icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.service);
 }
 
-/**
- * @return the services
- */
 List<Service> getServices() {
   return services;
 }
 
-/**
- * @param services the services to set
- */
 public void setServices(List<Service> services) {
   this.services = services;
 }
@@ -92,5 +86,4 @@ static class ViewHolder {
   TextView description;
   ImageView icon;
 }
-
 }

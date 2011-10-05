@@ -25,9 +25,6 @@ public class ServiceListActivity extends Activity implements OnDeviceServiceList
 private ServiceListAdapter adapter;
 private ProgressDialog dialog;
 
-/**
- * Called when the activity is first created.
- */
 @Override
 public void onCreate(Bundle icicle) {
   super.onCreate(icicle);
@@ -56,9 +53,7 @@ public void OnDeviceServiceListPreExecute() {
   dialog.setCancelable(true);
 }
 
-
 public void OnDeviceServiceListSuccess(ServiceList sList) {
-  //ServiceList sList1 = sList;
   Log.d("ServiceList", String.valueOf(sList.size()));
   ((UpnpBrowserApp) getApplication()).setServiceList(sList);
   adapter.setServices(sList);

@@ -27,9 +27,6 @@ private ProgressDialog dialog;
 private int deviceNumber;
 private ContainerListAdapter adapter;
 
-/**
- * Called when the activity is first created.
- */
 @Override
 public void onCreate(Bundle icicle) {
   super.onCreate(icicle);
@@ -44,7 +41,6 @@ public void onCreate(Bundle icicle) {
 }
 
 public void OnDeviceDetailsPreExecute() {
-  //dialog = ProgressDialog.show(this, "", getResources().getString(R.string.loading), true);
 }
 
 public void OnDeviceDetailsSuccess(Device device) {

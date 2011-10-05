@@ -29,11 +29,6 @@ public class ActionListActivity extends Activity implements OnServiceActionsList
 private ActionListAdapter adapter;
 private ProgressDialog dialog;
 
-/**
- * Called when the activity is first created.
- *
- * @param icicle
- */
 @Override
 public void onCreate(Bundle icicle) {
   super.onCreate(icicle);
@@ -79,12 +74,8 @@ public void OnServiceActionsListSuccess(ActionList aList) {
   }
 }
 
-
 public void OnServiceActionListPreExecute() {
-
   dialog = ProgressDialog.show(this, "", getResources().getString(R.string.loading), true);
   dialog.setCancelable(true);
-  //dialog.setCancelMessage("Cannot load data. Try again");
 }
-
 }

@@ -53,26 +53,14 @@ protected BrowserTaskResult doInBackground(Void... params) {
   BrowserTaskResult res = new BrowserTaskResult();
 
   if (getAction().postControlAction()) {
-    //ArgumentList outArgList = action.getOutputArgumentList();
-
-
     res.setResult(getAction().getArgument("Result").getValue());
     res.setNumberReturned(getAction().getArgument("NumberReturned").getValue());
     res.setTotalMatches(getAction().getArgument("TotalMatches").getValue());
     res.setUpdateID(getAction().getArgument("UpdateID").getValue());
-
-    //String result = ;
-    //String numberReturned = action.getArgument("NumberReturned").getValue();
-    //String totalMatches = action.getArgument("TotalMatches").getValue();
-    //String updateID = action.getArgument("UpdateID").getValue();
     Log.d("XML Parsing Result", res.getResult());
     parser.setMessage(res.getResult());
-
-
   }
 
-
-  //List<Entity> containers = parser.parse();
   res.setEntities(parser.parse());
 
   return res;
@@ -89,128 +77,86 @@ public void setOnTaskFactoryHandler(OnTaskFactory delegate) {
   this.setDelegate(delegate);
 }
 
-/**
- * @return the delegate
- */
+
 OnTaskFactory getDelegate() {
   return delegate;
 }
 
-/**
- * @param delegate the delegate to set
- */
+
 void setDelegate(OnTaskFactory delegate) {
   this.delegate = delegate;
 }
 
-/**
- * @return the action
- */
+
 Action getAction() {
   return action;
 }
 
-/**
- * @param action the action to set
- */
+
 void setAction(Action action) {
   this.action = action;
 }
 
-/**
- * @return the objectId
- */
+
 String getObjectId() {
   return objectId;
 }
 
-/**
- * @param objectId the objectId to set
- */
+
 public void setObjectId(String objectId) {
   this.objectId = objectId;
 }
 
-/**
- * @return the browseFlag
- */
+
 String getBrowseFlag() {
   return browseFlag;
 }
 
-/**
- * @param browseFlag the browseFlag to set
- */
+
 public void setBrowseFlag(String browseFlag) {
   this.browseFlag = browseFlag;
 }
 
-/**
- * @return the Filter
- */
+
 String getFilter() {
   return Filter;
 }
 
-/**
- * @param Filter the Filter to set
- */
+
 public void setFilter(String Filter) {
   this.Filter = Filter;
 }
 
-/**
- * @return the startingIndex
- */
+
 String getStartingIndex() {
   return startingIndex;
 }
 
-/**
- * @param startingIndex the startingIndex to set
- */
+
 public void setStartingIndex(String startingIndex) {
   this.startingIndex = startingIndex;
 }
 
-/**
- * @return the requestedCount
- */
 String getRequestedCount() {
   return requestedCount;
 }
 
-/**
- * @param requestedCount the requestedCount to set
- */
 public void setRequestedCount(String requestedCount) {
   this.requestedCount = requestedCount;
 }
 
-/**
- * @return the sortCriteria
- */
 String getSortCriteria() {
   return sortCriteria;
 }
 
-/**
- * @param sortCriteria the sortCriteria to set
- */
 public void setSortCriteria(String sortCriteria) {
   this.sortCriteria = sortCriteria;
 }
 
-/**
- * @return the device
- */
 Device getDevice() {
   return device;
 }
 
-/**
- * @param device the device to set
- */
 void setDevice(Device device) {
   this.device = device;
 }

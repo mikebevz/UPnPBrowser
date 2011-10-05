@@ -44,38 +44,21 @@ public DeviceDetailsAdapter(Context context, int position) {
 
 }
 
-/**
- * @return
- */
 public int getCount() {
 
   return data.size();
 
 }
 
-/**
- * @param position
- * @return
- */
 public Object getItem(int position) {
   return data.get(position);
 
 }
 
-/**
- * @param position
- * @return
- */
 public long getItemId(int position) {
   return position;
 }
 
-/**
- * @param position
- * @param cView
- * @param parent
- * @return
- */
 public View getView(int position, View cView, ViewGroup parent) {
 
   ViewHolder holder;
@@ -107,16 +90,10 @@ static class ViewHolder {
   ImageView icon;
 }
 
-/**
- * @return the data
- */
 public List<String> getData() {
   return data;
 }
 
-/**
- * @param data the data to set
- */
 void setData(List<String> data) {
   this.data = data;
 }

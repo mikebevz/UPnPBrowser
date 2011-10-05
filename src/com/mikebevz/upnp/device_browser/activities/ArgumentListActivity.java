@@ -53,7 +53,6 @@ public void onCreate(Bundle icicle) {
   listView.setAdapter(adapter);
 }
 
-
 public void OnActionArgumentsListSuccess(ArgumentList aList) {
   Log.d("ArgumentsList", String.valueOf(aList.size()));
   app.setArgumentList(aList);
@@ -86,7 +85,6 @@ public boolean onMenuItemSelected(int featureId, MenuItem item) {
     default:
       return true;
   }
-
 }
 
 private void invokeAction() {

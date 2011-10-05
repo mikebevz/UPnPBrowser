@@ -12,38 +12,13 @@ import com.mikebevz.upnp.networklight.activities.SwitchPowerUIActivity;
  */
 public class ControlUIFactory {
 
-/**
- *
- */
 private final static int SWITCH_POWER = 1000;
-/**
- *
- */
 private final static String SWITCH_POWER_UPC = "urn:schemas-upnp-org:device:DimmableLight:1";
-/**
- *
- */
 private final static int MEDIA_SERVER1 = 2000;
-/**
- *
- */
 private final static String MEDIA_SERVER1_UPC = "urn:schemas-upnp-org:device:MediaServer:1";
-/**
- *
- */
 private final static int MEDIA_SERVER2 = 3000;
-/**
- *
- */
 private final static String MEDIA_SERVER2_UPC = "urn:schemas-upnp-org:device:MediaServer:2";
 
-
-/**
- * @param context
- * @param upc
- * @return
- * @throws RuntimeException
- */
 public Intent getIntent(Context context, String upc) throws RuntimeException {
 
   System.out.println("INPUT: " + upc);
@@ -77,7 +52,5 @@ public Intent getIntent(Context context, String upc) throws RuntimeException {
       return new Intent(context, DeviceBrowserUIActivity.class);
 
   }
-
-
 }
 }

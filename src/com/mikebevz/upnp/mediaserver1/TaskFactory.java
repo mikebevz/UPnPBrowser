@@ -40,7 +40,6 @@ public AsyncTask getTaskForAction(Action action) throws Exception {
     ContentDirectoryTaskFactory factory = new ContentDirectoryTaskFactory();
     return factory.getTaskForAction(action);
   }
-
   // Default TODO: Investigate
   ContentDirectoryTaskFactory factory = new ContentDirectoryTaskFactory();
   return factory.getTaskForAction(action);

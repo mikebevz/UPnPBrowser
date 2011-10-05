@@ -22,11 +22,6 @@ public class ServiceDetailsActivity extends Activity implements OnClickListener 
 private Service service;
 private ProgressDialog dialog;
 
-/**
- * Called when the activity is first created.
- *
- * @param icicle
- */
 @Override
 public void onCreate(Bundle icicle) {
   super.onCreate(icicle);
@@ -39,7 +34,6 @@ public void onCreate(Bundle icicle) {
   Button servicesBtn = (Button) findViewById(R.id.services_btn);
   servicesBtn.setOnClickListener(this);
 
-
   ServiceDetailsAdapter adapter = new ServiceDetailsAdapter(this, position);
 
   ArrayList<String> properties = new ArrayList<String>();
@@ -50,15 +44,9 @@ public void onCreate(Bundle icicle) {
 
 }
 
-
-/**
- * @param view
- */
 public void onClick(View view) {
-
   Intent intent = new Intent(this, ActionListActivity.class);
   intent.putExtra("position", getIntent().getExtras().getInt("position"));
   startActivity(intent);
-
 }
 }

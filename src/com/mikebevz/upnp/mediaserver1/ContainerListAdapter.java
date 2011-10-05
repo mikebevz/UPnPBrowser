@@ -37,8 +37,6 @@ private final Bitmap icon_container;
 private final Bitmap icon_item;
 private static final String CONTAINER_CCLASS = "object.container";
 private static final String ITEM_CCLASS = "object.item";
-//private final Bitmap icon_music;
-//private final Bitmap icon_mp3;
 
 private final Pattern isContainer;
 private final Pattern isItem;
@@ -50,7 +48,6 @@ private String numberReturned;
 
 
 public ContainerListAdapter(Context context, Device device) {
-  //super(context, wrapped, pendingResource);
   this.context = context;
   this.device = device;
   mInflater = LayoutInflater.from(context);
@@ -60,13 +57,9 @@ public ContainerListAdapter(Context context, Device device) {
 
   icon_container = BitmapFactory.decodeResource(context.getResources(), R.drawable.folder);
   icon_item = BitmapFactory.decodeResource(context.getResources(), R.drawable.file);
-  //icon_music = BitmapFactory.decodeResource(context.getResources(), R.drawable.file_music);
-  //icon_mp3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.file_mp3);
-
 
   isContainer = Pattern.compile(CONTAINER_CCLASS);
   isItem = Pattern.compile(ITEM_CCLASS);
-
 
   BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
   task.setOnTaskFactoryHandler(this);
@@ -79,19 +72,11 @@ public ContainerListAdapter(Context context, Device device, String objectId) {
   this.context = context;
   this.device = device;
   mInflater = LayoutInflater.from(context);
-
   containers = new ArrayList<Entity>();
-
-
   icon_container = BitmapFactory.decodeResource(context.getResources(), R.drawable.folder);
   icon_item = BitmapFactory.decodeResource(context.getResources(), R.drawable.file);
-  //icon_music = BitmapFactory.decodeResource(context.getResources(), R.drawable.file_music);
-  //icon_mp3 = BitmapFactory.decodeResource(context.getResources(), R.drawable.file_mp3);
-
-
   isContainer = Pattern.compile(CONTAINER_CCLASS);
   isItem = Pattern.compile(ITEM_CCLASS);
-
 
   BrowseTask task = new BrowseTask(device, TaskFactory.CONTENT_DIRECTORY_SERVICE, TaskFactory.BROWSE_ACTION);
   task.setOnTaskFactoryHandler(this);
@@ -101,17 +86,10 @@ public ContainerListAdapter(Context context, Device device, String objectId) {
 
 }
 
-
-/**
- * @return the containers
- */
 public List<Entity> getContainers() {
   return containers;
 }
 
-/**
- * @param containers the containers to set
- */
 void setContainers(List<Entity> containers) {
   this.containers = containers;
 }

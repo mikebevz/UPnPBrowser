@@ -27,11 +27,6 @@ private static final String DIRECTION_OUT = "out";
 private static final String STRING = "string";
 private static final String UI4 = "ui4";
 
-/**
- * Called when the activity is first created.
- *
- * @param icicle
- */
 @Override
 public void onCreate(Bundle icicle) {
   super.onCreate(icicle);
@@ -45,9 +40,6 @@ public void onCreate(Bundle icicle) {
 
   Button invokeBtn = (Button) findViewById(R.id.invoke_btn);
   invokeBtn.setOnClickListener(this);
-
-  //Button resetBtn = (Button) findViewById(R.id.reset_btn);
-  //resetBtn.setOnClickListener(this);
 
   setTitle("Invoke " + action.getName() + " at " + action.getService().getServiceID());
 
@@ -100,7 +92,6 @@ private void buildUI(ArgumentList argumentList) {
           te.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
         }
 
-
         te.setId(i);
         te.setText(arg.getValue());
 
@@ -108,33 +99,22 @@ private void buildUI(ArgumentList argumentList) {
 
       } else { // Add drop down
         Spinner spinner = new Spinner(this);
-        SpinnerAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, allowedValues);
+        SpinnerAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, allowedValues);
         spinner.setAdapter(adapter);
         spinner.setId(i);
-
         layout.addView(spinner);
       }
-
 
     }
   }
 }
 
-/**
- * @param view
- */
 public void onClick(View view) {
-
-  //if (view.getId() == R.id.reset_btn) {
-  //}
-
 
   if (view.getId() == R.id.invoke_btn) {
 
-
     for (int i = 0; i < argumentList.size(); i++) {
       Argument arg = argumentList.getArgument(i);
-      //View element = (View)findViewById(i);
       String argValue = "";
       if (findViewById(i) instanceof EditText) {
         EditText et = (EditText) findViewById(i);
@@ -178,17 +158,7 @@ public void onClick(View view) {
         layout.addView(argValue);
 
       }
-      //String result = getAction().getArgument("Result").getValue();
-      //String numberReturned = action.getArgument("NumberReturned").getValue();
-      //String totalMatches = action.getArgument("TotalMatches").getValue();
-      //String updateID = action.getArgument("UpdateID").getValue();
-      //System.out.println(result);
-      //parser.setMessage(result);
-
     }
-
   }
-
-
 }
 }

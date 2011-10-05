@@ -8,7 +8,6 @@ import org.cybergarage.upnp.Action;
  */
 class ContentDirectoryTaskFactory {
 
-
 AsyncTask getTaskForAction(Action action) throws Exception {
 
   switch (TaskFactory.name2Int(action.getName())) {

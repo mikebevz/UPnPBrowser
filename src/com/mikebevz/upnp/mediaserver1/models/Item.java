@@ -44,30 +44,18 @@ public void setRestricted(String value) {
   this.restricted = value;
 }
 
-/**
- * @return the objectId
- */
 public String getObjectId() {
   return objectId;
 }
 
-/**
- * @return the dlnaManaged
- */
 public String getDlnaManager() {
   return dlnaManaged;
 }
 
-/**
- * @return the parentId
- */
 public String getParentId() {
   return parentId;
 }
 
-/**
- * @return the restricted
- */
 public String getRestricted() {
   return restricted;
 }
@@ -120,86 +108,50 @@ public void setAlbumArtUriProfileId(String value) {
   this.albumArtUriProfileId = value;
 }
 
-/**
- * @return the title
- */
 public String getTitle() {
   return title;
 }
 
-/**
- * @return the cclass
- */
 public String getCclass() {
   return cclass;
 }
 
-/**
- * @return the icon
- */
 public String getIcon() {
   return icon;
 }
 
-/**
- * @return the description
- */
 public String getDescription() {
   return description;
 }
 
-/**
- * @return the artist
- */
 public String getArtist() {
   return artist;
 }
 
-/**
- * @return the album
- */
 public String getAlbum() {
   return album;
 }
 
-/**
- * @return the genre
- */
 public String getGenre() {
   return genre;
 }
 
-/**
- * @return the res
- */
 public String getRes() {
   return res;
 }
 
-/**
- * @return the albumArtUri
- */
 public String getAlbumArtUri() {
   return albumArtUri;
 }
 
-/**
- * @return the resSize
- */
 public String getResSize() {
   return resSize;
 }
 
-/**
- * @return the resProtocolInfo
- */
 public String getResProtocolInfo() {
   return resProtocolInfo;
 }
 
-/**
- * @return the albumArtUriProfileId
- */
 public String getAlbumArtUriProfileId() {
   return albumArtUriProfileId;
 }

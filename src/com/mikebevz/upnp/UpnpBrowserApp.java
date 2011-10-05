@@ -15,7 +15,6 @@ private ActionList actionList;
 private ServiceList serviceList;
 private ArgumentList argumentList;
 
-private Boolean contentBrowser = true;
 private ConnectivityManager connManager;
 private NetworkInfo mWifi;
 private boolean debug;
@@ -66,12 +65,9 @@ public ArgumentList getArgumentList() {
 
 
 public Boolean getContentBrowser() {
+  Boolean contentBrowser = true;
   return contentBrowser;
 }
-
-//public void setContentBrowser(Boolean contentBrowser) {
-//  this.contentBrowser = contentBrowser;
-//}
 
 public boolean isDebug() {
   debug = true;
@@ -84,6 +80,4 @@ public boolean isWifiEnabled() {
 
   return mWifi.isAvailable();
 }
-
-
 }

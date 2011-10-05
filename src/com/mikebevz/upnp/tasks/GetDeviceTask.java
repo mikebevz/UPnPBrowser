@@ -37,6 +37,8 @@ protected void onCancelled() {
 @Override
 protected Device doInBackground(Integer... positions) {
   Device dev = null;
+
+  //TODO review this block
   try {
     dev = (Device) app.getDeviceList().get(positions[0]);
     Log.d("DeviceList", String.valueOf(app.getDeviceList().size()));
@@ -61,11 +63,4 @@ protected void onPostExecute(Device result) {
 public void setOnDeviceDetailsHandler(OnDeviceDetails delegate) {
   this.delegate = delegate;
 }
-
-@Override
-protected void onProgressUpdate(Integer... values) {
-  //this.delegate.OnDeviceDetailsProgressUpdate(values[0]);
-}
-
-
 }

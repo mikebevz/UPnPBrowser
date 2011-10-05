@@ -45,26 +45,17 @@ public void onCreate(Bundle icicle) {
   setContentView(R.layout.media_server_frontpage);
 
   String objectId = getIntent().getExtras().getString("objectId");
-  //Log.d("ObjectID", objectId);
   deviceNumber = getIntent().getExtras().getInt("device");
   Device device = ((UpnpBrowserApp) getApplication()).getDeviceList().getDevice(deviceNumber);
 
   adapter = new ContainerListAdapter(this, device, objectId);
 
   ListView cList = (ListView) findViewById(R.id.container_list);
-  //List<Entity> entityList = adapter.getContainers();
 
   cList.setOnItemClickListener(this);
-  //cList.setFooterDividersEnabled(true);
-
-  //TextView tv = new TextView(this);
-  //tv.setText(R.string.loading);
-  //cList.addFooterView(tv);
-  //cList.setTranscriptMode(ALWAYS_SC);
   cList.setItemsCanFocus(false);
   cList.setSmoothScrollbarEnabled(true);
   cList.setAdapter(adapter);
-
 
 }
 
@@ -75,6 +66,7 @@ public void onItemClick(AdapterView<?> av, View view, int position, long id) {
   Log.d("CClass", cclass);
 
 
+  // If the current item is container - call ContainerListActivity recursively
   if (cclass.matches(CONTAINER_STORAGE_FOLDER) || cclass.matches(CONTAINER_PHOTO_ALBUM)
         || cclass.matches(CONTAINER_MUSIC_ALBUM) || cclass.matches(CONTAINER_MUSIC_ARTIST)
         || cclass.matches(CONTAINER_MUSIC_GENRE)) {
@@ -83,7 +75,6 @@ public void onItemClick(AdapterView<?> av, View view, int position, long id) {
     intent.putExtra("device", deviceNumber);
     startActivity(intent);
   }
-
 
   if (cclass.matches(ITEM_MUSIC)) {
     Item item = (Item) adapter.getContainers().get(position);
@@ -110,8 +101,5 @@ public void onItemClick(AdapterView<?> av, View view, int position, long id) {
       Log.e("PlayVideo", e.getMessage());
     }
   }
-
 }
-
-
 }
