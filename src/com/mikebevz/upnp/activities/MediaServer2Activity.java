@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import org.cybergarage.upnp.ActionList;
-import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.Service;
-import org.cybergarage.upnp.ServiceList;
+import com.mikebevz.upnp.lal.ActionList;
+import com.mikebevz.upnp.lal.Device;
+import com.mikebevz.upnp.lal.Service;
+import com.mikebevz.upnp.lal.ServiceList;
+
 
 /**
  * @author mikebevz

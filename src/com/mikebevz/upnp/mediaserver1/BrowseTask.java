@@ -2,9 +2,10 @@ package com.mikebevz.upnp.mediaserver1;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import org.cybergarage.upnp.Action;
-import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.Service;
+import com.mikebevz.upnp.lal.Action;
+import com.mikebevz.upnp.lal.Device;
+import com.mikebevz.upnp.lal.Service;
+
 
 /**
  * @author mikebevz

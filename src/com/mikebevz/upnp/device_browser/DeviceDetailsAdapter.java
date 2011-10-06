@@ -12,9 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.lal.Device;
 import com.mikebevz.upnp.tasks.GetDeviceTask;
 import com.mikebevz.upnp.tasks.OnDeviceDetails;
-import org.cybergarage.upnp.Device;
+
 
 import java.util.ArrayList;
 import java.util.List;

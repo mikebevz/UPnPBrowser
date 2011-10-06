@@ -1,8 +1,9 @@
 package com.mikebevz.upnp.tasks;
 
 import android.os.AsyncTask;
-import org.cybergarage.upnp.ActionList;
-import org.cybergarage.upnp.Service;
+import com.mikebevz.upnp.lal.ActionList;
+import com.mikebevz.upnp.lal.Service;
+
 
 /**
  * @author mikebevz

@@ -13,10 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
+import com.mikebevz.upnp.lal.Device;
+import com.mikebevz.upnp.lal.Service;
 import com.mikebevz.upnp.tasks.GetServiceTask;
 import com.mikebevz.upnp.tasks.OnServiceDetails;
-import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;

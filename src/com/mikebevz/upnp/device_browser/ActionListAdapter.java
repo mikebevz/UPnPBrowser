@@ -10,7 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.mikebevz.upnp.R;
-import org.cybergarage.upnp.Action;
+import com.mikebevz.upnp.lal.Action;
+
 
 import java.util.ArrayList;
 import java.util.List;

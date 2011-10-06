@@ -1,6 +1,7 @@
 package com.mikebevz.upnp.tasks;
 
-import org.cybergarage.upnp.Device;
+
+import com.mikebevz.upnp.lal.Device;
 
 /**
  * @author mikebevz

@@ -12,7 +12,8 @@ import com.mikebevz.upnp.ControlUIFactory;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.DeviceDetailsAdapter;
-import org.cybergarage.upnp.Device;
+import com.mikebevz.upnp.lal.Device;
+
 
 /**
  * @author mikebevz

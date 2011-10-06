@@ -12,10 +12,11 @@ import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.ArgumentListAdapter;
+import com.mikebevz.upnp.lal.Action;
+import com.mikebevz.upnp.lal.ArgumentList;
 import com.mikebevz.upnp.tasks.GetActionArgumentsTask;
 import com.mikebevz.upnp.tasks.OnActionArgumentsList;
-import org.cybergarage.upnp.Action;
-import org.cybergarage.upnp.ArgumentList;
+
 
 /**
  * @author mikebevz

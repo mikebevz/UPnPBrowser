@@ -12,10 +12,12 @@ import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.ActionListAdapter;
+import com.mikebevz.upnp.lal.ActionList;
+import com.mikebevz.upnp.lal.Service;
 import com.mikebevz.upnp.tasks.GetServiceActionsTask;
 import com.mikebevz.upnp.tasks.OnServiceActionsList;
-import org.cybergarage.upnp.ActionList;
-import org.cybergarage.upnp.Service;
+
+
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -12,10 +12,12 @@ import android.widget.ListView;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.device_browser.ServiceListAdapter;
+import com.mikebevz.upnp.lal.Device;
+import com.mikebevz.upnp.lal.ServiceList;
 import com.mikebevz.upnp.tasks.GetDeviceServicesTask;
 import com.mikebevz.upnp.tasks.OnDeviceServiceList;
-import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.ServiceList;
+
+
 
 /**
  * @author mikebevz

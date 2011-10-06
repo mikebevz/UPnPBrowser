@@ -10,11 +10,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.lal.Device;
 import com.mikebevz.upnp.mediaserver1.ContainerListAdapter;
 import com.mikebevz.upnp.mediaserver1.models.Entity;
 import com.mikebevz.upnp.tasks.GetDeviceTask;
 import com.mikebevz.upnp.tasks.OnDeviceDetails;
-import org.cybergarage.upnp.Device;
+
 
 import java.util.List;
 

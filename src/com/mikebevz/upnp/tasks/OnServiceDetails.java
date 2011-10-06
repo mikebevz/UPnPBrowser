@@ -1,6 +1,7 @@
 package com.mikebevz.upnp.tasks;
 
-import org.cybergarage.upnp.Service;
+
+import com.mikebevz.upnp.lal.Service;
 
 /**
  * @author mikebevz

@@ -12,10 +12,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.mikebevz.upnp.R;
+import com.mikebevz.upnp.lal.Device;
 import com.mikebevz.upnp.mediaserver1.models.Container;
 import com.mikebevz.upnp.mediaserver1.models.Entity;
 import com.mikebevz.upnp.mediaserver1.models.Item;
-import org.cybergarage.upnp.Device;
+
+
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

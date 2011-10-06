@@ -9,7 +9,10 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import org.cybergarage.upnp.*;
+import com.mikebevz.upnp.lal.*;
+
+
+
 
 /**
  * @author mikebevz
@@ -27,7 +30,7 @@ public void onCreate(Bundle icicle) {
 
   Bundle bundle = getIntent().getExtras();
   int position = bundle.getInt("device");
-  Device device = (Device) ((UpnpBrowserApp) getApplication()).getDeviceList().get(position);
+  Device device = ((UpnpBrowserApp) getApplication()).getDeviceList().get(position);
   this.setTitle(device.getFriendlyName());
 
   setTargetAction = device.getAction("SetLoadLevelTarget");
@@ -37,7 +40,7 @@ public void onCreate(Bundle icicle) {
   slider.setOnSeekBarChangeListener(this);
 
   // Set level of the slider
-  StateVariable loadlevel = device.getStateVariable("LoadLevelTarget");
+  com.mikebevz.upnp.lal.StateVariable loadlevel = device.getStateVariable("LoadLevelTarget");
   if (loadlevel.postQuerylAction()) {
     int value = Integer.parseInt(loadlevel.getValue());
     slider.setProgress(value);

@@ -4,7 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.mikebevz.upnp.UpnpBrowserApp;
-import org.cybergarage.upnp.Device;
+import com.mikebevz.upnp.lal.Device;
+
 
 /**
  * @author mikebevz
