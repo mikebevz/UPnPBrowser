@@ -1,9 +1,11 @@
 package com.mikebevz.upnp.lal.wrappers;
 
 import com.mikebevz.upnp.lal.DeviceList;
+import com.mikebevz.upnp.lal.Service;
 import com.mikebevz.upnp.lal.wrappers.clink.ControlPointImpl;
 import org.cybergarage.upnp.ControlPoint;
 import org.cybergarage.upnp.Device;
+import org.cybergarage.upnp.ServiceList;
 
 public class CLinkWrapper implements ILibraryWrapper<org.cybergarage.upnp.DeviceList, Device> {
 
@@ -89,5 +91,39 @@ public com.mikebevz.upnp.lal.Device mapDevice(Device dev) {
   return device;
 }
 
+public Service mapService(org.cybergarage.upnp.Service ser) {
+
+  Service service = new Service();
+
+  //service.setActionList(ser.getActionList());
+  service.setControlURL(ser.getControlURL());
+  service.setDescriptionURL(ser.getDescriptionURL());
+  //service.setDevice(ser.getDevice());
+  //service.setRootDevice(ser.getRootDevice());
+  service.setSCPDData(ser.getSCPDData());
+  service.setSCPDURL(ser.getSCPDURL());
+  service.setServiceID(ser.getServiceID());
+  service.setServiceNode(ser.getServiceNode());
+  service.setServiceStateTable(ser.getServiceStateTable());
+  service.setServiceType(ser.getServiceType());
+  service.setSID(ser.getSID());
+  service.setSubscriberList(ser.getSubscriberList());
+  service.setTimeout(ser.getTimeout());
+  service.setUserData(ser.getUserData());
+
+
+  return service;
+}
+
+public com.mikebevz.upnp.lal.ServiceList mapServiceList(ServiceList serviceList) {
+
+  com.mikebevz.upnp.lal.ServiceList serList = new com.mikebevz.upnp.lal.ServiceList();
+
+  for (int i = 0; i < serviceList.size(); i++) {
+    serList.add(mapService(serviceList.getService(i)));
+  }
+
+  return serList;
+}
 
 }

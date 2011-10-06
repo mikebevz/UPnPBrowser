@@ -8,7 +8,5 @@ import com.mikebevz.upnp.lal.ServiceList;
  */
 public interface OnDeviceServiceList {
 public void OnDeviceServiceListSuccess(ServiceList sList);
-
-//public void OnDeviceServiceListProgressUpdate(Integer value);
 public void OnDeviceServiceListPreExecute();
 }

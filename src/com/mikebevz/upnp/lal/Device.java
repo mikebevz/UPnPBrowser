@@ -298,4 +298,12 @@ public Service getService(String s) {
 public String getInterfaceAddress() {
   return interfaceAddress;
 }
+
+public void setServiceList(ServiceList serviceList) {
+  this.serviceList = serviceList;
+}
+
+public void setInterfaceAddress(String interfaceAddress) {
+  this.interfaceAddress = interfaceAddress;
+}
 }
