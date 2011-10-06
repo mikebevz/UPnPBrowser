@@ -3,6 +3,8 @@ package com.mikebevz.upnp;
 import android.app.Application;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import com.mikebevz.upnp.lal.wrappers.ILibraryWrapper;
+import com.mikebevz.upnp.lal.wrappers.Wrapper;
 import org.cybergarage.upnp.ActionList;
 import org.cybergarage.upnp.ArgumentList;
 import org.cybergarage.upnp.DeviceList;
@@ -18,6 +20,9 @@ private ArgumentList argumentList;
 private ConnectivityManager connManager;
 private NetworkInfo mWifi;
 private boolean debug;
+private Boolean contentBrowser = false;
+
+private ILibraryWrapper upnpWrapper = new Wrapper();
 
 
 public void setDeviceList(DeviceList list) {
@@ -65,7 +70,7 @@ public ArgumentList getArgumentList() {
 
 
 public Boolean getContentBrowser() {
-  Boolean contentBrowser = true;
+
   return contentBrowser;
 }
 
@@ -79,5 +84,13 @@ public boolean isWifiEnabled() {
   mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
   return mWifi.isAvailable();
+}
+
+public void setDeviceList(com.mikebevz.upnp.lal.DeviceList data) {
+  com.mikebevz.upnp.lal.DeviceList deviceListLal = data;
+}
+
+public ILibraryWrapper getWrapper() {
+  return this.upnpWrapper;
 }
 }

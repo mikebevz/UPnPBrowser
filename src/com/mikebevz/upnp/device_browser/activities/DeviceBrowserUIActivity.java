@@ -61,6 +61,7 @@ public void onCreate(Bundle icicle) {
 public void onClick(View view) {
   Intent intent;
   switch (view.getId()) {
+
     case R.id.content_btn:
       ControlUIFactory factory = new ControlUIFactory();
       intent = factory.getIntent(this, device.getDeviceType());

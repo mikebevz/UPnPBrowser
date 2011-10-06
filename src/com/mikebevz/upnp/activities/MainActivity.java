@@ -9,7 +9,6 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.bugsense.trace.BugSenseHandler;
 import com.google.ads.AdView;
 import com.mikebevz.upnp.ActivityState;
 import com.mikebevz.upnp.DeviceListAdapter;
@@ -17,7 +16,7 @@ import com.mikebevz.upnp.R;
 import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.activities.states.*;
 import com.mikebevz.upnp.device_browser.activities.DeviceBrowserUIActivity;
-import org.cybergarage.upnp.Device;
+//import org.cybergarage.upnp.Device;
 
 /**
  * @author mikebevz
@@ -51,7 +50,7 @@ public void onCreate(Bundle savedInstanceState) {
 
   if (app.isDebug()) {
     // Bugsense library for handling crashes
-    BugSenseHandler.setup(this, "a8c5f7db");
+    //BugSenseHandler.setup(this, "a8c5f7db");
   }
 
 
@@ -96,7 +95,7 @@ protected void onDestroy() {
 }
 
 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-  Device dev = (Device) devListAdapter.getItem(position);
+  //Device dev = (Device) devListAdapter.getItem(position);
 
   Intent intent = new Intent(this, DeviceBrowserUIActivity.class);
   intent.putExtra("device", position);
@@ -105,8 +104,8 @@ public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 }
 
 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-  Device dev = (Device) devListAdapter.getItem(position);
-  Log.d("Device", "Show Device Details " + dev.getFriendlyName());
+  //Device dev = (Device) devListAdapter.getItem(position);
+  //Log.d("Device", "Show Device Details " + dev.getFriendlyName());
 }
 
 public void onNothingSelected(AdapterView<?> arg0) {

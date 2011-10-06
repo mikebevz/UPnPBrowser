@@ -35,7 +35,7 @@ public void setSettings() {
     if (mainActivity.devListAdapter == null) {
       mainActivity.devListAdapter = new DeviceListAdapter(mainActivity);
     }
-
+    //TODO Investigate: On Netgear WNT100v3 UI freezes until control point starts.
     mainActivity.devListAdapter.startControlPoint();
 
 

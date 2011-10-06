@@ -15,17 +15,17 @@ import android.widget.TextView;
 import com.mikebevz.upnp.exceptions.UpnpLibraryException;
 import com.mikebevz.upnp.exceptions.WifiDisabledException;
 import com.mikebevz.upnp.exceptions.WifiNotConnectedException;
-import org.cybergarage.upnp.ControlPoint;
-import org.cybergarage.upnp.Device;
-import org.cybergarage.upnp.DeviceList;
-import org.cybergarage.upnp.device.DeviceChangeListener;
-import org.cybergarage.upnp.device.NotifyListener;
-import org.cybergarage.upnp.ssdp.SSDPPacket;
+import com.mikebevz.upnp.lal.DeviceList;
+import com.mikebevz.upnp.lal.device.OnDeviceChange;
+import com.mikebevz.upnp.lal.device.OnDeviceNotification;
+import com.mikebevz.upnp.lal.wrappers.IControlPoint;
+
+
 
 /**
  * @author mikebevz
  */
-public class DeviceListAdapter extends BaseAdapter implements DeviceChangeListener, NotifyListener {
+public class DeviceListAdapter extends BaseAdapter implements OnDeviceChange, OnDeviceNotification {
 
 private final LayoutInflater mInflater;
 private DeviceList data;
@@ -40,7 +40,7 @@ private static final String KIES_SYNC_SERVER = "Kies Sync Server";
 private static final String INTERNET_GATEWAY_DEVICE_TYPE = "urn:schemas-upnp-org:device:InternetGatewayDevice:1";
 private static final String INTERNET_GATEWAY_AP_TYPE = "urn:schemas-wifialliance-org:device:WFADevice:1";
 private final Activity context;
-private ControlPoint ctrlPoint = null;
+private IControlPoint ctrlPoint = null;
 private Boolean controlPointStatus = false; // false = stopped, true = running
 private UpnpBrowserApp app;
 private final ProgressDialog dialog;
@@ -51,7 +51,9 @@ private final ProgressDialog dialog;
 public DeviceListAdapter(Activity context) {
   this.context = context;
   mInflater = LayoutInflater.from(context);
+
   data = new DeviceList();
+
   diskIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.disk);
   windowsIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.windows_device);
   //Bitmap appleIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple_device);
@@ -96,7 +98,7 @@ public View getView(int position, View cView, ViewGroup parent) {
   return cView;
 }
 
-private Bitmap getIconForDevice(Device device) {
+private Bitmap getIconForDevice(com.mikebevz.upnp.lal.Device device) {
   //TODO implement different icons
   String type = device.getDeviceType();
   String modelName = device.getModelName();
@@ -137,6 +139,46 @@ public void cancel() {
   }
 }
 
+public void deviceChanged() {
+  //Nothing
+}
+
+
+public void deviceAdded(final com.mikebevz.upnp.lal.Device device) {
+
+  Log.d("Device added", device.getFriendlyName());
+
+  Runnable task = new Runnable() {
+    public void run() {
+      addDevice(device);
+    }
+  };
+  context.runOnUiThread(task);
+
+
+}
+
+public void deviceDeleted(com.mikebevz.upnp.lal.Device device) {
+
+  Runnable task = new Runnable() {
+    public void run() {
+      //deleteDevice(device);
+    }
+  };
+
+  context.runOnUiThread(task);
+
+
+}
+
+public void deviceNotificationReceived() {
+  //NOTHING
+}
+
+
+
+
+
 static class ViewHolder {
   TextView text;
   TextView description;
@@ -154,7 +196,7 @@ void setDeviceList(DeviceList deviceList) {
  *
  * @param dev Device added
  */
-void addDevice(Device dev) {
+void addDevice(com.mikebevz.upnp.lal.Device dev) {
   Log.d("DeviceNotify", "Device Added " + dev.getFriendlyName());
   data.add(dev);
   notifyDataSetChanged();
@@ -170,17 +212,18 @@ void addDevice(Device dev) {
  *
  * @param dev Device to be deleted
  */
-void deleteDevice(Device dev) {
+void deleteDevice(com.mikebevz.upnp.lal.Device dev) {
   Log.d("DeviceNotify", "Device Deleted " + dev.getFriendlyName());
   data.remove(dev);
   notifyDataSetChanged();
 }
 
+/*
 public void deviceAdded(final Device device) {
 
   Runnable task = new Runnable() {
     public void run() {
-      addDevice(device);
+      //addDevice(device);
 
     }
   };
@@ -191,14 +234,15 @@ public void deviceRemoved(final Device device) {
 
   Runnable task = new Runnable() {
     public void run() {
-      deleteDevice(device);
+      //deleteDevice(device);
     }
   };
 
   context.runOnUiThread(task);
 
 }
-
+*/
+/*
 public void deviceNotifyReceived(final SSDPPacket ssdpp) {
 
   Runnable task = new Runnable() {
@@ -213,6 +257,8 @@ public void deviceNotifyReceived(final SSDPPacket ssdpp) {
 
 }
 
+*/
+
 public void startControlPoint() throws WifiNotConnectedException, WifiDisabledException, UpnpLibraryException {
   app = (UpnpBrowserApp) context.getApplication();
   Resources resources = context.getResources();
@@ -226,20 +272,14 @@ public void startControlPoint() throws WifiNotConnectedException, WifiDisabledEx
   }
 
   if (ctrlPoint == null) {
-    ctrlPoint = new ControlPoint();
-    ctrlPoint.addNotifyListener(this);
-    ctrlPoint.addDeviceChangeListener(this);
+    ctrlPoint = app.getWrapper().getControlPoint();
+    ctrlPoint.setOnDeviceChangeDelegate(this);
+    ctrlPoint.setOnDeviceNotificationDelegate(this);
 
   }
 
   if (!controlPointStatus) {
-    //Issue #2 fix. Catch Exceptions coming from underlying library.
-    try {
-      ctrlPoint.start();
-    } catch (NullPointerException e) {
-      throw new UpnpLibraryException(this.context.getApplication().getResources().getString(R.string.unknown_socket_error));
-    }
-
+    ctrlPoint.start();
     this.context.setProgressBarIndeterminate(true);
     this.context.setProgressBarIndeterminateVisibility(true);
 
@@ -250,19 +290,12 @@ public void startControlPoint() throws WifiNotConnectedException, WifiDisabledEx
 
 }
 
-/*
-public void resumeControlPoint() throws Exception {
-this.startControlPoint();
-ctrlPoint.removeExpiredDevices();
-}
-*/
-
 public void stopControlPoint() {
   Log.d("ControlPoint", "Stopping ControlPoint");
   if (controlPointStatus) {
     ctrlPoint.stop();
-    ctrlPoint.removeNotifyListener(this);
-    ctrlPoint.removeDeviceChangeListener(this);
+    ctrlPoint.removeOnDeviceChangeDelegate(this);
+    ctrlPoint.removeOnDeviceNotificationDelegate(this);
     controlPointStatus = false;
     this.context.setProgressBarIndeterminate(false);
     this.context.setProgressBarIndeterminateVisibility(false);
