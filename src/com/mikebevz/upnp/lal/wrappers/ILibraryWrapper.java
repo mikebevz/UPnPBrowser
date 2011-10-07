@@ -1,5 +1,6 @@
 package com.mikebevz.upnp.lal.wrappers;
 
+import com.mikebevz.upnp.UpnpBrowserApp;
 import com.mikebevz.upnp.lal.Device;
 import com.mikebevz.upnp.lal.DeviceList;
 
@@ -13,5 +14,9 @@ IControlPoint getControlPoint();
 
 public DeviceList mapDeviceList(DL deviceList) ;
 public Device mapDevice(D dev);
+
+void setWrapper(Wrapper wrapper);
+
+Device getDevice(Device device);
 
 }

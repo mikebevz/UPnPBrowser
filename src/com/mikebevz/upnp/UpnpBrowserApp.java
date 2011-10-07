@@ -23,7 +23,7 @@ private ArgumentList argumentList;
 private ConnectivityManager connManager;
 private NetworkInfo mWifi;
 private boolean debug;
-private Boolean contentBrowser = false;
+private Boolean contentBrowser = true;
 
 private ILibraryWrapper upnpWrapper = new Wrapper();
 

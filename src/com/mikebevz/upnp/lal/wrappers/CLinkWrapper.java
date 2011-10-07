@@ -11,15 +11,11 @@ public class CLinkWrapper implements ILibraryWrapper<org.cybergarage.upnp.Device
 
 
 private ControlPoint controlPoint;
-//private List<OnDeviceChange> deviceChangeDelegates;
-//private List<OnDeviceNotification> deviceNotificationDelegates;
 private IControlPoint localCP;
+private Wrapper wrapper;
 
 
 public CLinkWrapper() {
-  //deviceChangeDelegates = new ArrayList<OnDeviceChange>();
-  //deviceNotificationDelegates = new ArrayList<OnDeviceNotification>();
-
 }
 
 
@@ -45,6 +41,8 @@ public DeviceList mapDeviceList(org.cybergarage.upnp.DeviceList deviceList) {
 public com.mikebevz.upnp.lal.Device mapDevice(Device dev) {
   com.mikebevz.upnp.lal.Device device = new com.mikebevz.upnp.lal.Device();
 
+
+  device.setWrapper(this.wrapper);
 
   device.setDescriptionFile(dev.getDescriptionFile());
   device.setDescriptionFilePath(dev.getDescriptionFilePath());
@@ -89,6 +87,10 @@ public com.mikebevz.upnp.lal.Device mapDevice(Device dev) {
 
 
   return device;
+}
+
+public void setWrapper(Wrapper wrapper) {
+  this.wrapper = wrapper;
 }
 
 public Service mapService(org.cybergarage.upnp.Service ser) {

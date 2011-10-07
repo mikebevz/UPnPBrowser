@@ -2,10 +2,15 @@ package com.mikebevz.upnp.lal;
 
 
 
+import com.mikebevz.upnp.lal.wrappers.ILibraryWrapper;
+import com.mikebevz.upnp.lal.wrappers.Wrapper;
+
 import java.io.File;
 import java.net.InetAddress;
 
 public class Device {
+
+private ILibraryWrapper wrapper;
 
 private String friendlyName;
 private String location;
@@ -188,7 +193,8 @@ public StateVariable getStateVariable(String loadLevelTarget) {
 }
 
 public ServiceList getServiceList() {
-  return serviceList;
+  //TODO Return list of services
+  return null;
 }
 
 public File getDescriptionFile() {
@@ -305,5 +311,9 @@ public void setServiceList(ServiceList serviceList) {
 
 public void setInterfaceAddress(String interfaceAddress) {
   this.interfaceAddress = interfaceAddress;
+}
+
+public void setWrapper(Wrapper wrapper) {
+  this.wrapper = wrapper;
 }
 }

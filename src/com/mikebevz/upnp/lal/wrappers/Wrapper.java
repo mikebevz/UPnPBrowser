@@ -7,6 +7,7 @@ public class Wrapper implements ILibraryWrapper {
 
 private ILibraryWrapper concreteWrapper;
 public IControlPoint controlPoint;
+private Wrapper wrapper;
 
 public Wrapper(ILibraryWrapper concreteWrapper) {
   this.concreteWrapper = concreteWrapper;
@@ -14,6 +15,7 @@ public Wrapper(ILibraryWrapper concreteWrapper) {
 
 public Wrapper() {
   this.concreteWrapper  = new CLinkWrapper();
+  this.concreteWrapper.setWrapper(this);
 }
 
 public IControlPoint getControlPoint() {
@@ -26,6 +28,10 @@ public DeviceList mapDeviceList(Object deviceList) {
 
 public Device mapDevice(Object dev) {
   return null;  //To change body of implemented methods use File | Settings | File Templates.
+}
+
+public void setWrapper(Wrapper wrapper) {
+  this.wrapper = wrapper;
 }
 
 
