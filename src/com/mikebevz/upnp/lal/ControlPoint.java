@@ -15,7 +15,7 @@ private List<OnDeviceNotification> notificationDelegates;
 private DeviceList deviceList;
 private DiscoveryManager discoveryManager;
 private Wrapper wrapper;
-private IControlPoint controlPoint;
+private IControlPoint<?> controlPoint;
 
 
 public ControlPoint() {
@@ -59,5 +59,33 @@ public void removeOnDeviceChangeDelegate(OnDeviceChange delegate) {
 public void removeOnDeviceNotificationDelegate(OnDeviceNotification delegate) {
   //this.notificationDelegates.remove(delegate);
   this.controlPoint.removeOnDeviceNotificationDelegate(delegate);
+}
+
+public List<OnDeviceChange> getChangeDelegates() {
+	return changeDelegates;
+}
+
+public void setChangeDelegates(List<OnDeviceChange> changeDelegates) {
+	this.changeDelegates = changeDelegates;
+}
+
+public List<OnDeviceNotification> getNotificationDelegates() {
+	return notificationDelegates;
+}
+
+public void setNotificationDelegates(List<OnDeviceNotification> notificationDelegates) {
+	this.notificationDelegates = notificationDelegates;
+}
+
+public void setDeviceList(DeviceList deviceList) {
+	this.deviceList = deviceList;
+}
+
+public DiscoveryManager getDiscoveryManager() {
+	return discoveryManager;
+}
+
+public void setDiscoveryManager(DiscoveryManager discoveryManager) {
+	this.discoveryManager = discoveryManager;
 }
 }

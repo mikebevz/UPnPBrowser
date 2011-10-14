@@ -46,10 +46,9 @@ protected Device doInBackground(Integer... positions) {
     return dev;
   } catch (Exception e) {
     lastException = e;
-  } finally {
-    return dev;
-  }
+  } 
 
+  return dev;
 }
 
 @Override

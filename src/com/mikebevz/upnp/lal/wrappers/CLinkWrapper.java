@@ -128,4 +128,12 @@ public com.mikebevz.upnp.lal.ServiceList mapServiceList(ServiceList serviceList)
   return serList;
 }
 
+
+@Override
+public com.mikebevz.upnp.lal.Device getDevice(
+		com.mikebevz.upnp.lal.Device device) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 }

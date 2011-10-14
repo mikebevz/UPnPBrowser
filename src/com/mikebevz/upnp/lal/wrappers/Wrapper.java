@@ -34,5 +34,11 @@ public void setWrapper(Wrapper wrapper) {
   this.wrapper = wrapper;
 }
 
+@Override
+public Device getDevice(Device device) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 
 }

@@ -21,13 +21,14 @@ import com.mikebevz.upnp.device_browser.activities.DeviceBrowserUIActivity;
 /**
  * @author mikebevz
  */
+@SuppressWarnings("unused")
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
 private ActivityState state;
 public DeviceListAdapter devListAdapter = null;
 //Boolean controlPointStatus = false; // false = stopped, true = running
 public ListView devicesList;
-private AdView av;
+///private AdView av;
 
 // WiFi is disabled
 public final ActivityState STATE_WIFI_DISABLED = new StateWifiDisabled(this);

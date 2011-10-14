@@ -19,14 +19,14 @@ import java.util.List;
 public class ControlPointImpl implements IControlPoint<Device>, DeviceChangeListener, NotifyListener {
 
 private ControlPoint clinkCP;
-private ILibraryWrapper wrapper;
+private ILibraryWrapper<org.cybergarage.upnp.DeviceList, Device> wrapper;
 
 //Delegates
 private List<OnDeviceChange> deviceChangeDelegates;
 private List<OnDeviceNotification> deviceNotificationDelegates;
 
 
-public ControlPointImpl(ILibraryWrapper wrapper) {
+public ControlPointImpl(ILibraryWrapper<org.cybergarage.upnp.DeviceList, Device> wrapper) {
   Log.d("Creating new ControlPoint", "NEW");
 
   this.wrapper = wrapper;
@@ -118,7 +118,7 @@ public void deviceNotifyReceived(SSDPPacket ssdpPacket) {
 
 }
 
-public void setWrapper(ILibraryWrapper wrapper) {
+public void setWrapper(ILibraryWrapper<org.cybergarage.upnp.DeviceList, Device> wrapper) {
   this.wrapper = wrapper;
 }
 }

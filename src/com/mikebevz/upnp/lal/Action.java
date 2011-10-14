@@ -12,7 +12,7 @@ private ArgumentList argumentList;
 private UPnPStatus controlStatus;
 private Service service;
 private ArgumentList outputArgumentList;
-private SparseArray inputArgumentList;
+private SparseArray<?> inputArgumentList;
 
 public String getName() {
   return name;
@@ -54,7 +54,7 @@ public ArgumentList getOutputArgumentList() {
 }
 
 
-public SparseArray getInputArgumentList() {
+public SparseArray<?> getInputArgumentList() {
   return inputArgumentList;
 }
 }

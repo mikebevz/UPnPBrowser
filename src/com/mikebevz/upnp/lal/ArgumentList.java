@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 public class ArgumentList extends ArrayList<Argument> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3298540884442287175L;
 
-  public ArgumentList() {
-  }
+	public ArgumentList() {
+	}
 
-  public Argument getArgument(int pos) {
+	public Argument getArgument(int pos) {
 
-    return get(pos);
+		return get(pos);
 
-  }
+	}
 }
